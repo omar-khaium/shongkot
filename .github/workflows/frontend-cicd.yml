@@ -1,0 +1,209 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-cicd.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-cicd.yml'
+
+env:
+  FLUTTER_VERSION: '3.19.0'
+  
+jobs:
+  analyze-and-test:
+    name: Analyze and Test Flutter App
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      working-directory: ./frontend/shongkot_app
+      
+    - name: Verify formatting
+      run: dart format --output=none --set-exit-if-changed .
+      working-directory: ./frontend/shongkot_app
+      continue-on-error: true
+      
+    - name: Analyze code
+      run: flutter analyze
+      working-directory: ./frontend/shongkot_app
+      
+    - name: Run unit tests
+      run: flutter test --coverage
+      working-directory: ./frontend/shongkot_app
+      
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        files: ./frontend/shongkot_app/coverage/lcov.info
+        flags: frontend
+        name: frontend-coverage
+        fail_ci_if_error: false
+        
+    - name: Run widget tests
+      run: flutter test test/widget
+      working-directory: ./frontend/shongkot_app
+      continue-on-error: true
+      
+  integration-test:
+    name: Integration Tests
+    runs-on: macos-latest
+    needs: analyze-and-test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      working-directory: ./frontend/shongkot_app
+      
+    - name: Setup iOS Simulator
+      run: |
+        xcrun simctl list devices
+        DEVICE_ID=$(xcrun simctl create TestiPhone com.apple.CoreSimulator.SimDeviceType.iPhone-14)
+        xcrun simctl boot $DEVICE_ID
+        echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
+        
+    - name: Run integration tests
+      run: flutter test integration_test
+      working-directory: ./frontend/shongkot_app
+      continue-on-error: true
+      
+  build-android:
+    name: Build Android APK & AAB
+    runs-on: ubuntu-latest
+    needs: analyze-and-test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+        cache: 'gradle'
+        
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      working-directory: ./frontend/shongkot_app
+      
+    - name: Build APK
+      run: flutter build apk --release
+      working-directory: ./frontend/shongkot_app
+      
+    - name: Build App Bundle
+      run: flutter build appbundle --release
+      working-directory: ./frontend/shongkot_app
+      
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-apk
+        path: frontend/shongkot_app/build/app/outputs/flutter-apk/app-release.apk
+        retention-days: 30
+        
+    - name: Upload AAB artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-aab
+        path: frontend/shongkot_app/build/app/outputs/bundle/release/app-release.aab
+        retention-days: 30
+        
+  build-ios:
+    name: Build iOS IPA
+    runs-on: macos-latest
+    needs: analyze-and-test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      working-directory: ./frontend/shongkot_app
+      
+    - name: Build iOS (no codesign)
+      run: flutter build ios --release --no-codesign
+      working-directory: ./frontend/shongkot_app
+      continue-on-error: true
+      
+  deploy-firebase:
+    name: Deploy to Firebase App Distribution
+    runs-on: ubuntu-latest
+    needs: [build-android, build-ios]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download APK artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: android-apk
+        path: ./artifacts
+        
+    - name: Deploy to Firebase App Distribution
+      uses: wzieba/Firebase-Distribution-Github-Action@v1
+      with:
+        appId: ${{ secrets.FIREBASE_APP_ID }}
+        serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}
+        groups: testers
+        file: ./artifacts/app-release.apk
+        releaseNotes: |
+          Build: ${{ github.run_number }}
+          Commit: ${{ github.sha }}
+          Branch: ${{ github.ref_name }}
+          
+    - name: Comment on PR with download link
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '✅ Build successful! APK has been uploaded to Firebase App Distribution.\n\nTesters can download the app from Firebase console.'
+          })

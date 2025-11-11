@@ -1,0 +1,110 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-cicd.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-cicd.yml'
+
+env:
+  DOTNET_VERSION: '9.0.x'
+  
+jobs:
+  build-and-test:
+    name: Build and Test Backend
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: ./backend
+      
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+      working-directory: ./backend
+      
+    - name: Run Unit Tests
+      run: dotnet test --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+      working-directory: ./backend
+      
+    - name: Code Coverage Report
+      uses: codecov/codecov-action@v4
+      with:
+        files: ./backend/coverage/**/coverage.cobertura.xml
+        flags: backend
+        name: backend-coverage
+        fail_ci_if_error: false
+        
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: |
+          backend/**/*.trx
+          
+  security-scan:
+    name: Security Scanning
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Install security scanner
+      run: dotnet tool install --global security-scan
+      
+    - name: Run security scan
+      run: security-scan ./backend/Shongkot.sln
+      continue-on-error: true
+      
+  deploy:
+    name: Deploy API
+    runs-on: ubuntu-latest
+    needs: [build-and-test, security-scan]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Publish API
+      run: dotnet publish ./backend/Shongkot.Api/Shongkot.Api.csproj -c Release -o ./publish
+      
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      if: github.ref == 'refs/heads/main'
+      with:
+        app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ./publish
+        
+    - name: Test Swagger Endpoint
+      if: github.ref == 'refs/heads/main'
+      run: |
+        echo "Swagger UI available at: https://${{ secrets.AZURE_WEBAPP_NAME }}.azurewebsites.net/swagger"
+        curl -f https://${{ secrets.AZURE_WEBAPP_NAME }}.azurewebsites.net/swagger/v1/swagger.json || exit 1
