@@ -4,12 +4,12 @@ on:
   push:
     branches: [ main, develop ]
     paths:
-      - 'frontend/**'
+      - 'mobile/**'
       - '.github/workflows/frontend-cicd.yml'
   pull_request:
     branches: [ main, develop ]
     paths:
-      - 'frontend/**'
+      - 'mobile/**'
       - '.github/workflows/frontend-cicd.yml'
 
 env:
@@ -33,32 +33,32 @@ jobs:
         
     - name: Get dependencies
       run: flutter pub get
-      working-directory: ./frontend/shongkot_app
+      working-directory: ./mobile
       
     - name: Verify formatting
       run: dart format --output=none --set-exit-if-changed .
-      working-directory: ./frontend/shongkot_app
+      working-directory: ./mobile
       continue-on-error: true
       
     - name: Analyze code
       run: flutter analyze
-      working-directory: ./frontend/shongkot_app
+      working-directory: ./mobile
       
     - name: Run unit tests
       run: flutter test --coverage
-      working-directory: ./frontend/shongkot_app
+      working-directory: ./mobile
       
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
       with:
-        files: ./frontend/shongkot_app/coverage/lcov.info
+        files: ./mobile/coverage/lcov.info
         flags: frontend
         name: frontend-coverage
         fail_ci_if_error: false
         
     - name: Run widget tests
       run: flutter test test/widget
-      working-directory: ./frontend/shongkot_app
+      working-directory: ./mobile
       continue-on-error: true
       
   integration-test:
@@ -79,7 +79,7 @@ jobs:
         
     - name: Get dependencies
       run: flutter pub get
-      working-directory: ./frontend/shongkot_app
+      working-directory: ./mobile
       
     - name: Setup iOS Simulator
       run: |
@@ -90,7 +90,7 @@ jobs:
         
     - name: Run integration tests
       run: flutter test integration_test
-      working-directory: ./frontend/shongkot_app
+      working-directory: ./mobile
       continue-on-error: true
       
   build-android:
@@ -118,28 +118,28 @@ jobs:
         
     - name: Get dependencies
       run: flutter pub get
-      working-directory: ./frontend/shongkot_app
+      working-directory: ./mobile
       
     - name: Build APK
       run: flutter build apk --release
-      working-directory: ./frontend/shongkot_app
+      working-directory: ./mobile
       
     - name: Build App Bundle
       run: flutter build appbundle --release
-      working-directory: ./frontend/shongkot_app
+      working-directory: ./mobile
       
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
         name: android-apk
-        path: frontend/shongkot_app/build/app/outputs/flutter-apk/app-release.apk
+        path: mobile/build/app/outputs/flutter-apk/app-release.apk
         retention-days: 30
         
     - name: Upload AAB artifact
       uses: actions/upload-artifact@v4
       with:
         name: android-aab
-        path: frontend/shongkot_app/build/app/outputs/bundle/release/app-release.aab
+        path: mobile/build/app/outputs/bundle/release/app-release.aab
         retention-days: 30
         
   build-ios:
@@ -160,11 +160,11 @@ jobs:
         
     - name: Get dependencies
       run: flutter pub get
-      working-directory: ./frontend/shongkot_app
+      working-directory: ./mobile
       
     - name: Build iOS (no codesign)
       run: flutter build ios --release --no-codesign
-      working-directory: ./frontend/shongkot_app
+      working-directory: ./mobile
       continue-on-error: true
       
   deploy-firebase:

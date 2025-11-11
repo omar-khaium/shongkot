@@ -4,14 +4,57 @@
 [![Frontend CI/CD](https://github.com/omar-khaium/shongkot/actions/workflows/frontend-cicd.yml/badge.svg)](https://github.com/omar-khaium/shongkot/actions/workflows/frontend-cicd.yml)
 [![codecov](https://codecov.io/gh/omar-khaium/shongkot/branch/main/graph/badge.svg)](https://codecov.io/gh/omar-khaium/shongkot)
 
+**⚠️ PROPRIETARY SOFTWARE - All Rights Reserved**
+
+Copyright © 2025 Omar Khaium
+
+This is proprietary and confidential software. Unauthorized copying, distribution, or use of this software is strictly prohibited. See [LICENSE](LICENSE) for details.
+
+---
+
 ## Overview
 
-**Shongkot** is an emergency responder mobile application that simplifies emergency response coordination. When someone faces an emergency (accident, health crisis, fire, assault, etc.), they often lose valuable minutes trying to reach the right service. Shongkot solves this problem:
+**Shongkot** is a proprietary emergency responder mobile application that simplifies emergency response coordination. When someone faces an emergency (accident, health crisis, fire, assault, etc.), they often lose valuable minutes trying to reach the right service. Shongkot solves this problem:
 
 - **One button** connects users to nearby responders
 - **Live location** sharing in real-time
 - **Automatic alerts** to family and friends
 - **Quick access** to emergency services
+
+## 📁 Repository Structure
+
+```
+shongkot-emergency-responder/
+├── mobile/                    # Flutter mobile application
+│   ├── lib/                   # Application source code
+│   ├── test/                  # Unit and widget tests
+│   ├── integration_test/      # Integration tests
+│   └── pubspec.yaml           # Flutter dependencies
+│
+├── backend/                   # ASP.NET Core API
+│   ├── Shongkot.Api/          # Web API layer
+│   ├── Shongkot.Application/  # Application logic
+│   ├── Shongkot.Domain/       # Domain entities
+│   ├── Shongkot.Infrastructure/ # Infrastructure layer
+│   └── Tests/                 # Backend tests
+│       ├── Shongkot.Api.Tests/
+│       ├── Shongkot.Application.Tests/
+│       └── Shongkot.Integration.Tests/
+│
+├── docs/                      # Documentation
+│   ├── ARCHITECTURE.md        # System architecture
+│   ├── SETUP.md               # Setup instructions
+│   └── CONTRIBUTING.md        # Contribution guidelines
+│
+├── .github/                   # GitHub Actions workflows
+│   └── workflows/
+│       ├── backend-cicd.yml   # Backend CI/CD
+│       └── frontend-cicd.yml  # Frontend CI/CD
+│
+├── .gitignore                 # Git ignore rules
+├── README.md                  # This file
+└── LICENSE                    # Shongkot Proprietary License 1.0
+```
 
 ## 🏗️ Architecture
 
@@ -32,7 +75,7 @@ backend/
 
 ### Frontend (Flutter)
 ```
-frontend/shongkot_app/
+mobile/
 ├── lib/
 │   ├── core/                  # Core utilities, theme, constants
 │   ├── features/              # Feature modules (Emergency, Contacts, Settings)
@@ -42,8 +85,7 @@ frontend/shongkot_app/
 │   │       └── presentation/  # UI layer (pages, widgets, bloc)
 │   └── main.dart
 ├── test/                      # Unit and widget tests
-├── integration_test/          # Integration tests
-└── test_driver/               # E2E tests
+└── integration_test/          # Integration tests
 ```
 
 ## 🚀 Getting Started
@@ -61,10 +103,9 @@ frontend/shongkot_app/
 
 ### Backend Setup
 
-1. **Clone the repository:**
+1. **Navigate to backend directory:**
 ```bash
-git clone https://github.com/omar-khaium/shongkot.git
-cd shongkot/backend
+cd backend
 ```
 
 2. **Restore dependencies:**
@@ -90,9 +131,9 @@ https://localhost:5001/swagger
 
 ### Frontend Setup
 
-1. **Navigate to frontend directory:**
+1. **Navigate to mobile directory:**
 ```bash
-cd frontend/shongkot_app
+cd mobile
 ```
 
 2. **Install dependencies:**
@@ -110,39 +151,25 @@ flutter pub get
 flutter run
 ```
 
+For detailed setup instructions, see [docs/SETUP.md](docs/SETUP.md).
+
 ## 🧪 Testing
 
 ### Backend Tests
 
 ```bash
-# Run all tests
 cd backend
 dotnet test
-
-# Run with coverage
-dotnet test --collect:"XPlat Code Coverage"
-
-# Run specific test project
-dotnet test Shongkot.Api.Tests/
 ```
 
 ### Frontend Tests
 
 ```bash
-cd frontend/shongkot_app
-
-# Run unit tests
+cd mobile
 flutter test
-
-# Run widget tests
-flutter test test/widget
-
-# Run integration tests
-flutter test integration_test
-
-# Run with coverage
-flutter test --coverage
 ```
+
+For more testing details, see [docs/SETUP.md](docs/SETUP.md).
 
 ## 📦 CI/CD Pipeline
 
@@ -155,45 +182,22 @@ The project uses GitHub Actions for continuous integration and deployment:
 - ✅ Code coverage analysis
 - ✅ Security scanning
 - 🚀 Deploy to Azure Web App (main branch)
-- 📊 Swagger UI available at production endpoint
 
 ### Frontend Pipeline
 - ✅ Code analysis and formatting
 - ✅ Run unit tests
 - ✅ Run widget tests
-- ✅ Run integration tests (iOS simulator)
+- ✅ Run integration tests
 - 🔨 Build APK and AAB
-- 🔨 Build iOS IPA
 - 🚀 Deploy to Firebase App Distribution
-- 📱 Testers notified automatically
 
 ## 🔑 Core Features
 
-### 1. Emergency SOS Button
-- Large, prominent button for immediate emergency activation
-- Animated pulse effect for visibility
-- One-tap activation with confirmation
-
-### 2. Real-time Location Tracking
-- GPS-based location detection
-- Continuous location updates during emergency
-- Reverse geocoding for address display
-
-### 3. Emergency Contacts
-- Add/edit/delete emergency contacts
-- Priority contact designation
-- Automatic SMS/push notification on emergency
-
-### 4. Nearby Responders
-- Find police stations, hospitals, fire services
-- Distance-based sorting
-- Direct call integration
-
-### 5. Settings & Preferences
-- Auto-call emergency services
-- Location sharing preferences
-- Sound and vibration alerts
-- Dark mode support
+- **Emergency SOS Button** - One-tap emergency activation
+- **Real-time Location Tracking** - GPS-based location with continuous updates
+- **Emergency Contacts** - Automatic SMS/push notification system
+- **Nearby Responders** - Find police stations, hospitals, fire services
+- **Settings & Preferences** - Customizable emergency response options
 
 ## 🔐 Security
 
@@ -205,52 +209,29 @@ The project uses GitHub Actions for continuous integration and deployment:
 
 ## 📊 API Documentation
 
-The API documentation is available via Swagger UI when running the backend:
+API documentation is available via Swagger UI when running the backend:
 - Development: `https://localhost:5001/swagger`
-- Production: `https://your-app.azurewebsites.net/swagger`
-
-### Key Endpoints
-
-- `POST /api/emergency` - Trigger emergency alert
-- `GET /api/emergency/{id}` - Get emergency details
-- `PATCH /api/emergency/{id}/status` - Update emergency status
-- `POST /api/emergency/find-responders` - Find nearby responders
-- `GET /api/contacts/user/{userId}` - Get user's contacts
-- `POST /api/contacts` - Add emergency contact
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Code Quality Standards
-
-- Follow C# and Dart style guidelines
-- Write unit tests for all business logic
-- Maintain > 80% code coverage
-- All tests must pass before merging
-- Security vulnerabilities must be addressed
+- Production: Contact administrator for endpoint
 
 ## 📱 Firebase App Distribution
 
-Test builds are automatically distributed to testers via Firebase App Distribution:
-1. Testers receive email notification
-2. Download and install APK from Firebase console
-3. Provide feedback through GitHub issues
+Test builds are distributed to authorized testers via Firebase App Distribution.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Shongkot Proprietary License 1.0 - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Authors
+**Copyright © 2025 Omar Khaium. All Rights Reserved.**
 
-- **Omar Khaium** - *Initial work* - [omar-khaium](https://github.com/omar-khaium)
+## 👥 Author
 
-## 🙏 Acknowledgments
+**Omar Khaium** - *Project Owner* - [@omar-khaium](https://github.com/omar-khaium)
 
-- Emergency services providers
-- Open source community
-- Flutter and .NET teams
+## 📞 Contact
+
+For licensing inquiries or access requests, contact:
+- GitHub: [@omar-khaium](https://github.com/omar-khaium)
+
+---
+
+**⚠️ CONFIDENTIAL**: This repository and its contents are proprietary and confidential. Unauthorized access, use, or distribution is prohibited.

@@ -50,7 +50,7 @@ Thank you for your interest in contributing to Shongkot! This document provides 
    cd backend && dotnet test
    
    # Frontend
-   cd frontend/shongkot_app && flutter test
+   cd mobile && flutter test
    ```
 
 4. **Commit:**

@@ -86,9 +86,9 @@ Follow the official guide: https://flutter.dev/docs/get-started/install
 flutter doctor
 ```
 
-3. **Navigate to frontend:**
+3. **Navigate to mobile:**
 ```bash
-cd frontend/shongkot_app
+cd mobile
 ```
 
 4. **Install dependencies:**
