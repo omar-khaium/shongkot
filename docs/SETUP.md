@@ -140,6 +140,8 @@ flutter test --coverage
 
 ### Build for Production
 
+**Important:** For release builds with proper signing, see [mobile/SIGNING.md](../mobile/SIGNING.md) for complete setup instructions.
+
 **Android:**
 ```bash
 # APK
@@ -148,6 +150,11 @@ flutter build apk --release
 # App Bundle (recommended for Play Store)
 flutter build appbundle --release
 ```
+
+**Note:** Release builds require signing keys. Without proper signing configuration, builds will use debug signing. See the signing documentation for:
+- Generating a keystore
+- Configuring local signing
+- Setting up GitHub Actions secrets
 
 **iOS:**
 ```bash

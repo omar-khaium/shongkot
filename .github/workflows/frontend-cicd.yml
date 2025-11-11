@@ -120,6 +120,32 @@ jobs:
       run: flutter pub get
       working-directory: ./mobile
       
+    - name: Setup signing keys
+      env:
+        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      run: |
+        # Only setup signing if secrets are available
+        if [ -n "$KEYSTORE_BASE64" ]; then
+          echo "Setting up release signing..."
+          # Decode keystore
+          echo "$KEYSTORE_BASE64" | base64 --decode > android/app/key.jks
+          
+          # Create key.properties
+          cat > android/key.properties << EOF
+        storePassword=$KEYSTORE_PASSWORD
+        keyPassword=$KEY_PASSWORD
+        keyAlias=$KEY_ALIAS
+        storeFile=../app/key.jks
+        EOF
+          echo "Release signing configured"
+        else
+          echo "No signing secrets found, using debug signing"
+        fi
+      working-directory: ./mobile
+      
     - name: Build APK
       run: flutter build apk --release
       working-directory: ./mobile

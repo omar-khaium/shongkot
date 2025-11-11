@@ -1,0 +1,14 @@
+# Example key.properties file for Android release signing
+# DO NOT commit this file to version control!
+# This file should be created locally or in CI/CD using secrets
+
+storePassword=<your-keystore-password>
+keyPassword=<your-key-password>
+keyAlias=<your-key-alias>
+storeFile=<path-to-your-keystore-file>
+
+# Example:
+# storePassword=myStrongPassword123
+# keyPassword=myStrongPassword123
+# keyAlias=shongkot
+# storeFile=../app/key.jks
