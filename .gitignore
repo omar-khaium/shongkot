@@ -92,8 +92,9 @@ TestResults/
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
 **/android/captures/
-**/android/gradlew
-**/android/gradlew.bat
+# Note: gradlew files are needed for CI/CD
+# **/android/gradlew
+# **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 **/android/key.properties
