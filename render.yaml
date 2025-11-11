@@ -1,8 +1,8 @@
 services:
   - type: web
-    name: shongkot-api
+    name: shongkot
     runtime: docker
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     env: docker
     plan: free
