@@ -1,7 +1,7 @@
-flutter:
-  sdk: flutter
+include: package:flutter_lints/flutter.yaml
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^3.0.1
+linter:
+  rules:
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+
