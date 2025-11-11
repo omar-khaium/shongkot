@@ -1,0 +1,15 @@
+{
+  "app_distribution": {
+    "groups": {
+      "testers": {
+        "aliases": ["testers"]
+      },
+      "alpha": {
+        "aliases": ["alpha-testers"]
+      },
+      "beta": {
+        "aliases": ["beta-testers"]
+      }
+    }
+  }
+}

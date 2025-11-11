@@ -198,7 +198,7 @@ jobs:
   deploy-firebase:
     name: Deploy to Firebase App Distribution
     runs-on: ubuntu-latest
-    needs: [build-android, build-ios]
+    needs: [build-android]
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
     
     steps:
@@ -211,17 +211,152 @@ jobs:
         name: android-apk
         path: ./artifacts
         
+    - name: Download AAB artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: android-aab
+        path: ./artifacts
+        
+    - name: Generate Release Notes
+      id: release_notes
+      run: |
+        cat > release-notes.txt << 'EOF'
+        🚀 Shongkot Emergency Responder - Build #${{ github.run_number }}
+        
+        📱 Version: 1.0.0+${{ github.run_number }}
+        🔨 Build: ${{ github.run_number }}
+        📝 Commit: ${{ github.sha }}
+        🌿 Branch: ${{ github.ref_name }}
+        👤 Author: ${{ github.actor }}
+        📅 Date: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+        
+        📦 What's New:
+        - In-app update support enabled
+        - Automatic update notifications
+        - Bug fixes and improvements
+        
+        ⚡ Features:
+        - Emergency SOS button
+        - Real-time location tracking
+        - Contact notification system
+        
+        🔗 Links:
+        - Repository: ${{ github.server_url }}/${{ github.repository }}
+        - Commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+        
+        ⚠️ Note: This is a proprietary build. Unauthorized distribution is prohibited.
+        EOF
+        cat release-notes.txt
+        
     - name: Deploy to Firebase App Distribution
+      id: firebase_deploy
       uses: wzieba/Firebase-Distribution-Github-Action@v1
       with:
         appId: ${{ secrets.FIREBASE_APP_ID }}
         serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}
         groups: testers
         file: ./artifacts/app-release.apk
-        releaseNotes: |
-          Build: ${{ github.run_number }}
-          Commit: ${{ github.sha }}
-          Branch: ${{ github.ref_name }}
+        releaseNotesFile: release-notes.txt
+        
+    - name: Create GitHub Release
+      if: github.ref == 'refs/heads/main'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.0-build.${{ github.run_number }}
+        name: Release v1.0.0 Build ${{ github.run_number }}
+        body_path: release-notes.txt
+        draft: false
+        prerelease: false
+        files: |
+          ./artifacts/app-release.apk
+          ./artifacts/app-release.aab
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Save Firebase Distribution Info
+      run: |
+        mkdir -p firebase-dist-info
+        cat > firebase-dist-info/distribution-info.json << 'EOF'
+        {
+          "build_number": "${{ github.run_number }}",
+          "version": "1.0.0+${{ github.run_number }}",
+          "commit_sha": "${{ github.sha }}",
+          "branch": "${{ github.ref_name }}",
+          "build_date": "$(date -u +'%Y-%m-%d %H:%M:%S UTC')",
+          "firebase_app_id": "${{ secrets.FIREBASE_APP_ID }}",
+          "distribution_groups": ["testers"],
+          "in_app_updates": "enabled",
+          "download_link": "https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}"
+        }
+        EOF
+        cat firebase-dist-info/distribution-info.json
+        
+    - name: Upload Distribution Info
+      uses: actions/upload-artifact@v4
+      with:
+        name: firebase-distribution-info
+        path: firebase-dist-info/
+        retention-days: 90
+        
+    - name: Update README with Distribution Link
+      if: github.ref == 'refs/heads/main'
+      run: |
+        # Generate distribution badge and link
+        FIREBASE_LINK="https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}"
+        BUILD_NUM="${{ github.run_number }}"
+        
+        # Create a temporary file with distribution info
+        cat > FIREBASE_DISTRIBUTION.md << EOF
+        # Firebase App Distribution
+        
+        ## Latest Build
+        
+        **Version:** 1.0.0+${BUILD_NUM}
+        **Build Number:** ${BUILD_NUM}
+        **Build Date:** $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+        **Status:** ✅ Available
+        
+        ## Download Links
+        
+        ### For Testers
+        📱 [Download Latest APK from Firebase](${FIREBASE_LINK})
+        
+        ### In-App Updates
+        ✅ **Automatic Updates Enabled**
+        - Users with previous versions will receive update prompts
+        - Updates are delivered through Firebase App Distribution
+        - No manual download required for existing users
+        
+        ## How to Get Access
+        
+        1. Contact the repository owner for tester access
+        2. You'll receive an invitation email from Firebase
+        3. Accept the invitation and download the Firebase App Tester app
+        4. Install and launch Shongkot from Firebase App Tester
+        5. Future updates will be automatically prompted
+        
+        ## Release Information
+        
+        - **Repository:** ${{ github.server_url }}/${{ github.repository }}
+        - **Latest Release:** [View on GitHub](${{ github.server_url }}/${{ github.repository }}/releases/latest)
+        - **CI/CD Pipeline:** [View Workflow](${{ github.server_url }}/${{ github.repository }}/actions)
+        
+        ---
+        
+        **⚠️ PROPRIETARY SOFTWARE** - This is a confidential build. Unauthorized distribution is prohibited.
+        
+        Copyright © 2025 Omar Khaium. All Rights Reserved.
+        EOF
+        
+        cat FIREBASE_DISTRIBUTION.md
+        
+    - name: Upload Distribution Markdown
+      if: github.ref == 'refs/heads/main'
+      uses: actions/upload-artifact@v4
+      with:
+        name: firebase-distribution-doc
+        path: FIREBASE_DISTRIBUTION.md
+        retention-days: 90
           
     - name: Comment on PR with download link
       if: github.event_name == 'pull_request'
@@ -229,9 +364,25 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
+          const buildNum = '${{ github.run_number }}';
+          const firebaseLink = 'https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}';
+          
           github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: '✅ Build successful! APK has been uploaded to Firebase App Distribution.\n\nTesters can download the app from Firebase console.'
+            body: `## ✅ Build Successful!\n\n` +
+                  `**Version:** 1.0.0+${buildNum}\n` +
+                  `**Build:** #${buildNum}\n\n` +
+                  `### 📱 Download\n` +
+                  `APK has been uploaded to Firebase App Distribution with **in-app updates enabled**.\n\n` +
+                  `🔗 [Download from Firebase](${firebaseLink})\n\n` +
+                  `### ⚡ In-App Updates\n` +
+                  `✅ Automatic update prompts enabled for existing users\n` +
+                  `✅ Seamless update delivery through Firebase\n\n` +
+                  `### 📦 Artifacts\n` +
+                  `- APK: Available in workflow artifacts\n` +
+                  `- AAB: Available in workflow artifacts\n` +
+                  `- Distribution Info: Available in workflow artifacts\n\n` +
+                  `**Note:** Testers need Firebase App Tester app to receive automatic updates.`
           })

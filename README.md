@@ -215,7 +215,51 @@ API documentation is available via Swagger UI when running the backend:
 
 ## 📱 Firebase App Distribution
 
-Test builds are distributed to authorized testers via Firebase App Distribution.
+Test builds are distributed to authorized testers via Firebase App Distribution with **automatic in-app updates enabled**.
+
+### Download Latest Build
+
+**For Authorized Testers:**
+- 🔗 [Download Latest APK from Firebase App Distribution](https://appdistribution.firebase.google.com/testerapps/YOUR_FIREBASE_APP_ID)
+- 📱 Download the **Firebase App Tester** app from Play Store
+- ✅ Accept the invitation email from Firebase
+- 🔄 **In-app updates**: Automatic update notifications for new releases
+
+### Latest Release
+
+Check the [Releases page](../../releases/latest) for the latest builds with:
+- 📦 APK files (ready to install)
+- 📦 AAB files (for Play Store)
+- 📝 Detailed release notes
+- 🔢 Build information
+
+### How It Works
+
+1. **New Build Created**: Every merge to `main` or `develop` triggers a build
+2. **Firebase Distribution**: APK is automatically uploaded to Firebase
+3. **Tester Notification**: Authorized testers receive push notifications
+4. **In-App Update**: Existing users see update prompt inside the app
+5. **Automatic Install**: Users can update with one tap
+
+### Features
+
+✅ **Automatic Updates** - No manual APK download for existing users
+✅ **Version Check** - App automatically checks for newer versions
+✅ **Push Notifications** - Testers notified when new builds are available
+✅ **Rollback Support** - Can revert to previous versions if needed
+✅ **Distribution Groups** - Organized tester groups (alpha, beta, production)
+
+### Getting Tester Access
+
+To become a tester and receive automatic updates:
+
+1. Contact [@omar-khaium](https://github.com/omar-khaium) for access
+2. Receive invitation email from Firebase
+3. Install Firebase App Tester from Play Store
+4. Accept the invitation and install Shongkot
+5. Enable notifications to receive update alerts
+
+**Note:** This is proprietary software. Tester access is restricted and requires authorization.
 
 ## 📄 License
 

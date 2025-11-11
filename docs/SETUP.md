@@ -98,17 +98,29 @@ flutter pub get
 
 5. **Firebase Configuration:**
 
+See the comprehensive [Firebase Setup Guide](../mobile/FIREBASE_SETUP.md) for detailed instructions on:
+- Creating Firebase project
+- Registering Android/iOS apps
+- Enabling App Distribution with in-app updates
+- Configuring GitHub Actions secrets
+- Adding testers and managing groups
+
+**Quick Setup:**
+
 **For Android:**
-- Go to Firebase Console
-- Create a new project
-- Add Android app
-- Download `google-services.json`
-- Place it in `android/app/`
+- Copy `android/app/google-services.json.example` to `google-services.json`
+- Replace with your actual Firebase configuration
+- File is in `.gitignore` to prevent committing secrets
 
 **For iOS:**
-- Add iOS app in Firebase Console
-- Download `GoogleService-Info.plist`
+- Copy iOS configuration example (when available)
+- Download `GoogleService-Info.plist` from Firebase Console
 - Place it in `ios/Runner/`
+
+**Firebase Options:**
+- Copy `lib/firebase_options.dart.example` to `lib/firebase_options.dart`
+- Update with your Firebase project configuration
+- File is in `.gitignore` to prevent committing secrets
 
 6. **Run the app:**
 ```bash
