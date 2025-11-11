@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Emergency icon - exclamation mark in circle -->
+    <group
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:translateX="10.8"
+        android:translateY="10.8">
+        <!-- Circle -->
+        <path
+            android:fillColor="#00000000"
+            android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="4"/>
+        <!-- Exclamation mark - line -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M50,30 L58,30 L56,58 L52,58 Z"/>
+        <!-- Exclamation mark - dot -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M54,68m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+    </group>
+</vector>

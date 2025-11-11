@@ -1,4 +1,4 @@
-package com.omarkhaium.shongkot
+package com.omar_khaium.shongkot
 
 import io.flutter.embedding.android.FlutterActivity
 
