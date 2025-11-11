@@ -38,6 +38,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_21.toString()
+    }
 
     defaultConfig {
         applicationId "com.omar_khaium.shongkot"
@@ -69,5 +72,8 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+kotlin {
+    jvmToolchain(21)
+}
 
+dependencies {}
