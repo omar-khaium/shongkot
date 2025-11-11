@@ -39,6 +39,15 @@ jobs:
       run: dart format --output=none --set-exit-if-changed .
       working-directory: ./mobile
       continue-on-error: true
+    
+    - name: Generate firebase_options.dart
+      uses: ./.github/actions/generate-firebase-options
+      with:
+        firebase-project-id: ${{ secrets.FIREBASE_PROJECT_ID }}
+        firebase-token: ${{ secrets.FIREBASE_TOKEN }}
+        working-directory: ./mobile
+        output-path: lib/firebase_options.dart
+        platforms: android
       
     - name: Analyze code
       run: flutter analyze
@@ -121,20 +130,14 @@ jobs:
       run: flutter pub get
       working-directory: ./mobile
 
-    - name: Install Firebase CLI
-      run: npm install -g firebase-tools
-
     - name: Generate firebase_options.dart
-      run: |
-        flutterfire configure \
-          --project=$FIREBASE_PROJECT_ID \
-          --out=lib/firebase_options.dart \
-          --yes \
-          --platforms=android
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-      working-directory: ./mobile
+      uses: ./.github/actions/generate-firebase-options
+      with:
+        firebase-project-id: ${{ secrets.FIREBASE_PROJECT_ID }}
+        firebase-token: ${{ secrets.FIREBASE_TOKEN }}
+        working-directory: ./mobile
+        output-path: lib/firebase_options.dart
+        platforms: android
       
     - name: Setup signing keys
       env:
