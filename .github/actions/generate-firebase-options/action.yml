@@ -1,0 +1,85 @@
+name: Generate Firebase Options
+description: Installs required CLIs and runs FlutterFire to regenerate firebase_options.dart
+inputs:
+  firebase-project-id:
+    description: Firebase project ID to use when configuring FlutterFire
+    required: true
+  firebase-token:
+    description: Firebase CI token generated via firebase login:ci
+    required: true
+  working-directory:
+    description: Directory where flutterfire configure should run
+    default: .
+    required: false
+  platforms:
+    description: Comma separated list of Flutter platforms to configure
+    default: android
+    required: false
+  output-path:
+    description: Relative path (from working-directory) for firebase_options.dart
+    default: lib/firebase_options.dart
+    required: false
+runs:
+  using: composite
+  steps:
+    - name: Ensure Firebase CLI is installed
+      shell: bash
+      run: |
+        set -euo pipefail
+        if ! command -v firebase >/dev/null 2>&1; then
+          echo "Installing firebase-tools..."
+          npm install -g firebase-tools
+        else
+          echo "firebase-tools already available"
+        fi
+
+    - name: Ensure FlutterFire CLI is installed
+      shell: bash
+      run: |
+        set -euo pipefail
+        if ! command -v flutterfire >/dev/null 2>&1; then
+          echo "Installing FlutterFire CLI..."
+          dart pub global activate flutterfire_cli
+        else
+          echo "FlutterFire CLI already available"
+        fi
+        echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+
+    - name: Generate firebase_options.dart
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        FIREBASE_PROJECT_ID: ${{ inputs.firebase-project-id }}
+        FIREBASE_TOKEN: ${{ inputs.firebase-token }}
+        FIREBASE_PLATFORMS: ${{ inputs.platforms }}
+        FIREBASE_OUTPUT_PATH: ${{ inputs.output-path }}
+      run: |
+        set -euo pipefail
+
+        if [[ -z "$FIREBASE_PROJECT_ID" ]]; then
+          echo "::error::FIREBASE_PROJECT_ID is required"
+          exit 1
+        fi
+
+        if [[ -z "$FIREBASE_TOKEN" ]]; then
+          echo "::error::FIREBASE_TOKEN is required"
+          exit 1
+        fi
+
+        OUTPUT_DIR="$(dirname "$FIREBASE_OUTPUT_PATH")"
+        mkdir -p "$OUTPUT_DIR"
+
+        echo "Generating firebase_options.dart for project '$FIREBASE_PROJECT_ID'..."
+        flutterfire configure \
+          --yes \
+          --token="$FIREBASE_TOKEN" \
+          --project="$FIREBASE_PROJECT_ID" \
+          --platforms="$FIREBASE_PLATFORMS" \
+          --out="$FIREBASE_OUTPUT_PATH"
+
+        if [[ ! -s "$FIREBASE_OUTPUT_PATH" ]]; then
+          echo "::error::Failed to generate firebase_options.dart at $FIREBASE_OUTPUT_PATH"
+          exit 1
+        fi
+
+        echo "firebase_options.dart generated at $FIREBASE_OUTPUT_PATH"
