@@ -1,15 +1,1 @@
-{
-  "app_distribution": {
-    "groups": {
-      "testers": {
-        "aliases": ["testers"]
-      },
-      "alpha": {
-        "aliases": ["alpha-testers"]
-      },
-      "beta": {
-        "aliases": ["beta-testers"]
-      }
-    }
-  }
-}
+{"app_distribution":{"groups":{"testers":{"aliases":["testers"]},"alpha":{"aliases":["alpha-testers"]},"beta":{"aliases":["beta-testers"]}}},"flutter":{"platforms":{"android":{"default":{"projectId":"shongkot-er","appId":"1:657665364433:android:33fc8763de2c42867390f0","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"shongkot-er","configurations":{"android":"1:657665364433:android:33fc8763de2c42867390f0"}}}}}}
