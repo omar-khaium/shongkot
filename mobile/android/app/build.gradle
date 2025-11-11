@@ -71,10 +71,10 @@ android {
             // Sign with release config if available, otherwise use debug
             signingConfig keystorePropertiesFile.exists() ? signingConfigs.release : signingConfigs.debug
             
-            // Shrink, obfuscate, and optimize the release build
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // Disable minification for minimal app (re-enable when adding complex dependencies)
+            minifyEnabled false
+            shrinkResources false
+            // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }

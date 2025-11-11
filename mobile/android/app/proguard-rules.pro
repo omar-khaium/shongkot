@@ -10,6 +10,11 @@
 -keep class io.flutter.**  { *; }
 -keep class io.flutter.plugins.**  { *; }
 
+# Play Core (required for Flutter's split compatibility)
+-keep class com.google.android.play.core.** { *; }
+-keep interface com.google.android.play.core.** { *; }
+-dontwarn com.google.android.play.core.**
+
 # Gson
 -keepattributes Signature
 -keepattributes *Annotation*
