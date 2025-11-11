@@ -1,26 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'core/theme/app_theme.dart';
-import 'core/utils/service_locator.dart';
-import 'features/emergency/presentation/pages/home_page.dart';
-import 'features/emergency/presentation/bloc/emergency_bloc.dart';
-import 'features/contacts/presentation/bloc/contacts_bloc.dart';
-import 'features/settings/presentation/bloc/settings_bloc.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  
-  // Initialize Firebase
-  await Firebase.initializeApp();
-  
-  // Initialize Hive
-  await Hive.initFlutter();
-  
-  // Initialize dependency injection
-  await setupServiceLocator();
-  
+void main() {
   runApp(const ShongkotApp());
 }
 
@@ -29,25 +9,61 @@ class ShongkotApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => getIt<EmergencyBloc>(),
+    return MaterialApp(
+      title: 'Shongkot Emergency Responder',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFFDC2626),
         ),
-        BlocProvider(
-          create: (context) => getIt<ContactsBloc>()..add(LoadContacts()),
+      ),
+      home: const HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Shongkot Emergency'),
+        backgroundColor: const Color(0xFFDC2626),
+        foregroundColor: Colors.white,
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.emergency,
+              size: 100,
+              color: Color(0xFFDC2626),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Emergency Responder',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'One button to connect with nearby responders',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
+          ],
         ),
-        BlocProvider(
-          create: (context) => getIt<SettingsBloc>()..add(LoadSettings()),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Shongkot Emergency Responder',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        home: const HomePage(),
       ),
     );
   }
 }
+
