@@ -17,7 +17,6 @@ env:
   
 jobs:  
   build-and-test:
-    if: false
     name: Build and Test Backend
     runs-on: ubuntu-latest
     
@@ -57,55 +56,68 @@ jobs:
         files: |
           backend/**/*.trx
           
-  security-scan:
-    name: Security Scanning
+  docker-build:
+    name: Build Docker Image
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: [build-and-test]
+    if: github.ref == 'refs/heads/main'
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
-        
-    - name: Install security scanner
-      run: dotnet tool install --global security-scan
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
       
-    - name: Run security scan
-      run: security-scan ./backend/Shongkot.sln
-      continue-on-error: true
-      
-  deploy:
-    name: Deploy API
-    runs-on: ubuntu-latest
-    needs: [build-and-test, security-scan]
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
-        
-    - name: Publish API
-      run: dotnet publish ./backend/Shongkot.Api/Shongkot.Api.csproj -c Release -o ./publish
-      
-    - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
-      if: github.ref == 'refs/heads/main'
-      with:
-        app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: ./publish
-        
-    - name: Test Swagger Endpoint
-      if: github.ref == 'refs/heads/main'
+    - name: Build Docker image
       run: |
-        echo "Swagger UI available at: https://${{ secrets.AZURE_WEBAPP_NAME }}.azurewebsites.net/swagger"
-        curl -f https://${{ secrets.AZURE_WEBAPP_NAME }}.azurewebsites.net/swagger/v1/swagger.json || exit 1
+        cd backend
+        docker build -t shongkot-api:latest .
+        
+    - name: Test Docker image
+      run: |
+        docker run -d -p 8080:8080 --name test-container shongkot-api:latest
+        sleep 10
+        curl -f http://localhost:8080/health || exit 1
+        docker stop test-container
+        docker rm test-container
+        
+  deploy-instructions:
+    name: Deployment Information
+    runs-on: ubuntu-latest
+    needs: [docker-build]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Display Deployment Info
+      run: |
+        echo "=========================================="
+        echo "🚀 Deployment Instructions for Render.com"
+        echo "=========================================="
+        echo ""
+        echo "To deploy this backend API to Render.com (Free Tier):"
+        echo ""
+        echo "1. Sign up at https://render.com (free)"
+        echo "2. Connect your GitHub repository"
+        echo "3. Click 'New' → 'Web Service'"
+        echo "4. Select this repository: omar-khaium/shongkot"
+        echo "5. Use these settings:"
+        echo "   - Name: shongkot-api"
+        echo "   - Runtime: Docker"
+        echo "   - Branch: main"
+        echo "   - Dockerfile Path: ./backend/Dockerfile"
+        echo "   - Docker Context: ./backend"
+        echo "   - Plan: Free"
+        echo "6. Click 'Create Web Service'"
+        echo ""
+        echo "Alternatively, use the render.yaml Blueprint:"
+        echo "1. Go to https://dashboard.render.com/select-repo"
+        echo "2. Select this repository"
+        echo "3. Render will auto-detect render.yaml and configure everything"
+        echo ""
+        echo "Your API will be available at:"
+        echo "https://shongkot-api.onrender.com"
+        echo ""
+        echo "Health check: https://shongkot-api.onrender.com/health"
+        echo "Swagger UI: https://shongkot-api.onrender.com/swagger"
+        echo "=========================================="

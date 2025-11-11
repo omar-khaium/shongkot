@@ -179,9 +179,8 @@ The project uses GitHub Actions for continuous integration and deployment:
 - ✅ Build and compile
 - ✅ Run unit tests
 - ✅ Run integration tests
-- ✅ Code coverage analysis
-- ✅ Security scanning
-- 🚀 Deploy to Azure Web App (main branch)
+- ✅ Docker image build and test
+- 🚀 Ready for deployment to Render.com (free tier)
 
 ### Frontend Pipeline
 - ✅ Code analysis and formatting
@@ -190,6 +189,24 @@ The project uses GitHub Actions for continuous integration and deployment:
 - ✅ Run integration tests
 - 🔨 Build APK and AAB
 - 🚀 Deploy to Firebase App Distribution
+
+## 🌐 Backend Deployment
+
+The backend API can be deployed to Render.com's free tier:
+
+### Quick Deploy
+1. Sign up at [Render.com](https://render.com)
+2. Connect this GitHub repository
+3. Deploy using the `render.yaml` blueprint
+4. Get your public API URL: `https://shongkot-api.onrender.com`
+
+### Available Endpoints
+- **Health Check**: `/health` - Service status
+- **Swagger UI**: `/swagger` - Interactive API documentation
+- **Emergency API**: `/api/emergency/*` - Emergency endpoints
+- **Contacts API**: `/api/contacts/*` - Emergency contacts
+
+For detailed deployment instructions, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## 🔑 Core Features
 
@@ -211,7 +228,9 @@ The project uses GitHub Actions for continuous integration and deployment:
 
 API documentation is available via Swagger UI when running the backend:
 - Development: `https://localhost:5001/swagger`
-- Production: Contact administrator for endpoint
+- Production (Render.com): `https://shongkot-api.onrender.com/swagger`
+
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for deployment instructions.
 
 ## 📱 Firebase App Distribution
 
