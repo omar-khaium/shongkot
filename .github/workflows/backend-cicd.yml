@@ -12,6 +12,11 @@ on:
       - 'backend/**'
       - '.github/workflows/backend-cicd.yml'
 
+# Default permissions for the workflow - following principle of least privilege
+# Individual jobs can override these as needed
+permissions:
+  contents: read  # Allow reading repository contents for checkout
+
 env:
   DOTNET_VERSION: '9.0.x'
   
@@ -20,6 +25,12 @@ jobs:
     if: false
     name: Build and Test Backend
     runs-on: ubuntu-latest
+    
+    # Permissions for build and test job
+    permissions:
+      contents: read        # Read repository contents
+      pull-requests: write  # Write test results to PR comments (for publish-unit-test-result-action)
+      checks: write        # Write check results
     
     steps:
     - name: Checkout code
@@ -62,6 +73,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-test
     
+    # Permissions for security scanning job
+    permissions:
+      contents: read       # Read repository contents
+      security-events: write  # Write security scanning results (if using SARIF upload)
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -83,6 +99,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-and-test, security-scan]
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    # Permissions for deployment job
+    # Using publish profile for Azure deployment (no OIDC needed)
+    permissions:
+      contents: read       # Read repository contents for checkout and publishing
+      id-token: none      # Explicitly disable OIDC token (not used with publish profile)
     
     steps:
     - name: Checkout code
