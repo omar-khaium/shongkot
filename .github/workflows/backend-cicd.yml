@@ -333,7 +333,11 @@ jobs:
         
         git add README.md
         git commit -m "docs: update README with deployment info [${{ steps.get_details.outputs.VERSION_TAG }}]"
-        git push origin main
+        
+        # Push to the current branch (works for both PR and main branch)
+        CURRENT_BRANCH="${{ github.head_ref || github.ref_name }}"
+        echo "Pushing to branch: ${CURRENT_BRANCH}"
+        git push origin HEAD:"${CURRENT_BRANCH}"
     
     - name: Create deployment summary
       run: |
