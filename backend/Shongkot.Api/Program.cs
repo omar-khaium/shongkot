@@ -39,7 +39,12 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     });
 }
 
-app.UseHttpsRedirection();
+// Only use HTTPS redirection in development (Render handles TLS at edge)
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseCors("AllowAll");
 app.UseAuthorization();
 app.MapControllers();

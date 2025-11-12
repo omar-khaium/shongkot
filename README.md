@@ -4,6 +4,38 @@
 [![Frontend CI/CD](https://github.com/omar-khaium/shongkot/actions/workflows/frontend-cicd.yml/badge.svg)](https://github.com/omar-khaium/shongkot/actions/workflows/frontend-cicd.yml)
 [![codecov](https://codecov.io/gh/omar-khaium/shongkot/branch/main/graph/badge.svg)](https://codecov.io/gh/omar-khaium/shongkot)
 
+## 🚀 Latest Deployment
+
+**Version:** v2025.11.12-5da5315  
+**Deployed:** 2025-11-12 10:53:59 UTC  
+**Commit:** 5da5315
+
+### Service Status
+
+- **Health Check:** ✅ healthy - [/health](/health)
+- **API Documentation:** ✅ available - [/swagger](/swagger)
+- **Base URL:** []()
+
+### What's New in v2025.11.12-5da5315
+
+Merge cfc73a0cab2bae77f0ad5b3c29daef83a8170f74 into 66d5bfe64dbb516d01c9326775be045d1036944b
+
+### Recent Changes
+
+- Merge cfc73a0cab2bae77f0ad5b3c29daef83a8170f74 into 66d5bfe64dbb516d01c9326775be045d1036944b (5da5315)
+- Fix README update push to use current branch instead of hardcoded main (cfc73a0)
+- Remove event_name condition to allow README update job on PR events (f6b03e4)
+- Remove branch restriction for README update job in CI/CD workflow (0f54d8f)
+- Add workflow description comment to trigger CI/CD verification (38c60ca)
+- Add post-deployment README automation with version, changelog, and service status (4d214ef)
+- Update deployment workflow to use Google Cloud Run instead of Render (d469467)
+- Enhance Render deployment trigger with HTTP status code handling and improved error messages (dd2cc7a)
+- Update permissions for deploy job in backend CI/CD workflow (815e516)
+- Refactor deployment workflow and update render.yaml for backend deployment to Render (744ed45)
+
+---
+
+
 **⚠️ PROPRIETARY SOFTWARE - All Rights Reserved**
 
 Copyright © 2025 Omar Khaium
@@ -179,9 +211,8 @@ The project uses GitHub Actions for continuous integration and deployment:
 - ✅ Build and compile
 - ✅ Run unit tests
 - ✅ Run integration tests
-- ✅ Code coverage analysis
-- ✅ Security scanning
-- 🚀 Deploy to Azure Web App (main branch)
+- ✅ Docker image build and test
+- 🚀 Ready for deployment to Render.com (free tier)
 
 ### Frontend Pipeline
 - ✅ Code analysis and formatting
@@ -190,6 +221,24 @@ The project uses GitHub Actions for continuous integration and deployment:
 - ✅ Run integration tests
 - 🔨 Build APK and AAB
 - 🚀 Deploy to Firebase App Distribution
+
+## 🌐 Backend Deployment
+
+The backend API can be deployed to Render.com's free tier:
+
+### Quick Deploy
+1. Sign up at [Render.com](https://render.com)
+2. Connect this GitHub repository
+3. Deploy using the `render.yaml` blueprint
+4. Get your public API URL: `https://shongkot-api.onrender.com`
+
+### Available Endpoints
+- **Health Check**: `/health` - Service status
+- **Swagger UI**: `/swagger` - Interactive API documentation
+- **Emergency API**: `/api/emergency/*` - Emergency endpoints
+- **Contacts API**: `/api/contacts/*` - Emergency contacts
+
+For detailed deployment instructions, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## 🔑 Core Features
 
@@ -211,7 +260,9 @@ The project uses GitHub Actions for continuous integration and deployment:
 
 API documentation is available via Swagger UI when running the backend:
 - Development: `https://localhost:5001/swagger`
-- Production: Contact administrator for endpoint
+- Production (Render.com): `https://shongkot-api.onrender.com/swagger`
+
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for deployment instructions.
 
 ## 📱 Firebase App Distribution
 
