@@ -123,21 +123,36 @@ jobs:
           exit 1
         fi
 
-        response=$(curl -fsS -X POST \
+        echo "Triggering deploy for service: ${RENDER_SERVICE_ID}"
+
+        # Capture both response and HTTP status code
+        http_code=$(curl -w "%{http_code}" -sS -X POST \
           -H "Authorization: Bearer ${RENDER_API_KEY}" \
           -H "Content-Type: application/json" \
           "https://api.render.com/v1/services/${RENDER_SERVICE_ID}/deploys" \
-          -d '{"clearCache":false}')
+          -d '{"clearCache":false}' \
+          -o /tmp/render_response.json)
+
+        response=$(cat /tmp/render_response.json)
+
+        echo "HTTP Status: ${http_code}"
+        echo "Response: ${response}"
+
+        if [ "${http_code}" -ne 201 ] && [ "${http_code}" -ne 200 ]; then
+          echo "::error::Render API returned HTTP ${http_code}"
+          echo "::error::Response: ${response}"
+          exit 1
+        fi
 
         deploy_id=$(echo "${response}" | jq -r '.id')
 
         if [ -z "${deploy_id}" ] || [ "${deploy_id}" = "null" ]; then
-          echo "Render deploy API response did not include an id:"
-          echo "${response}"
+          echo "::error::Render deploy API response did not include an id"
+          echo "::error::Full response: ${response}"
           exit 1
         fi
 
-        echo "Triggered Render deploy ${deploy_id}"
+        echo "✓ Triggered Render deploy ${deploy_id}"
         echo "deploy_id=${deploy_id}" >> "${GITHUB_OUTPUT}"
 
     - name: Wait for Render deploy to finish
