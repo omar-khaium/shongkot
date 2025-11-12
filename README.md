@@ -6,9 +6,9 @@
 
 ## 🚀 Latest Deployment
 
-**Version:** v2025.11.12-5da5315  
-**Deployed:** 2025-11-12 10:53:59 UTC  
-**Commit:** 5da5315
+**Version:** v2025.11.12-cd15803  
+**Deployed:** 2025-11-12 11:04:05 UTC  
+**Commit:** cd15803
 
 ### Service Status
 
@@ -16,12 +16,16 @@
 - **API Documentation:** ✅ available - [/swagger](/swagger)
 - **Base URL:** []()
 
-### What's New in v2025.11.12-5da5315
+### What's New in v2025.11.12-cd15803
 
-Merge cfc73a0cab2bae77f0ad5b3c29daef83a8170f74 into 66d5bfe64dbb516d01c9326775be045d1036944b
+Merge pull request #2 from omar-khaium/copilot/deploy-project-to-cicd
+
+Add CI/CD deployment pipeline for backend API to Google Cloud Run with automated README updates
 
 ### Recent Changes
 
+- Merge pull request #2 from omar-khaium/copilot/deploy-project-to-cicd (cd15803)
+- docs: update README with deployment info [v2025.11.12-5da5315] (ebc25ae)
 - Merge cfc73a0cab2bae77f0ad5b3c29daef83a8170f74 into 66d5bfe64dbb516d01c9326775be045d1036944b (5da5315)
 - Fix README update push to use current branch instead of hardcoded main (cfc73a0)
 - Remove event_name condition to allow README update job on PR events (f6b03e4)
@@ -30,10 +34,9 @@ Merge cfc73a0cab2bae77f0ad5b3c29daef83a8170f74 into 66d5bfe64dbb516d01c9326775be
 - Add post-deployment README automation with version, changelog, and service status (4d214ef)
 - Update deployment workflow to use Google Cloud Run instead of Render (d469467)
 - Enhance Render deployment trigger with HTTP status code handling and improved error messages (dd2cc7a)
-- Update permissions for deploy job in backend CI/CD workflow (815e516)
-- Refactor deployment workflow and update render.yaml for backend deployment to Render (744ed45)
 
 ---
+
 
 
 **⚠️ PROPRIETARY SOFTWARE - All Rights Reserved**
