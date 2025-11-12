@@ -1,5 +1,8 @@
 name: Backend CI/CD
 
+# Automated CI/CD pipeline for backend deployment to Google Cloud Run
+# Includes automated README updates with version, changelog, and service status
+
 on:
   push:
     branches: [ main, develop ]
