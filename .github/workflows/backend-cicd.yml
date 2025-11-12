@@ -210,7 +210,7 @@ jobs:
     name: Update README with Deployment Info
     runs-on: ubuntu-latest
     needs: [deploy-backend]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.event_name == 'push'
     permissions:
       contents: write
       pull-requests: write
