@@ -22,7 +22,6 @@ env:
   
 jobs:  
   build-and-test:
-    if: false
     name: Build and Test Backend
     runs-on: ubuntu-latest
     
