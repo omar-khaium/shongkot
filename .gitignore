@@ -126,6 +126,8 @@ appsettings.*.json
 .cache/
 tmp/
 temp/
+*.backup
+*.bak
 
 # OS Files
 .DS_Store

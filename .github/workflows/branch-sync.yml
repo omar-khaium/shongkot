@@ -1,0 +1,62 @@
+name: Branch Synchronization
+
+# This workflow helps maintain the branch structure by automatically
+# creating mobile and backend branches if they don't exist
+
+on:
+  workflow_dispatch: # Manual trigger
+  push:
+    branches: [ main ]
+
+jobs:
+  check-and-create-branches:
+    name: Check and Create Feature Branches
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Configure Git
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+    
+    - name: Check and create mobile branch
+      run: |
+        # Check if mobile branch exists remotely
+        if git ls-remote --heads origin mobile | grep -q mobile; then
+          echo "Mobile branch already exists"
+        else
+          echo "Creating mobile branch from main"
+          git checkout -b mobile
+          git push origin mobile
+          echo "Mobile branch created successfully"
+        fi
+    
+    - name: Check and create backend branch
+      run: |
+        git checkout main
+        # Check if backend branch exists remotely
+        if git ls-remote --heads origin backend | grep -q backend; then
+          echo "Backend branch already exists"
+        else
+          echo "Creating backend branch from main"
+          git checkout -b backend
+          git push origin backend
+          echo "Backend branch created successfully"
+        fi
+    
+    - name: Summary
+      run: |
+        echo "## Branch Structure Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Branches available:" >> $GITHUB_STEP_SUMMARY
+        git branch -r | grep -E '(main|mobile|backend)' >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Branch structure is ready for development!" >> $GITHUB_STEP_SUMMARY
