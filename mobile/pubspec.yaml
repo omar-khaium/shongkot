@@ -9,9 +9,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   
   # UI
   cupertino_icons: ^1.0.6
+  google_fonts: ^6.1.0
+  
+  # State Management
+  flutter_riverpod: ^2.4.9
+  
+  # Navigation
+  go_router: ^12.1.3
+  
+  # Storage
+  shared_preferences: ^2.2.2
+  
+  # Internationalization
+  intl: ^0.20.2
   
   # Firebase for in-app updates
   firebase_core: ^2.24.2
@@ -26,6 +41,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
   
   assets:
     - assets/images/
