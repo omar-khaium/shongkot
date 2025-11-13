@@ -37,286 +37,74 @@ Fix deployment URL masking and push conflicts in CI/CD workflow
 
 ---
 
+## 📱 Latest Mobile App Version
 
+**Version:** 1.0.0+latest  
+**Platform:** Android (iOS coming soon)  
+**Distribution:** Firebase App Distribution
 
+### Download Links
 
+- **For Testers:** [Firebase App Distribution](https://appdistribution.firebase.google.com/) (requires authorization)
+- **Latest Release:** [GitHub Releases](https://github.com/omar-khaium/shongkot/releases/latest)
 
+### Features
 
-**⚠️ PROPRIETARY SOFTWARE - All Rights Reserved**
+- Emergency SOS button with one-tap activation
+- Real-time GPS location tracking
+- Automatic emergency contact notifications
+- Nearby responders finder
 
-Copyright © 2025 Omar Khaium
+---
 
-This is proprietary and confidential software. Unauthorized copying, distribution, or use of this software is strictly prohibited. See [LICENSE](LICENSE) for details.
+## 📚 Documentation
+
+For comprehensive documentation, please visit:
+
+- **[Complete Wiki](docs/WIKI.md)** - Full documentation including architecture, setup, deployment
+- **[Branch Strategy](docs/BRANCH_STRATEGY.md)** - Development workflow and branch management
+- **[Architecture](docs/ARCHITECTURE.md)** - System architecture and design
+- **[Setup Guide](docs/SETUP.md)** - Detailed setup instructions
+- **[Deployment Guide](docs/DEPLOYMENT.md)** - Deployment instructions
+- **[Contributing](docs/CONTRIBUTING.md)** - Contribution guidelines
+
+## 🏗️ Quick Start
+
+**Backend:**
+```bash
+cd backend
+dotnet restore
+dotnet build
+dotnet run --project Shongkot.Api
+# Access API at https://localhost:5001/swagger
+```
+
+**Mobile:**
+```bash
+cd mobile
+flutter pub get
+flutter run
+```
+
+## 🌳 Branch Structure
+
+- **`main`** - Production-ready stable version
+- **`mobile`** - Latest stable mobile application code
+- **`backend`** - Latest stable backend API code
+
+**Development Workflow:**
+- Mobile features → `mobile` branch → `main`
+- Backend features → `backend` branch → `main`
+
+See [Branch Strategy](docs/BRANCH_STRATEGY.md) for detailed workflow.
 
 ---
 
 ## Overview
 
-**Shongkot** is a proprietary emergency responder mobile application that simplifies emergency response coordination. When someone faces an emergency (accident, health crisis, fire, assault, etc.), they often lose valuable minutes trying to reach the right service. Shongkot solves this problem:
+**Shongkot** is a proprietary emergency responder mobile application that simplifies emergency response coordination. When someone faces an emergency, they often lose valuable minutes trying to reach the right service. Shongkot solves this with one-button access to nearby responders, live location sharing, and automatic alerts to emergency contacts.
 
-- **One button** connects users to nearby responders
-- **Live location** sharing in real-time
-- **Automatic alerts** to family and friends
-- **Quick access** to emergency services
-
-## 📁 Repository Structure
-
-```
-shongkot-emergency-responder/
-├── mobile/                    # Flutter mobile application
-│   ├── lib/                   # Application source code
-│   ├── test/                  # Unit and widget tests
-│   ├── integration_test/      # Integration tests
-│   └── pubspec.yaml           # Flutter dependencies
-│
-├── backend/                   # ASP.NET Core API
-│   ├── Shongkot.Api/          # Web API layer
-│   ├── Shongkot.Application/  # Application logic
-│   ├── Shongkot.Domain/       # Domain entities
-│   ├── Shongkot.Infrastructure/ # Infrastructure layer
-│   └── Tests/                 # Backend tests
-│       ├── Shongkot.Api.Tests/
-│       ├── Shongkot.Application.Tests/
-│       └── Shongkot.Integration.Tests/
-│
-├── docs/                      # Documentation
-│   ├── ARCHITECTURE.md        # System architecture
-│   ├── SETUP.md               # Setup instructions
-│   └── CONTRIBUTING.md        # Contribution guidelines
-│
-├── .github/                   # GitHub Actions workflows
-│   └── workflows/
-│       ├── backend-cicd.yml   # Backend CI/CD
-│       └── frontend-cicd.yml  # Frontend CI/CD
-│
-├── .gitignore                 # Git ignore rules
-├── README.md                  # This file
-└── LICENSE                    # Shongkot Proprietary License 1.0
-```
-
-## 🏗️ Architecture
-
-This project follows Clean Architecture principles with a clear separation of concerns:
-
-### Backend (ASP.NET Core API)
-```
-backend/
-├── Shongkot.Api/              # Web API layer (Controllers, Middleware)
-├── Shongkot.Application/      # Application logic (Services, DTOs)
-├── Shongkot.Domain/           # Domain entities and interfaces
-├── Shongkot.Infrastructure/   # External concerns (Database, External APIs)
-└── Tests/
-    ├── Shongkot.Api.Tests/
-    ├── Shongkot.Application.Tests/
-    └── Shongkot.Integration.Tests/
-```
-
-### Frontend (Flutter)
-```
-mobile/
-├── lib/
-│   ├── core/                  # Core utilities, theme, constants
-│   ├── features/              # Feature modules (Emergency, Contacts, Settings)
-│   │   └── {feature}/
-│   │       ├── data/          # Data layer (models, repositories, datasources)
-│   │       ├── domain/        # Domain layer (entities, use cases)
-│   │       └── presentation/  # UI layer (pages, widgets, bloc)
-│   └── main.dart
-├── test/                      # Unit and widget tests
-└── integration_test/          # Integration tests
-```
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-**Backend:**
-- [.NET 9.0 SDK](https://dotnet.microsoft.com/download)
-- Visual Studio 2022+ or VS Code with C# extension
-
-**Frontend:**
-- [Flutter 3.19+](https://flutter.dev/docs/get-started/install)
-- Android Studio / Xcode (for mobile development)
-- [Firebase account](https://firebase.google.com/) (for notifications)
-
-### Backend Setup
-
-1. **Navigate to backend directory:**
-```bash
-cd backend
-```
-
-2. **Restore dependencies:**
-```bash
-dotnet restore
-```
-
-3. **Build the solution:**
-```bash
-dotnet build
-```
-
-4. **Run the API:**
-```bash
-cd Shongkot.Api
-dotnet run
-```
-
-5. **Access Swagger UI:**
-```
-https://localhost:5001/swagger
-```
-
-### Frontend Setup
-
-1. **Navigate to mobile directory:**
-```bash
-cd mobile
-```
-
-2. **Install dependencies:**
-```bash
-flutter pub get
-```
-
-3. **Configure Firebase:**
-   - Create a Firebase project
-   - Download `google-services.json` (Android) and `GoogleService-Info.plist` (iOS)
-   - Place them in the appropriate directories
-
-4. **Run the app:**
-```bash
-flutter run
-```
-
-For detailed setup instructions, see [docs/SETUP.md](docs/SETUP.md).
-
-## 🧪 Testing
-
-### Backend Tests
-
-```bash
-cd backend
-dotnet test
-```
-
-### Frontend Tests
-
-```bash
-cd mobile
-flutter test
-```
-
-For more testing details, see [docs/SETUP.md](docs/SETUP.md).
-
-## 📦 CI/CD Pipeline
-
-The project uses GitHub Actions for continuous integration and deployment:
-
-### Backend Pipeline
-- ✅ Build and compile
-- ✅ Run unit tests
-- ✅ Run integration tests
-- ✅ Docker image build and test
-- 🚀 Ready for deployment to Render.com (free tier)
-
-### Frontend Pipeline
-- ✅ Code analysis and formatting
-- ✅ Run unit tests
-- ✅ Run widget tests
-- ✅ Run integration tests
-- 🔨 Build APK and AAB
-- 🚀 Deploy to Firebase App Distribution
-
-## 🌐 Backend Deployment
-
-The backend API can be deployed to Render.com's free tier:
-
-### Quick Deploy
-1. Sign up at [Render.com](https://render.com)
-2. Connect this GitHub repository
-3. Deploy using the `render.yaml` blueprint
-4. Get your public API URL: `https://shongkot-api.onrender.com`
-
-### Available Endpoints
-- **Health Check**: `/health` - Service status
-- **Swagger UI**: `/swagger` - Interactive API documentation
-- **Emergency API**: `/api/emergency/*` - Emergency endpoints
-- **Contacts API**: `/api/contacts/*` - Emergency contacts
-
-For detailed deployment instructions, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
-
-## 🔑 Core Features
-
-- **Emergency SOS Button** - One-tap emergency activation
-- **Real-time Location Tracking** - GPS-based location with continuous updates
-- **Emergency Contacts** - Automatic SMS/push notification system
-- **Nearby Responders** - Find police stations, hospitals, fire services
-- **Settings & Preferences** - Customizable emergency response options
-
-## 🔐 Security
-
-- All API endpoints use HTTPS
-- Input validation and sanitization
-- Rate limiting on critical endpoints
-- Security scanning in CI/CD pipeline
-- Regular dependency updates
-
-## 📊 API Documentation
-
-API documentation is available via Swagger UI when running the backend:
-- Development: `https://localhost:5001/swagger`
-- Production (Render.com): `https://shongkot-api.onrender.com/swagger`
-
-See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for deployment instructions.
-
-## 📱 Firebase App Distribution
-
-Test builds are distributed to authorized testers via Firebase App Distribution with **automatic in-app updates enabled**.
-
-### Download Latest Build
-
-**For Authorized Testers:**
-- 🔗 [Download Latest APK from Firebase App Distribution](https://appdistribution.firebase.google.com/testerapps/YOUR_FIREBASE_APP_ID)
-- 📱 Download the **Firebase App Tester** app from Play Store
-- ✅ Accept the invitation email from Firebase
-- 🔄 **In-app updates**: Automatic update notifications for new releases
-
-### Latest Release
-
-Check the [Releases page](../../releases/latest) for the latest builds with:
-- 📦 APK files (ready to install)
-- 📦 AAB files (for Play Store)
-- 📝 Detailed release notes
-- 🔢 Build information
-
-### How It Works
-
-1. **New Build Created**: Every merge to `main` or `develop` triggers a build
-2. **Firebase Distribution**: APK is automatically uploaded to Firebase
-3. **Tester Notification**: Authorized testers receive push notifications
-4. **In-App Update**: Existing users see update prompt inside the app
-5. **Automatic Install**: Users can update with one tap
-
-### Features
-
-✅ **Automatic Updates** - No manual APK download for existing users
-✅ **Version Check** - App automatically checks for newer versions
-✅ **Push Notifications** - Testers notified when new builds are available
-✅ **Rollback Support** - Can revert to previous versions if needed
-✅ **Distribution Groups** - Organized tester groups (alpha, beta, production)
-
-### Getting Tester Access
-
-To become a tester and receive automatic updates:
-
-1. Contact [@omar-khaium](https://github.com/omar-khaium) for access
-2. Receive invitation email from Firebase
-3. Install Firebase App Tester from Play Store
-4. Accept the invitation and install Shongkot
-5. Enable notifications to receive update alerts
-
-**Note:** This is proprietary software. Tester access is restricted and requires authorization.
+---
 
 ## 📄 License
 
@@ -335,4 +123,6 @@ For licensing inquiries or access requests, contact:
 
 ---
 
-**⚠️ CONFIDENTIAL**: This repository and its contents are proprietary and confidential. Unauthorized access, use, or distribution is prohibited.
+**⚠️ PROPRIETARY SOFTWARE - All Rights Reserved**
+
+This is proprietary and confidential software. Unauthorized copying, distribution, or use of this software is strictly prohibited.

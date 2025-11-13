@@ -5,12 +5,12 @@ name: Backend CI/CD
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, backend ]
     paths:
       - 'backend/**'
       - '.github/workflows/backend-cicd.yml'
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, backend ]
     paths:
       - 'backend/**'
       - '.github/workflows/backend-cicd.yml'
