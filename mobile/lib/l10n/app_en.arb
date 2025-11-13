@@ -1,0 +1,131 @@
+{
+  "@@locale": "en",
+  "appTitle": "Shongkot Emergency",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "emergencyResponder": "Emergency Responder",
+  "@emergencyResponder": {
+    "description": "Main heading text"
+  },
+  "tagline": "One button to connect with nearby responders",
+  "@tagline": {
+    "description": "App tagline"
+  },
+  "sosButton": "Emergency SOS",
+  "@sosButton": {
+    "description": "Emergency SOS button label"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Home navigation label"
+  },
+  "contacts": "Contacts",
+  "@contacts": {
+    "description": "Contacts navigation label"
+  },
+  "responders": "Responders",
+  "@responders": {
+    "description": "Responders navigation label"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings navigation label"
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Dark mode toggle label"
+  },
+  "lightMode": "Light Mode",
+  "@lightMode": {
+    "description": "Light mode toggle label"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language selection label"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile label"
+  },
+  "emergencyContacts": "Emergency Contacts",
+  "@emergencyContacts": {
+    "description": "Emergency contacts label"
+  },
+  "addContact": "Add Contact",
+  "@addContact": {
+    "description": "Add contact button label"
+  },
+  "nearbyResponders": "Nearby Responders",
+  "@nearbyResponders": {
+    "description": "Nearby responders label"
+  },
+  "location": "Location",
+  "@location": {
+    "description": "Location label"
+  },
+  "enableLocation": "Enable Location Services",
+  "@enableLocation": {
+    "description": "Enable location services prompt"
+  },
+  "locationRequired": "Location access is required to find nearby responders",
+  "@locationRequired": {
+    "description": "Location requirement message"
+  },
+  "pressForEmergency": "Press for Emergency",
+  "@pressForEmergency": {
+    "description": "Emergency button instruction"
+  },
+  "holdToActivate": "Hold to Activate",
+  "@holdToActivate": {
+    "description": "Hold button instruction"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Confirm button"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save button"
+  },
+  "name": "Name",
+  "@name": {
+    "description": "Name field label"
+  },
+  "phoneNumber": "Phone Number",
+  "@phoneNumber": {
+    "description": "Phone number field label"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+  "about": "About",
+  "@about": {
+    "description": "About section label"
+  },
+  "version": "Version",
+  "@version": {
+    "description": "Version label"
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Theme label"
+  },
+  "system": "System",
+  "@system": {
+    "description": "System theme option"
+  },
+  "light": "Light",
+  "@light": {
+    "description": "Light theme option"
+  },
+  "dark": "Dark",
+  "@dark": {
+    "description": "Dark theme option"
+  }
+}
