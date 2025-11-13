@@ -272,7 +272,6 @@ jobs:
       with:
         appId: ${{ secrets.FIREBASE_APP_ID }}
         serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}
-        groups: testers
         file: ./artifacts/app-release.apk
         releaseNotesFile: release-notes.txt
         
@@ -302,7 +301,7 @@ jobs:
           "branch": "${{ github.ref_name }}",
           "build_date": "$(date -u +'%Y-%m-%d %H:%M:%S UTC')",
           "firebase_app_id": "${{ secrets.FIREBASE_APP_ID }}",
-          "distribution_groups": ["testers"],
+          "distribution_type": "public",
           "in_app_updates": "enabled",
           "download_link": "https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}"
         }
@@ -336,7 +335,7 @@ jobs:
         
         ## Download Links
         
-        ### For Testers
+        ### Public Access (Anyone with the link)
         📱 [Download Latest APK from Firebase](${FIREBASE_LINK})
         
         ### In-App Updates
@@ -347,11 +346,12 @@ jobs:
         
         ## How to Get Access
         
-        1. Contact the repository owner for tester access
-        2. You'll receive an invitation email from Firebase
-        3. Accept the invitation and download the Firebase App Tester app
-        4. Install and launch Shongkot from Firebase App Tester
-        5. Future updates will be automatically prompted
+        1. Click the Firebase App Distribution link above
+        2. Download the Firebase App Tester app if you don't have it
+        3. Install and launch Shongkot from Firebase App Tester
+        4. Future updates will be automatically prompted
+        
+        **Note:** This build is publicly accessible to anyone with the Firebase link.
         
         ## Release Information
         
@@ -394,7 +394,7 @@ jobs:
                   `**Build:** #${buildNum}\n\n` +
                   `### 📱 Download\n` +
                   `APK has been uploaded to Firebase App Distribution with **in-app updates enabled**.\n\n` +
-                  `🔗 [Download from Firebase](${firebaseLink})\n\n` +
+                  `🔗 [Download from Firebase](${firebaseLink}) (Public - anyone with the link)\n\n` +
                   `### ⚡ In-App Updates\n` +
                   `✅ Automatic update prompts enabled for existing users\n` +
                   `✅ Seamless update delivery through Firebase\n\n` +
@@ -402,5 +402,5 @@ jobs:
                   `- APK: Available in workflow artifacts\n` +
                   `- AAB: Available in workflow artifacts\n` +
                   `- Distribution Info: Available in workflow artifacts\n\n` +
-                  `**Note:** Testers need Firebase App Tester app to receive automatic updates.`
+                  `**Note:** This build is publicly accessible. Users need Firebase App Tester app to receive automatic updates.`
           })
