@@ -48,6 +48,9 @@ jobs:
         working-directory: ./mobile
         output-path: lib/firebase_options.dart
         platforms: android
+      env:
+        FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       
     - name: Analyze code
       run: flutter analyze
@@ -138,6 +141,9 @@ jobs:
         working-directory: ./mobile
         output-path: lib/firebase_options.dart
         platforms: android
+      env:
+        FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       
     - name: Setup signing keys
       env:
