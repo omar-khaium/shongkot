@@ -66,11 +66,7 @@ class RespondersScreen extends ConsumerWidget {
             // Header
             Row(
               children: [
-                Icon(
-                  Icons.location_on,
-                  color: AppColors.success,
-                  size: 20,
-                ),
+                Icon(Icons.location_on, color: AppColors.success, size: 20),
                 const SizedBox(width: AppSpacing.sm),
                 // TODO: Replace with user's actual location. This is sample data.
                 Text(
@@ -116,14 +112,17 @@ class RespondersScreen extends ConsumerWidget {
                                 color: _getResponderTypeColor(
                                   responder['type'] as String,
                                 ).withOpacity(0.1),
-                                borderRadius:
-                                    BorderRadius.circular(AppSpacing.radiusMd),
+                                borderRadius: BorderRadius.circular(
+                                  AppSpacing.radiusMd,
+                                ),
                               ),
                               child: Icon(
                                 _getResponderTypeIcon(
-                                    responder['type'] as String),
+                                  responder['type'] as String,
+                                ),
                                 color: _getResponderTypeColor(
-                                    responder['type'] as String),
+                                  responder['type'] as String,
+                                ),
                                 size: 30,
                               ),
                             ),
@@ -154,12 +153,14 @@ class RespondersScreen extends ConsumerWidget {
                                 vertical: AppSpacing.xs,
                               ),
                               decoration: BoxDecoration(
-                                color: (isAvailable
-                                        ? AppColors.success
-                                        : AppColors.lightTextMuted)
-                                    .withOpacity(0.1),
-                                borderRadius:
-                                    BorderRadius.circular(AppSpacing.radiusSm),
+                                color:
+                                    (isAvailable
+                                            ? AppColors.success
+                                            : AppColors.lightTextMuted)
+                                        .withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(
+                                  AppSpacing.radiusSm,
+                                ),
                               ),
                               child: Text(
                                 isAvailable ? l10n.available : l10n.busy,

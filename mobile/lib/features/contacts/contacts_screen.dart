@@ -18,23 +18,22 @@ class ContactsScreen extends ConsumerWidget {
     // Sample contacts data
     final contacts = [
       {'name': 'Emergency Services', 'phone': '999', 'isPrimary': true},
-      {'name': 'Family Doctor', 'phone': '+880 1700-000000', 'isPrimary': false},
+      {
+        'name': 'Family Doctor',
+        'phone': '+880 1700-000000',
+        'isPrimary': false,
+      },
       {'name': 'Close Friend', 'phone': '+880 1800-000000', 'isPrimary': false},
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.emergencyContacts),
-      ),
+      appBar: AppBar(title: Text(l10n.emergencyContacts)),
       body: Padding(
         padding: const EdgeInsets.all(AppSpacing.screenPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              l10n.emergencyContacts,
-              style: theme.textTheme.headlineMedium,
-            ),
+            Text(l10n.emergencyContacts, style: theme.textTheme.headlineMedium),
             const SizedBox(height: AppSpacing.sm),
             Text(
               'These contacts will be notified during an emergency',
@@ -81,10 +80,11 @@ class ContactsScreen extends ConsumerWidget {
                             color: isPrimary
                                 ? AppColors.primary.withOpacity(0.1)
                                 : (isDark
-                                    ? AppColors.darkSurfaceVariant
-                                    : AppColors.lightSurfaceVariant),
-                            borderRadius:
-                                BorderRadius.circular(AppSpacing.radiusMd),
+                                      ? AppColors.darkSurfaceVariant
+                                      : AppColors.lightSurfaceVariant),
+                            borderRadius: BorderRadius.circular(
+                              AppSpacing.radiusMd,
+                            ),
                           ),
                           child: Icon(
                             Icons.person,
@@ -111,16 +111,19 @@ class ContactsScreen extends ConsumerWidget {
                                         vertical: AppSpacing.xs,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: AppColors.primary.withOpacity(0.1),
+                                        color: AppColors.primary.withOpacity(
+                                          0.1,
+                                        ),
                                         borderRadius: BorderRadius.circular(
-                                            AppSpacing.radiusSm),
+                                          AppSpacing.radiusSm,
+                                        ),
                                       ),
                                       child: Text(
                                         l10n.primaryLabel,
                                         style: theme.textTheme.labelSmall
                                             ?.copyWith(
-                                          color: AppColors.primary,
-                                        ),
+                                              color: AppColors.primary,
+                                            ),
                                       ),
                                     ),
                                 ],

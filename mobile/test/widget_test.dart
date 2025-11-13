@@ -11,7 +11,7 @@ void main() {
 
     // Verify that the app loads without errors
     expect(find.byType(MaterialApp), findsOneWidget);
-    
+
     // Verify navigation bar is present
     expect(find.byType(NavigationBar), findsOneWidget);
   });
