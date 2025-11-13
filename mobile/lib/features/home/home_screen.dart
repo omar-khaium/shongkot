@@ -69,10 +69,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.screenPadding),
-          child: Column(
-            children: [
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.screenPadding),
+            child: Column(
+              children: [
               // Header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +101,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const SizedBox(height: AppSpacing.xxl),
 
               // Emergency SOS Button
-              Expanded(
+              SizedBox(
+                height: 400,
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -147,7 +149,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     : AppColors.primary,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppColors.primary.withOpacity(0.3),
+                                    color: AppColors.primary.withValues(alpha: 0.3),
                                     blurRadius: 20,
                                     spreadRadius: 5,
                                   ),
@@ -189,6 +191,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: AppSpacing.lg),
 
               // Quick info cards
               Row(
@@ -246,7 +249,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ],
               ),
-            ],
+              const SizedBox(height: AppSpacing.md),
+              ],
+            ),
           ),
         ),
       ),

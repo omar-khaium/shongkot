@@ -114,7 +114,7 @@ class RespondersScreen extends ConsumerWidget {
                               decoration: BoxDecoration(
                                 color: _getResponderTypeColor(
                                   responder['type'] as String,
-                                ).withOpacity(0.1),
+                                ).withValues(alpha: 0.1),
                                 borderRadius:
                                     BorderRadius.circular(AppSpacing.radiusMd),
                               ),
@@ -156,7 +156,7 @@ class RespondersScreen extends ConsumerWidget {
                                 color: (isAvailable
                                         ? AppColors.success
                                         : AppColors.lightTextMuted)
-                                    .withOpacity(0.1),
+                                    .withValues(alpha: 0.1),
                                 borderRadius:
                                     BorderRadius.circular(AppSpacing.radiusSm),
                               ),
