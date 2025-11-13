@@ -345,6 +345,17 @@ jobs:
         # Push to the current branch (works for both PR and main branch)
         CURRENT_BRANCH="${{ github.head_ref || github.ref_name }}"
         echo "Pushing to branch: ${CURRENT_BRANCH}"
+        
+        # Pull latest changes and rebase before pushing to avoid conflicts
+        # This ensures we're always pushing on top of the latest remote state
+        echo "Pulling latest changes from ${CURRENT_BRANCH}..."
+        git pull --rebase origin "${CURRENT_BRANCH}" || {
+          echo "::warning::Rebase failed, attempting to abort and retry..."
+          git rebase --abort || true
+          git pull --rebase origin "${CURRENT_BRANCH}"
+        }
+        
+        echo "Pushing changes to ${CURRENT_BRANCH}..."
         git push origin HEAD:"${CURRENT_BRANCH}"
     
     - name: Create deployment summary
