@@ -31,5 +31,19 @@
   "theme": "থিম",
   "system": "সিস্টেম",
   "light": "হালকা",
-  "dark": "গাঢ়"
+  "dark": "গাঢ়",
+  "sos": "এসওএস",
+  "appearance": "চেহারা",
+  "emergencySettings": "জরুরী সেটিংস",
+  "contactsWillBeNotified": "জরুরী অবস্থায় এই পরিচিতিগুলোকে জানানো হবে",
+  "primaryLabel": "প্রাথমিক",
+  "available": "উপলব্ধ",
+  "busy": "ব্যস্ত",
+  "contact": "যোগাযোগ",
+  "active": "সক্রিয়",
+  "respondersNearbyCount": "{count} জন সাহায্যকারী কাছাকাছি",
+  "profilePlaceholderName": "ব্যবহারকারীর নাম",
+  "profilePlaceholderEmail": "user@example.com",
+  "privacyPolicy": "গোপনীয়তা নীতি",
+  "termsOfService": "সেবার শর্তাবলী"
 }

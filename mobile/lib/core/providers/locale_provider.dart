@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Locale state notifier that persists locale preference
+/// A [StateNotifier] that manages the app's locale (language) state and persists
+/// the user's locale preference using [SharedPreferences].
+///
+/// This class allows the app to remember the user's selected language across sessions.
+/// It should be used with Riverpod's [StateNotifierProvider] to provide locale state
+/// throughout the app. Use [setLocale] to update the locale, which will also persist
+/// the change.
 class LocaleNotifier extends StateNotifier<Locale> {
   static const String _localeKey = 'locale';
 

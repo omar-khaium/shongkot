@@ -9,6 +9,11 @@ import '../../l10n/app_localizations.dart';
 /// Provider for managing the current navigation index
 final navigationIndexProvider = StateProvider<int>((ref) => 0);
 
+/// The root navigation widget for the app.
+///
+/// Manages the bottom navigation bar and handles switching between
+/// the main screens using an [IndexedStack]. This ensures that the
+/// state of each screen is preserved while navigating.
 class AppNavigation extends ConsumerWidget {
   const AppNavigation({super.key});
 

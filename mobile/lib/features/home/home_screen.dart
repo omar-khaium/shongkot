@@ -149,7 +149,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     : AppColors.primary,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppColors.primary.withValues(alpha: 0.3),
+                                    color: AppColors.primary.withOpacity(0.3),
                                     blurRadius: 20,
                                     spreadRadius: 5,
                                   ),
@@ -165,7 +165,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   ),
                                   const SizedBox(height: AppSpacing.sm),
                                   Text(
-                                    'SOS',
+                                    l10n.sos,
                                     style: theme.textTheme.headlineMedium
                                         ?.copyWith(
                                       color: Colors.white,
@@ -211,7 +211,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             style: theme.textTheme.labelLarge,
                           ),
                           Text(
-                            'Active',
+                            l10n.active,
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: AppColors.success,
                             ),

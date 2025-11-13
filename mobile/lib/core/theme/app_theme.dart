@@ -291,6 +291,9 @@ class AppTheme {
     );
   }
 
+  /// Creates a consistent [TextTheme] using the Inter font family and the provided [baseColor].
+  ///
+  /// The [baseColor] parameter sets the color for all text styles in the theme.
   static TextTheme _buildTextTheme(Color baseColor) {
     return TextTheme(
       displayLarge: GoogleFonts.inter(

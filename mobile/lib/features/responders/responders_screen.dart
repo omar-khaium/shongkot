@@ -72,6 +72,7 @@ class RespondersScreen extends ConsumerWidget {
                   size: 20,
                 ),
                 const SizedBox(width: AppSpacing.sm),
+                // TODO: Replace with user's actual location. This is sample data.
                 Text(
                   'Dhaka, Bangladesh',
                   style: theme.textTheme.bodyMedium?.copyWith(
@@ -84,7 +85,7 @@ class RespondersScreen extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              '${responders.length} responders nearby',
+              l10n.respondersNearbyCount(responders.length),
               style: theme.textTheme.headlineMedium,
             ),
             const SizedBox(height: AppSpacing.lg),
@@ -114,7 +115,7 @@ class RespondersScreen extends ConsumerWidget {
                               decoration: BoxDecoration(
                                 color: _getResponderTypeColor(
                                   responder['type'] as String,
-                                ).withValues(alpha: 0.1),
+                                ).withOpacity(0.1),
                                 borderRadius:
                                     BorderRadius.circular(AppSpacing.radiusMd),
                               ),
@@ -156,12 +157,12 @@ class RespondersScreen extends ConsumerWidget {
                                 color: (isAvailable
                                         ? AppColors.success
                                         : AppColors.lightTextMuted)
-                                    .withValues(alpha: 0.1),
+                                    .withOpacity(0.1),
                                 borderRadius:
                                     BorderRadius.circular(AppSpacing.radiusSm),
                               ),
                               child: Text(
-                                isAvailable ? 'AVAILABLE' : 'BUSY',
+                                isAvailable ? l10n.available : l10n.busy,
                                 style: theme.textTheme.labelSmall?.copyWith(
                                   color: isAvailable
                                       ? AppColors.success
@@ -213,7 +214,7 @@ class RespondersScreen extends ConsumerWidget {
                                     }
                                   : null,
                               icon: const Icon(Icons.phone, size: 16),
-                              label: const Text('Contact'),
+                              label: Text(l10n.contact),
                             ),
                           ],
                         ),

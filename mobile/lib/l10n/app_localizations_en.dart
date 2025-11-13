@@ -104,4 +104,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dark => 'Dark';
+
+  @override
+  String get sos => 'SOS';
+
+  @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get emergencySettings => 'Emergency Settings';
+
+  @override
+  String get contactsWillBeNotified =>
+      'These contacts will be notified during an emergency';
+
+  @override
+  String get primaryLabel => 'PRIMARY';
+
+  @override
+  String get available => 'AVAILABLE';
+
+  @override
+  String get busy => 'BUSY';
+
+  @override
+  String get contact => 'Contact';
+
+  @override
+  String get active => 'Active';
+
+  @override
+  String respondersNearbyCount(int count) {
+    return '$count responders nearby';
+  }
+
+  @override
+  String get profilePlaceholderName => 'User Name';
+
+  @override
+  String get profilePlaceholderEmail => 'user@example.com';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get termsOfService => 'Terms of Service';
 }

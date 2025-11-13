@@ -127,5 +127,66 @@
   "dark": "Dark",
   "@dark": {
     "description": "Dark theme option"
+  },
+  "sos": "SOS",
+  "@sos": {
+    "description": "Emergency SOS text"
+  },
+  "appearance": "Appearance",
+  "@appearance": {
+    "description": "Appearance section label"
+  },
+  "emergencySettings": "Emergency Settings",
+  "@emergencySettings": {
+    "description": "Emergency settings section label"
+  },
+  "contactsWillBeNotified": "These contacts will be notified during an emergency",
+  "@contactsWillBeNotified": {
+    "description": "Emergency contacts description"
+  },
+  "primaryLabel": "PRIMARY",
+  "@primaryLabel": {
+    "description": "Primary contact badge label"
+  },
+  "available": "AVAILABLE",
+  "@available": {
+    "description": "Available status label"
+  },
+  "busy": "BUSY",
+  "@busy": {
+    "description": "Busy status label"
+  },
+  "contact": "Contact",
+  "@contact": {
+    "description": "Contact action button"
+  },
+  "active": "Active",
+  "@active": {
+    "description": "Active status"
+  },
+  "respondersNearbyCount": "{count} responders nearby",
+  "@respondersNearbyCount": {
+    "description": "Number of responders nearby",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profilePlaceholderName": "User Name",
+  "@profilePlaceholderName": {
+    "description": "Placeholder name for profile"
+  },
+  "profilePlaceholderEmail": "user@example.com",
+  "@profilePlaceholderEmail": {
+    "description": "Placeholder email for profile"
+  },
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Privacy policy label"
+  },
+  "termsOfService": "Terms of Service",
+  "@termsOfService": {
+    "description": "Terms of service label"
   }
 }

@@ -31,7 +31,7 @@ class SettingsScreen extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   radius: 30,
-                  backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+                  backgroundColor: AppColors.primary.withOpacity(0.1),
                   child: const Icon(
                     Icons.person,
                     size: 35,
@@ -44,12 +44,12 @@ class SettingsScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'User Name',
+                        l10n.profilePlaceholderName,
                         style: theme.textTheme.titleLarge,
                       ),
                       const SizedBox(height: AppSpacing.xs),
                       Text(
-                        'user@example.com',
+                        l10n.profilePlaceholderEmail,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: isDark
                               ? AppColors.darkTextSecondary
@@ -72,7 +72,7 @@ class SettingsScreen extends ConsumerWidget {
 
           // Appearance section
           Text(
-            'Appearance',
+            l10n.appearance,
             style: theme.textTheme.titleMedium,
           ),
           const SizedBox(height: AppSpacing.md),
@@ -140,7 +140,7 @@ class SettingsScreen extends ConsumerWidget {
 
           // Emergency settings
           Text(
-            'Emergency Settings',
+            l10n.emergencySettings,
             style: theme.textTheme.titleMedium,
           ),
           const SizedBox(height: AppSpacing.md),
@@ -201,7 +201,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsTile(
                   icon: Icons.privacy_tip_outlined,
-                  title: 'Privacy Policy',
+                  title: l10n.privacyPolicy,
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {
                     // TODO: Show privacy policy
@@ -213,7 +213,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 _SettingsTile(
                   icon: Icons.description_outlined,
-                  title: 'Terms of Service',
+                  title: l10n.termsOfService,
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {
                     // TODO: Show terms

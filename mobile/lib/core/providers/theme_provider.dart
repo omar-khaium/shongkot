@@ -9,7 +9,12 @@ enum AppThemeMode {
   system,
 }
 
-/// Theme state notifier that persists theme preference
+/// A [StateNotifier] that manages the application's theme state (light, dark, or system)
+/// and persists the user's theme preference using [SharedPreferences].
+///
+/// This class loads the saved theme mode on initialization and updates the stored
+/// preference whenever the theme is changed. It is intended to be used with a
+/// [StateNotifierProvider] to expose the current theme mode throughout the app.
 class ThemeNotifier extends StateNotifier<AppThemeMode> {
   static const String _themeKey = 'theme_mode';
 

@@ -103,4 +103,49 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get dark => 'গাঢ়';
+
+  @override
+  String get sos => 'এসওএস';
+
+  @override
+  String get appearance => 'চেহারা';
+
+  @override
+  String get emergencySettings => 'জরুরী সেটিংস';
+
+  @override
+  String get contactsWillBeNotified =>
+      'জরুরী অবস্থায় এই পরিচিতিগুলোকে জানানো হবে';
+
+  @override
+  String get primaryLabel => 'প্রাথমিক';
+
+  @override
+  String get available => 'উপলব্ধ';
+
+  @override
+  String get busy => 'ব্যস্ত';
+
+  @override
+  String get contact => 'যোগাযোগ';
+
+  @override
+  String get active => 'সক্রিয়';
+
+  @override
+  String respondersNearbyCount(int count) {
+    return '$count জন সাহায্যকারী কাছাকাছি';
+  }
+
+  @override
+  String get profilePlaceholderName => 'ব্যবহারকারীর নাম';
+
+  @override
+  String get profilePlaceholderEmail => 'user@example.com';
+
+  @override
+  String get privacyPolicy => 'গোপনীয়তা নীতি';
+
+  @override
+  String get termsOfService => 'সেবার শর্তাবলী';
 }

@@ -79,7 +79,7 @@ class ContactsScreen extends ConsumerWidget {
                           height: 50,
                           decoration: BoxDecoration(
                             color: isPrimary
-                                ? AppColors.primary.withValues(alpha: 0.1)
+                                ? AppColors.primary.withOpacity(0.1)
                                 : (isDark
                                     ? AppColors.darkSurfaceVariant
                                     : AppColors.lightSurfaceVariant),
@@ -111,12 +111,12 @@ class ContactsScreen extends ConsumerWidget {
                                         vertical: AppSpacing.xs,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: AppColors.primary.withValues(alpha: 0.1),
+                                        color: AppColors.primary.withOpacity(0.1),
                                         borderRadius: BorderRadius.circular(
                                             AppSpacing.radiusSm),
                                       ),
                                       child: Text(
-                                        'PRIMARY',
+                                        l10n.primaryLabel,
                                         style: theme.textTheme.labelSmall
                                             ?.copyWith(
                                           color: AppColors.primary,

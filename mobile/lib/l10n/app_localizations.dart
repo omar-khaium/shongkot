@@ -63,7 +63,7 @@ import 'app_localizations_en.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -86,16 +86,16 @@ abstract class AppLocalizations {
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('bn'),
-    Locale('en')
+    Locale('en'),
   ];
 
   /// The title of the application
@@ -289,6 +289,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark'**
   String get dark;
+
+  /// Emergency SOS text
+  ///
+  /// In en, this message translates to:
+  /// **'SOS'**
+  String get sos;
+
+  /// Appearance section label
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// Emergency settings section label
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Settings'**
+  String get emergencySettings;
+
+  /// Emergency contacts description
+  ///
+  /// In en, this message translates to:
+  /// **'These contacts will be notified during an emergency'**
+  String get contactsWillBeNotified;
+
+  /// Primary contact badge label
+  ///
+  /// In en, this message translates to:
+  /// **'PRIMARY'**
+  String get primaryLabel;
+
+  /// Available status label
+  ///
+  /// In en, this message translates to:
+  /// **'AVAILABLE'**
+  String get available;
+
+  /// Busy status label
+  ///
+  /// In en, this message translates to:
+  /// **'BUSY'**
+  String get busy;
+
+  /// Contact action button
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get contact;
+
+  /// Active status
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get active;
+
+  /// Number of responders nearby
+  ///
+  /// In en, this message translates to:
+  /// **'{count} responders nearby'**
+  String respondersNearbyCount(int count);
+
+  /// Placeholder name for profile
+  ///
+  /// In en, this message translates to:
+  /// **'User Name'**
+  String get profilePlaceholderName;
+
+  /// Placeholder email for profile
+  ///
+  /// In en, this message translates to:
+  /// **'user@example.com'**
+  String get profilePlaceholderEmail;
+
+  /// Privacy policy label
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// Terms of service label
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsOfService;
 }
 
 class _AppLocalizationsDelegate
@@ -318,8 +402,9 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
 }
