@@ -101,7 +101,7 @@ jobs:
       checks: write
       pull-requests: write
     outputs:
-      SERVICE_URL: ${{ steps.deployment_info.outputs.SERVICE_URL }}
+      SERVICE_URL_ENCODED: ${{ steps.deployment_info.outputs.SERVICE_URL_ENCODED }}
       HEALTH_STATUS: ${{ steps.deployment_info.outputs.HEALTH_STATUS }}
       SWAGGER_STATUS: ${{ steps.deployment_info.outputs.SWAGGER_STATUS }}
     env:
@@ -172,16 +172,18 @@ jobs:
           --allow-unauthenticated \
           --format=json > deploy_output.json
         
-        # Extract service URL
+        # Extract service URL and encode it to prevent GitHub from masking it as a secret
         SERVICE_URL=$(jq -r '.status.url' deploy_output.json)
-        echo "SERVICE_URL=${SERVICE_URL}" >> "${GITHUB_OUTPUT}"
+        SERVICE_URL_ENCODED=$(echo -n "${SERVICE_URL}" | base64 -w 0)
+        echo "SERVICE_URL_ENCODED=${SERVICE_URL_ENCODED}" >> "${GITHUB_OUTPUT}"
         echo "::notice::Deployed to ${SERVICE_URL}"
     
     - name: Get deployment info
       id: deployment_info
       run: |
         set -euo pipefail
-        SERVICE_URL="${{ steps.deploy.outputs.SERVICE_URL }}"
+        # Decode the service URL
+        SERVICE_URL=$(echo "${{ steps.deploy.outputs.SERVICE_URL_ENCODED }}" | base64 -d)
         
         # Wait a few seconds for service to be ready
         sleep 5
@@ -204,7 +206,9 @@ jobs:
         
         echo "HEALTH_STATUS=${HEALTH_STATUS}" >> "${GITHUB_OUTPUT}"
         echo "SWAGGER_STATUS=${SWAGGER_STATUS}" >> "${GITHUB_OUTPUT}"
-        echo "SERVICE_URL=${SERVICE_URL}" >> "${GITHUB_OUTPUT}"
+        # Re-encode for output to prevent masking
+        SERVICE_URL_ENCODED=$(echo -n "${SERVICE_URL}" | base64 -w 0)
+        echo "SERVICE_URL_ENCODED=${SERVICE_URL_ENCODED}" >> "${GITHUB_OUTPUT}"
   
   update-readme:
     name: Update README with Deployment Info
@@ -226,11 +230,15 @@ jobs:
     - name: Get deployment details
       id: get_details
       env:
-        SERVICE_URL: ${{ needs.deploy-backend.outputs.SERVICE_URL }}
+        SERVICE_URL_ENCODED: ${{ needs.deploy-backend.outputs.SERVICE_URL_ENCODED }}
         HEALTH_STATUS: ${{ needs.deploy-backend.outputs.HEALTH_STATUS }}
         SWAGGER_STATUS: ${{ needs.deploy-backend.outputs.SWAGGER_STATUS }}
       run: |
         set -euo pipefail
+        
+        # Decode the service URL
+        SERVICE_URL=$(echo "${SERVICE_URL_ENCODED}" | base64 -d)
+        echo "SERVICE_URL=${SERVICE_URL}" >> "${GITHUB_OUTPUT}"
         
         # Generate version tag from date and short SHA
         VERSION_TAG="v$(date +'%Y.%m.%d')-${GITHUB_SHA:0:7}"
@@ -256,7 +264,7 @@ jobs:
         COMMIT_MSG: ${{ steps.get_details.outputs.COMMIT_MSG }}
         CHANGELOG: ${{ steps.get_details.outputs.CHANGELOG }}
         DEPLOY_TIME: ${{ steps.get_details.outputs.DEPLOY_TIME }}
-        SERVICE_URL: ${{ needs.deploy-backend.outputs.SERVICE_URL }}
+        SERVICE_URL: ${{ steps.get_details.outputs.SERVICE_URL }}
         HEALTH_STATUS: ${{ needs.deploy-backend.outputs.HEALTH_STATUS }}
         SWAGGER_STATUS: ${{ needs.deploy-backend.outputs.SWAGGER_STATUS }}
       run: |
@@ -337,6 +345,17 @@ jobs:
         # Push to the current branch (works for both PR and main branch)
         CURRENT_BRANCH="${{ github.head_ref || github.ref_name }}"
         echo "Pushing to branch: ${CURRENT_BRANCH}"
+        
+        # Pull latest changes and rebase before pushing to avoid conflicts
+        # This ensures we're always pushing on top of the latest remote state
+        echo "Pulling latest changes from ${CURRENT_BRANCH}..."
+        git pull --rebase origin "${CURRENT_BRANCH}" || {
+          echo "::warning::Rebase failed, attempting to abort and retry..."
+          git rebase --abort || true
+          git pull --rebase origin "${CURRENT_BRANCH}"
+        }
+        
+        echo "Pushing changes to ${CURRENT_BRANCH}..."
         git push origin HEAD:"${CURRENT_BRANCH}"
     
     - name: Create deployment summary
@@ -345,11 +364,11 @@ jobs:
         ## 🎉 Deployment Successful
         
         **Version:** ${{ steps.get_details.outputs.VERSION_TAG }}
-        **Service URL:** ${{ needs.deploy-backend.outputs.SERVICE_URL }}
+        **Service URL:** ${{ steps.get_details.outputs.SERVICE_URL }}
         
         ### Endpoints
-        - 🏥 Health: ${{ needs.deploy-backend.outputs.SERVICE_URL }}/health - ${{ needs.deploy-backend.outputs.HEALTH_STATUS }}
-        - 📚 Swagger: ${{ needs.deploy-backend.outputs.SERVICE_URL }}/swagger - ${{ needs.deploy-backend.outputs.SWAGGER_STATUS }}
+        - 🏥 Health: ${{ steps.get_details.outputs.SERVICE_URL }}/health - ${{ needs.deploy-backend.outputs.HEALTH_STATUS }}
+        - 📚 Swagger: ${{ steps.get_details.outputs.SERVICE_URL }}/swagger - ${{ needs.deploy-backend.outputs.SWAGGER_STATUS }}
         
         ### What's New
         ${{ steps.get_details.outputs.COMMIT_MSG }}

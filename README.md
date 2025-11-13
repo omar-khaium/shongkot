@@ -6,36 +6,36 @@
 
 ## 🚀 Latest Deployment
 
-**Version:** v2025.11.12-cd15803  
-**Deployed:** 2025-11-12 11:04:05 UTC  
-**Commit:** cd15803
+**Version:** v2025.11.13-740958f  
+**Deployed:** 2025-11-13 09:49:40 UTC  
+**Commit:** 740958f
 
 ### Service Status
 
-- **Health Check:** ✅ healthy - [/health](/health)
-- **API Documentation:** ✅ available - [/swagger](/swagger)
-- **Base URL:** []()
+- **Health Check:** ✅ healthy - [https://shongkot-mumbai-gyeuv4je3q-el.a.run.app/health](https://shongkot-mumbai-gyeuv4je3q-el.a.run.app/health)
+- **API Documentation:** ✅ available - [https://shongkot-mumbai-gyeuv4je3q-el.a.run.app/swagger](https://shongkot-mumbai-gyeuv4je3q-el.a.run.app/swagger)
+- **Base URL:** [https://shongkot-mumbai-gyeuv4je3q-el.a.run.app](https://shongkot-mumbai-gyeuv4je3q-el.a.run.app)
 
-### What's New in v2025.11.12-cd15803
+### What's New in v2025.11.13-740958f
 
-Merge pull request #2 from omar-khaium/copilot/deploy-project-to-cicd
-
-Add CI/CD deployment pipeline for backend API to Google Cloud Run with automated README updates
+Merge cde715f9cf6bc0b4ff7c24c45f3ecaa640a8f756 into e09cce5ee0ac539aa3f1b94ed95d0b1354c1274b
 
 ### Recent Changes
 
+- Merge cde715f9cf6bc0b4ff7c24c45f3ecaa640a8f756 into e09cce5ee0ac539aa3f1b94ed95d0b1354c1274b (740958f)
+- Add git pull --rebase before push to prevent non-fast-forward errors (cde715f)
+- docs: update README with deployment info [v2025.11.12-e5098bb] (6e92967)
+- Merge 6486c49a5424142467803471194010c1bf7389cc into e09cce5ee0ac539aa3f1b94ed95d0b1354c1274b (e5098bb)
+- Fix deployment URL masking by using base64 encoding (6486c49)
+- Initial plan (ee10208)
+- docs: update README with deployment info [v2025.11.12-cd15803] (e09cce5)
 - Merge pull request #2 from omar-khaium/copilot/deploy-project-to-cicd (cd15803)
 - docs: update README with deployment info [v2025.11.12-5da5315] (ebc25ae)
 - Merge cfc73a0cab2bae77f0ad5b3c29daef83a8170f74 into 66d5bfe64dbb516d01c9326775be045d1036944b (5da5315)
-- Fix README update push to use current branch instead of hardcoded main (cfc73a0)
-- Remove event_name condition to allow README update job on PR events (f6b03e4)
-- Remove branch restriction for README update job in CI/CD workflow (0f54d8f)
-- Add workflow description comment to trigger CI/CD verification (38c60ca)
-- Add post-deployment README automation with version, changelog, and service status (4d214ef)
-- Update deployment workflow to use Google Cloud Run instead of Render (d469467)
-- Enhance Render deployment trigger with HTTP status code handling and improved error messages (dd2cc7a)
 
 ---
+
+
 
 
 
