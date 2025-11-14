@@ -42,15 +42,15 @@ Mobile
 
 ## 📱 Latest Mobile App Version
 
-**Version:** v1.0.0-build.1  
-**Release Date:** N/A  
+**Version:** v1.0.0-build.79  
+**Release Date:** 2025-11-14  
 **Platform:** Android (iOS coming soon)  
 **Distribution:** Firebase App Distribution
 
 ### Download Links
 
 - **Firebase App Distribution:** [Download Latest APK](https://appdistribution.firebase.google.com/testerapps/1:657665364433:android:33fc8763de2c42867390f0) (Public - anyone with the link)
-- **GitHub Releases:** [v1.0.0-build.1](https://github.com/omar-khaium/shongkot/releases/latest)
+- **GitHub Releases:** [v1.0.0-build.79](https://github.com/omar-khaium/shongkot/releases/tag/v1.0.0-build.79)
 
 ### In-App Updates
 
@@ -67,6 +67,7 @@ Mobile
 - Nearby responders finder
 
 ---
+
 
 
 ## 📚 Documentation
