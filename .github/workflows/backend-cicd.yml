@@ -95,7 +95,7 @@ jobs:
     name: Deploy Backend to Cloud Run
     runs-on: ubuntu-latest
     needs: [docker-build]
-    # if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/backend'
     permissions:
       contents: read
       checks: write
@@ -211,11 +211,10 @@ jobs:
         echo "SERVICE_URL_ENCODED=${SERVICE_URL_ENCODED}" >> "${GITHUB_OUTPUT}"
   
   update-readme:
-    name: Update README with Deployment Info
+    name: Update README with Deployment Info (Backend Branch)
     runs-on: ubuntu-latest
     needs: [deploy-backend]
-    # Note: In production, add condition: if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    # For now, running on all events to demonstrate functionality
+    if: github.event_name == 'push' && github.ref == 'refs/heads/backend'
     permissions:
       contents: write
       pull-requests: write
@@ -375,3 +374,175 @@ jobs:
         
         README has been updated with the latest deployment information.
         SUMMARY_EOF
+        
+  update-readme-main:
+    name: Update README with Service Info (Main Branch Only)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    env:
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      GCP_REGION: ${{ secrets.GCP_REGION }}
+      CLOUD_RUN_SERVICE: ${{ secrets.CLOUD_RUN_SERVICE }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+    
+    - name: Set up gcloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+      with:
+        project_id: ${{ env.GCP_PROJECT_ID }}
+    
+    - name: Get service URL and status
+      id: get_service
+      run: |
+        set -euo pipefail
+        
+        # Get service URL
+        SERVICE_URL=$(gcloud run services describe "${CLOUD_RUN_SERVICE}" \
+          --region="${GCP_REGION}" \
+          --format='value(status.url)')
+        
+        echo "SERVICE_URL=${SERVICE_URL}" >> "${GITHUB_OUTPUT}"
+        
+        # Check health endpoint
+        HEALTH_STATUS="unknown"
+        if curl -sf "${SERVICE_URL}/health" > /dev/null 2>&1; then
+          HEALTH_STATUS="✅ healthy"
+        else
+          HEALTH_STATUS="⚠️ checking"
+        fi
+        
+        # Check swagger endpoint
+        SWAGGER_STATUS="unknown"
+        if curl -sf "${SERVICE_URL}/swagger/index.html" > /dev/null 2>&1; then
+          SWAGGER_STATUS="✅ available"
+        else
+          SWAGGER_STATUS="⚠️ checking"
+        fi
+        
+        echo "HEALTH_STATUS=${HEALTH_STATUS}" >> "${GITHUB_OUTPUT}"
+        echo "SWAGGER_STATUS=${SWAGGER_STATUS}" >> "${GITHUB_OUTPUT}"
+        
+        # Generate version tag from date and short SHA
+        VERSION_TAG="v$(date +'%Y.%m.%d')-${GITHUB_SHA:0:7}"
+        echo "VERSION_TAG=${VERSION_TAG}" >> "${GITHUB_OUTPUT}"
+        
+        # Get commit message for changelog
+        COMMIT_MSG=$(git log -1 --pretty=%B)
+        echo "COMMIT_MSG<<EOF" >> "${GITHUB_OUTPUT}"
+        echo "${COMMIT_MSG}" >> "${GITHUB_OUTPUT}"
+        echo "EOF" >> "${GITHUB_OUTPUT}"
+        
+        # Generate changelog from recent commits
+        echo "CHANGELOG<<EOF" >> "${GITHUB_OUTPUT}"
+        git log --pretty=format:"- %s (%h)" -10 >> "${GITHUB_OUTPUT}"
+        echo "" >> "${GITHUB_OUTPUT}"
+        echo "EOF" >> "${GITHUB_OUTPUT}"
+        
+        echo "DEPLOY_TIME=$(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> "${GITHUB_OUTPUT}"
+    
+    - name: Update README
+      env:
+        VERSION_TAG: ${{ steps.get_service.outputs.VERSION_TAG }}
+        COMMIT_MSG: ${{ steps.get_service.outputs.COMMIT_MSG }}
+        CHANGELOG: ${{ steps.get_service.outputs.CHANGELOG }}
+        DEPLOY_TIME: ${{ steps.get_service.outputs.DEPLOY_TIME }}
+        SERVICE_URL: ${{ steps.get_service.outputs.SERVICE_URL }}
+        HEALTH_STATUS: ${{ steps.get_service.outputs.HEALTH_STATUS }}
+        SWAGGER_STATUS: ${{ steps.get_service.outputs.SWAGGER_STATUS }}
+      run: |
+        set -euo pipefail
+        
+        # Backup README
+        cp README.md README.md.bak
+        
+        # Create deployment status section
+        {
+          echo "## 🚀 Latest Deployment"
+          echo ""
+          echo "**Version:** ${VERSION_TAG}  "
+          echo "**Deployed:** ${DEPLOY_TIME}  "
+          echo "**Commit:** ${GITHUB_SHA:0:7}"
+          echo ""
+          echo "### Service Status"
+          echo ""
+          echo "- **Health Check:** ${HEALTH_STATUS} - [${SERVICE_URL}/health](${SERVICE_URL}/health)"
+          echo "- **API Documentation:** ${SWAGGER_STATUS} - [${SERVICE_URL}/swagger](${SERVICE_URL}/swagger)"
+          echo "- **Base URL:** [${SERVICE_URL}](${SERVICE_URL})"
+          echo ""
+          echo "### What's New in ${VERSION_TAG}"
+          echo ""
+          echo "${COMMIT_MSG}"
+          echo ""
+          echo "### Recent Changes"
+          echo ""
+          echo "${CHANGELOG}"
+          echo ""
+          echo "---"
+          echo ""
+        } > deployment_status.md
+        
+        # Check if deployment section already exists
+        if grep -q "## 🚀 Latest Deployment" README.md; then
+          # Replace existing deployment section
+          awk '
+            /## 🚀 Latest Deployment/ {
+              system("cat deployment_status.md")
+              skip=1
+              next
+            }
+            /^---$/ && skip {
+              skip=0
+              next
+            }
+            !skip
+          ' README.md > README.md.new
+          mv README.md.new README.md
+        else
+          # Insert after badges section (after line 5)
+          head -n 5 README.md > README.md.new
+          echo "" >> README.md.new
+          cat deployment_status.md >> README.md.new
+          tail -n +6 README.md >> README.md.new
+          mv README.md.new README.md
+        fi
+        
+        # Clean up
+        rm deployment_status.md
+    
+    - name: Commit and push README updates
+      run: |
+        set -euo pipefail
+        
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        if git diff --quiet README.md; then
+          echo "No changes to README.md"
+          exit 0
+        fi
+        
+        git add README.md
+        git commit -m "docs: update README with service info [${{ steps.get_service.outputs.VERSION_TAG }}]"
+        
+        # Pull latest changes and rebase before pushing to avoid conflicts
+        echo "Pulling latest changes from main..."
+        git pull --rebase origin main || {
+          echo "::warning::Rebase failed, attempting to abort and retry..."
+          git rebase --abort || true
+          git pull --rebase origin main
+        }
+        
+        echo "Pushing changes to main..."
+        git push origin HEAD:main
