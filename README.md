@@ -41,14 +41,22 @@ Implement branch-based development workflow with isolated CI/CD pipelines
 
 ## 📱 Latest Mobile App Version
 
-**Version:** 1.0.0+latest  
+**Version:** v1.0.0-build.1  
+**Release Date:** N/A  
 **Platform:** Android (iOS coming soon)  
 **Distribution:** Firebase App Distribution
 
 ### Download Links
 
-- **For Testers:** [Firebase App Distribution](https://appdistribution.firebase.google.com/) (requires authorization)
-- **Latest Release:** [GitHub Releases](https://github.com/omar-khaium/shongkot/releases/latest)
+- **Firebase App Distribution:** [Download Latest APK](https://appdistribution.firebase.google.com/testerapps/1:657665364433:android:33fc8763de2c42867390f0) (Public - anyone with the link)
+- **GitHub Releases:** [v1.0.0-build.1](https://github.com/omar-khaium/shongkot/releases/latest)
+
+### In-App Updates
+
+✅ **Automatic Updates Enabled**
+- Users with previous versions will receive update prompts
+- Updates are delivered through Firebase App Distribution
+- No manual download required for existing users
 
 ### Features
 
@@ -58,6 +66,7 @@ Implement branch-based development workflow with isolated CI/CD pipelines
 - Nearby responders finder
 
 ---
+
 
 ## 📚 Documentation
 
