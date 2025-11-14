@@ -132,8 +132,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       : AppColors.lightBorder,
                                   valueColor:
                                       const AlwaysStoppedAnimation<Color>(
-                                    AppColors.primary,
-                                  ),
+                                        AppColors.primary,
+                                      ),
                                 ),
                               ),
                               // SOS Button
@@ -148,8 +148,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   color: _isPressed ? null : AppColors.primary,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: AppColors.primary
-                                          .withValues(alpha: 0.3),
+                                      color: AppColors.primary.withValues(
+                                        alpha: 0.3,
+                                      ),
                                       blurRadius: 20,
                                       spreadRadius: 5,
                                     ),
@@ -168,9 +169,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       l10n.sos,
                                       style: theme.textTheme.headlineMedium
                                           ?.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -225,8 +226,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       child: AppCard(
                         child: Column(
                           children: [
-                            const Icon(Icons.people,
-                                color: AppColors.info, size: 32),
+                            const Icon(
+                              Icons.people,
+                              color: AppColors.info,
+                              size: 32,
+                            ),
                             const SizedBox(height: AppSpacing.sm),
                             Text(
                               l10n.responders,

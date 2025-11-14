@@ -5,10 +5,12 @@ import 'package:shongkot_app/core/providers/theme_provider.dart';
 import 'package:shongkot_app/main.dart';
 
 void main() {
-  testWidgets('Theme changes are reflected immediately', (WidgetTester tester) async {
+  testWidgets('Theme changes are reflected immediately', (
+    WidgetTester tester,
+  ) async {
     // Create a ProviderContainer to manage state
     final container = ProviderContainer();
-    
+
     // Build the app
     await tester.pumpWidget(
       UncontrolledProviderScope(
@@ -24,7 +26,7 @@ void main() {
 
     // Change theme to dark
     container.read(themeProvider.notifier).setTheme(AppThemeMode.dark);
-    
+
     // Pump the widget tree to rebuild
     await tester.pump();
 
@@ -40,10 +42,12 @@ void main() {
     container.dispose();
   });
 
-  testWidgets('Theme changes work independently of locale changes', (WidgetTester tester) async {
+  testWidgets('Theme changes work independently of locale changes', (
+    WidgetTester tester,
+  ) async {
     // Create a ProviderContainer to manage state
     final container = ProviderContainer();
-    
+
     // Build the app
     await tester.pumpWidget(
       UncontrolledProviderScope(
