@@ -16,7 +16,7 @@ Shongkot is an emergency responder mobile application with:
 - Architecture: Clean Architecture (API → Application → Domain ← Infrastructure)
 
 ### Mobile
-- Framework: Flutter 3.19+
+- Framework: Flutter 3.35.3
 - Language: Dart 3.0+
 - State Management: flutter_bloc (BLoC pattern)
 - Navigation: go_router
