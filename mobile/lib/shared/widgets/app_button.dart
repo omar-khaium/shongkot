@@ -69,10 +69,7 @@ class AppButton extends StatelessWidget {
     }
 
     if (fullWidth) {
-      button = SizedBox(
-        width: double.infinity,
-        child: button,
-      );
+      button = SizedBox(width: double.infinity, child: button);
     }
 
     return button;
@@ -100,14 +97,6 @@ class AppButton extends StatelessWidget {
   }
 }
 
-enum ButtonVariant {
-  primary,
-  secondary,
-  ghost,
-}
+enum ButtonVariant { primary, secondary, ghost }
 
-enum ButtonSize {
-  small,
-  medium,
-  large,
-}
+enum ButtonSize { small, medium, large }

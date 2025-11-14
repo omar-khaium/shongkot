@@ -19,9 +19,7 @@ class SettingsScreen extends ConsumerWidget {
     final currentLocale = ref.watch(localeProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.settings),
-      ),
+      appBar: AppBar(title: Text(l10n.settings)),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.screenPadding),
         children: [
@@ -31,7 +29,7 @@ class SettingsScreen extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   radius: 30,
-                  backgroundColor: AppColors.primary.withOpacity(0.1),
+                  backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                   child: const Icon(
                     Icons.person,
                     size: 35,
@@ -71,10 +69,7 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.lg),
 
           // Appearance section
-          Text(
-            l10n.appearance,
-            style: theme.textTheme.titleMedium,
-          ),
+          Text(l10n.appearance, style: theme.textTheme.titleMedium),
           const SizedBox(height: AppSpacing.md),
           AppCard(
             child: Column(
@@ -139,10 +134,7 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.lg),
 
           // Emergency settings
-          Text(
-            l10n.emergencySettings,
-            style: theme.textTheme.titleMedium,
-          ),
+          Text(l10n.emergencySettings, style: theme.textTheme.titleMedium),
           const SizedBox(height: AppSpacing.md),
           AppCard(
             child: Column(
@@ -175,10 +167,7 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.lg),
 
           // About section
-          Text(
-            l10n.about,
-            style: theme.textTheme.titleMedium,
-          ),
+          Text(l10n.about, style: theme.textTheme.titleMedium),
           const SizedBox(height: AppSpacing.md),
           AppCard(
             child: Column(
@@ -253,12 +242,7 @@ class _SettingsTile extends StatelessWidget {
           children: [
             Icon(icon, size: 24),
             const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: Text(
-                title,
-                style: theme.textTheme.bodyLarge,
-              ),
-            ),
+            Expanded(child: Text(title, style: theme.textTheme.bodyLarge)),
             if (trailing != null) trailing!,
           ],
         ),
