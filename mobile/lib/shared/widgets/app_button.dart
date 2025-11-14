@@ -36,15 +36,15 @@ class AppButton extends StatelessWidget {
             ),
           )
         : icon != null
-        ? Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: _getIconSize()),
-              const SizedBox(width: AppSpacing.sm),
-              Text(text),
-            ],
-          )
-        : Text(text);
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(icon, size: _getIconSize()),
+                  const SizedBox(width: AppSpacing.sm),
+                  Text(text),
+                ],
+              )
+            : Text(text);
 
     Widget button;
     switch (variant) {

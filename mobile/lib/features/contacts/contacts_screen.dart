@@ -78,10 +78,10 @@ class ContactsScreen extends ConsumerWidget {
                           height: 50,
                           decoration: BoxDecoration(
                             color: isPrimary
-                                ? AppColors.primary.withOpacity(0.1)
+                                ? AppColors.primary.withValues(alpha: 0.1)
                                 : (isDark
-                                      ? AppColors.darkSurfaceVariant
-                                      : AppColors.lightSurfaceVariant),
+                                    ? AppColors.darkSurfaceVariant
+                                    : AppColors.lightSurfaceVariant),
                             borderRadius: BorderRadius.circular(
                               AppSpacing.radiusMd,
                             ),
@@ -111,8 +111,8 @@ class ContactsScreen extends ConsumerWidget {
                                         vertical: AppSpacing.xs,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: AppColors.primary.withOpacity(
-                                          0.1,
+                                        color: AppColors.primary.withValues(
+                                          alpha: 0.1,
                                         ),
                                         borderRadius: BorderRadius.circular(
                                           AppSpacing.radiusSm,
@@ -122,8 +122,8 @@ class ContactsScreen extends ConsumerWidget {
                                         l10n.primaryLabel,
                                         style: theme.textTheme.labelSmall
                                             ?.copyWith(
-                                              color: AppColors.primary,
-                                            ),
+                                          color: AppColors.primary,
+                                        ),
                                       ),
                                     ),
                                 ],

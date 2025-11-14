@@ -40,6 +40,6 @@ class AppColors {
 
   // Opacity variants
   static Color withOpacity(Color color, double opacity) {
-    return color.withOpacity(opacity);
+    return color.withValues(alpha: opacity);
   }
 }

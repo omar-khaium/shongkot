@@ -66,7 +66,8 @@ class RespondersScreen extends ConsumerWidget {
             // Header
             Row(
               children: [
-                Icon(Icons.location_on, color: AppColors.success, size: 20),
+                const Icon(Icons.location_on,
+                    color: AppColors.success, size: 20),
                 const SizedBox(width: AppSpacing.sm),
                 // TODO: Replace with user's actual location. This is sample data.
                 Text(
@@ -111,7 +112,7 @@ class RespondersScreen extends ConsumerWidget {
                               decoration: BoxDecoration(
                                 color: _getResponderTypeColor(
                                   responder['type'] as String,
-                                ).withOpacity(0.1),
+                                ).withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(
                                   AppSpacing.radiusMd,
                                 ),
@@ -153,11 +154,10 @@ class RespondersScreen extends ConsumerWidget {
                                 vertical: AppSpacing.xs,
                               ),
                               decoration: BoxDecoration(
-                                color:
-                                    (isAvailable
-                                            ? AppColors.success
-                                            : AppColors.lightTextMuted)
-                                        .withOpacity(0.1),
+                                color: (isAvailable
+                                        ? AppColors.success
+                                        : AppColors.lightTextMuted)
+                                    .withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(
                                   AppSpacing.radiusSm,
                                 ),
@@ -193,7 +193,7 @@ class RespondersScreen extends ConsumerWidget {
                               ),
                             ),
                             const SizedBox(width: AppSpacing.md),
-                            Icon(
+                            const Icon(
                               Icons.star,
                               size: 16,
                               color: AppColors.warning,
