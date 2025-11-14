@@ -11,7 +11,7 @@ Shongkot is an emergency responder mobile application with:
 
 ### Backend
 - Framework: .NET 9.0
-- Language: C# 12
+- Language: C# 13
 - Testing: xUnit, Moq
 - Architecture: Clean Architecture (API → Application → Domain ← Infrastructure)
 
