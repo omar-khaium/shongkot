@@ -20,7 +20,8 @@ class ShongkotApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(themeProvider.notifier).themeMode;
+    ref.watch(themeProvider);
+    final themeMode = ref.read(themeProvider.notifier).themeMode;
     final locale = ref.watch(localeProvider);
 
     return MaterialApp(
