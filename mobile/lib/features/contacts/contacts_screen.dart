@@ -80,8 +80,8 @@ class ContactsScreen extends ConsumerWidget {
                             color: isPrimary
                                 ? AppColors.primary.withValues(alpha: 0.1)
                                 : (isDark
-                                      ? AppColors.darkSurfaceVariant
-                                      : AppColors.lightSurfaceVariant),
+                                    ? AppColors.darkSurfaceVariant
+                                    : AppColors.lightSurfaceVariant),
                             borderRadius: BorderRadius.circular(
                               AppSpacing.radiusMd,
                             ),
@@ -122,8 +122,8 @@ class ContactsScreen extends ConsumerWidget {
                                         l10n.primaryLabel,
                                         style: theme.textTheme.labelSmall
                                             ?.copyWith(
-                                              color: AppColors.primary,
-                                            ),
+                                          color: AppColors.primary,
+                                        ),
                                       ),
                                     ),
                                 ],

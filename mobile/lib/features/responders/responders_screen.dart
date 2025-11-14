@@ -157,11 +157,10 @@ class RespondersScreen extends ConsumerWidget {
                                 vertical: AppSpacing.xs,
                               ),
                               decoration: BoxDecoration(
-                                color:
-                                    (isAvailable
-                                            ? AppColors.success
-                                            : AppColors.lightTextMuted)
-                                        .withValues(alpha: 0.1),
+                                color: (isAvailable
+                                        ? AppColors.success
+                                        : AppColors.lightTextMuted)
+                                    .withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(
                                   AppSpacing.radiusSm,
                                 ),

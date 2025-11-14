@@ -132,8 +132,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       : AppColors.lightBorder,
                                   valueColor:
                                       const AlwaysStoppedAnimation<Color>(
-                                        AppColors.primary,
-                                      ),
+                                    AppColors.primary,
+                                  ),
                                 ),
                               ),
                               // SOS Button
@@ -169,9 +169,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       l10n.sos,
                                       style: theme.textTheme.headlineMedium
                                           ?.copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ],
                                 ),
