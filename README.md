@@ -6,9 +6,9 @@
 
 ## 🚀 Latest Deployment
 
-**Version:** v2025.11.13-89c9115  
-**Deployed:** 2025-11-13 14:43:49 UTC  
-**Commit:** 89c9115
+**Version:** v2025.11.14-7d9fec2  
+**Deployed:** 2025-11-14 10:19:19 UTC  
+**Commit:** 7d9fec2
 
 ### Service Status
 
@@ -16,26 +16,27 @@
 - **API Documentation:** ✅ available - [https://shongkot-mumbai-gyeuv4je3q-el.a.run.app/swagger](https://shongkot-mumbai-gyeuv4je3q-el.a.run.app/swagger)
 - **Base URL:** [https://shongkot-mumbai-gyeuv4je3q-el.a.run.app](https://shongkot-mumbai-gyeuv4je3q-el.a.run.app)
 
-### What's New in v2025.11.13-89c9115
+### What's New in v2025.11.14-7d9fec2
 
-Merge pull request #6 from omar-khaium/copilot/setup-branch-management-system
+Merge pull request #20 from omar-khaium/mobile
 
-Implement branch-based development workflow with isolated CI/CD pipelines
+Mobile
 
 ### Recent Changes
 
-- Merge pull request #6 from omar-khaium/copilot/setup-branch-management-system (89c9115)
-- docs: update README with deployment info [v2025.11.13-3a20bcf] (11ff226)
-- Add comprehensive branch management setup documentation (a4006f6)
-- Add branch synchronization workflow and update gitignore (656de91)
-- Add comprehensive documentation and update branch strategy (0719f31)
-- Initial plan (b30369b)
-- docs: update README with deployment info [v2025.11.13-63fdcd1] (4267827)
-- Merge pull request #5 from omar-khaium/copilot/fix-deployment-url-issues (63fdcd1)
-- docs: update README with deployment info [v2025.11.13-740958f] (fce789b)
-- Add git pull --rebase before push to prevent non-fast-forward errors (cde715f)
+- Merge pull request #20 from omar-khaium/mobile (7d9fec2)
+- Merge pull request #19 from omar-khaium/copilot/fix-dart-format-issues (da02b22)
+- Fix Dart formatting after flutter pub get (CI compatibility) (ae15108)
+- Add pre-commit hooks to enforce code quality checks locally (431af99)
+- Fix Dart formatting issues in mobile app files (e447b1d)
+- Initial plan (539dfb4)
+- Merge pull request #17 from omar-khaium/copilot/fix-theme-change-bug (5417f4c)
+- Fix theme change not taking effect immediately (062cd17)
+- Initial plan (369dd39)
+- Merge pull request #12 from omar-khaium/copilot/fix-release-date-output (6268290)
 
 ---
+
 
 
 
