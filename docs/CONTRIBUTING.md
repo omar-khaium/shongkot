@@ -54,6 +54,13 @@ Thank you for your interest in contributing to Shongkot! This document provides 
    ```
 
 4. **Commit:**
+   
+   ⚠️ **Important:** The pre-commit hook will automatically check:
+   - Code formatting (dart format / dotnet format)
+   - Lint errors (flutter analyze)
+   
+   If issues are found, the commit will be **blocked** until you fix them.
+   
    ```bash
    git commit -m "feat: add awesome feature"
    ```
@@ -166,7 +173,12 @@ class EmergencyButton extends StatelessWidget {
    - All CI/CD tests must pass
    - Code coverage requirements met
    - No security vulnerabilities
-   - Code formatting is correct
+   - Code formatting is correct (enforced by pre-commit hook)
+   - No lint errors (enforced by pre-commit hook)
+   
+   ⚠️ **Note:** If you set up the pre-commit hook correctly (via `./setup-dev.sh`), 
+   formatting and lint issues will be caught **before** you commit, so CI/CD 
+   should not fail for these reasons.
 
 2. **Manual Review:**
    - Code quality and readability
@@ -180,6 +192,68 @@ class EmergencyButton extends StatelessWidget {
    - No unresolved conversations
 
 ## Development Setup
+
+### Initial Setup
+
+1. **Clone and Setup:**
+   ```bash
+   git clone https://github.com/omar-khaium/shongkot.git
+   cd shongkot
+   ./setup-dev.sh
+   ```
+
+   The setup script will:
+   - Configure git hooks to enforce code quality
+   - Set up pre-commit checks for formatting and linting
+   - Ensure no commits with code quality issues
+
+2. **Install Dependencies:**
+   
+   **Backend:**
+   ```bash
+   cd backend
+   dotnet restore
+   ```
+   
+   **Mobile:**
+   ```bash
+   cd mobile
+   flutter pub get
+   ```
+
+### Pre-commit Checks
+
+The project uses git hooks to **automatically enforce** code quality before commits:
+
+#### What Gets Checked:
+- ✅ **Code Formatting** (Dart/C#)
+- ✅ **Lint Errors** (flutter analyze / dotnet format)
+
+#### Behavior:
+- ❌ **Commits are blocked** if formatting issues or lint errors are found
+- ✅ CI/CD will **not fail** due to code quality issues (they're caught locally)
+
+#### Manual Checks:
+Run these commands before committing to fix issues:
+
+```bash
+# Flutter/Dart
+cd mobile
+dart format .              # Fix formatting
+flutter analyze            # Check for lint errors
+
+# C# (Backend)
+cd backend
+dotnet format              # Fix formatting
+```
+
+### Bypassing Pre-commit Hooks (Not Recommended)
+
+If you absolutely must bypass the pre-commit hook:
+```bash
+git commit --no-verify -m "your message"
+```
+⚠️ **Warning:** Your PR may be rejected if CI checks fail.
 
 See [SETUP.md](SETUP.md) for detailed setup instructions.
 

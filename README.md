@@ -69,6 +69,22 @@ For comprehensive documentation, please visit:
 
 ## 🏗️ Quick Start
 
+**First Time Setup (Required):**
+```bash
+# Clone the repository
+git clone https://github.com/omar-khaium/shongkot.git
+cd shongkot
+
+# Run setup script to configure git hooks
+./setup-dev.sh
+```
+
+This setup script configures pre-commit hooks that automatically:
+- ✅ Check code formatting before commits
+- ✅ Run lint checks to catch errors early
+- ✅ Prevent commits with code quality issues
+- ✅ Ensure CI/CD doesn't fail due to formatting/lint errors
+
 **Backend:**
 ```bash
 cd backend

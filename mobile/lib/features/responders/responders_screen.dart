@@ -66,8 +66,11 @@ class RespondersScreen extends ConsumerWidget {
             // Header
             Row(
               children: [
-                const Icon(Icons.location_on,
-                    color: AppColors.success, size: 20),
+                const Icon(
+                  Icons.location_on,
+                  color: AppColors.success,
+                  size: 20,
+                ),
                 const SizedBox(width: AppSpacing.sm),
                 // TODO: Replace with user's actual location. This is sample data.
                 Text(
