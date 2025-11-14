@@ -1,0 +1,137 @@
+#!/bin/bash
+# Pre-commit hook for Shongkot project
+# This hook ensures code quality by running formatting and linting checks
+
+set -e
+
+echo "🔍 Running pre-commit checks..."
+
+# Check if we're in the mobile directory or have mobile changes
+MOBILE_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep "^mobile/" || true)
+
+if [ -n "$MOBILE_FILES" ]; then
+    echo "📱 Checking Flutter/Dart files..."
+    
+    # Check if Flutter is installed
+    if ! command -v flutter &> /dev/null; then
+        echo "❌ Error: Flutter is not installed or not in PATH"
+        echo "   Please install Flutter: https://flutter.dev/docs/get-started/install"
+        exit 1
+    fi
+    
+    cd mobile
+    
+    # Check formatting
+    echo "  ✓ Checking code formatting..."
+    if ! dart format --output=none --set-exit-if-changed .; then
+        echo ""
+        echo "❌ Code formatting issues found!"
+        echo "   Run: cd mobile && dart format ."
+        echo "   Then stage the changes and commit again."
+        exit 1
+    fi
+    
+    # Check for lint errors (only if firebase_options.dart exists or can be skipped)
+    echo "  ✓ Running lint checks..."
+    
+    # Create a temporary firebase_options.dart if it doesn't exist
+    TEMP_FIREBASE_OPTIONS=false
+    if [ ! -f "lib/firebase_options.dart" ]; then
+        echo "  ℹ Creating temporary firebase_options.dart for linting..."
+        cat > lib/firebase_options.dart << 'EOF'
+// Temporary file for local development and pre-commit checks
+// This file is auto-generated during CI/CD builds
+import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb, TargetPlatform;
+
+class DefaultFirebaseOptions {
+  static FirebaseOptions get currentPlatform {
+    if (kIsWeb) {
+      throw UnsupportedError('Web platform is not supported');
+    }
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return android;
+      case TargetPlatform.iOS:
+        return ios;
+      default:
+        throw UnsupportedError('Platform not supported');
+    }
+  }
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'placeholder',
+    appId: 'placeholder',
+    messagingSenderId: 'placeholder',
+    projectId: 'placeholder',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'placeholder',
+    appId: 'placeholder',
+    messagingSenderId: 'placeholder',
+    projectId: 'placeholder',
+    iosBundleId: 'placeholder',
+  );
+}
+EOF
+        TEMP_FIREBASE_OPTIONS=true
+    fi
+    
+    # Run flutter analyze
+    if ! flutter analyze --no-pub 2>&1 | grep -v "firebase_options.dart"; then
+        ANALYZE_EXIT_CODE=${PIPESTATUS[0]}
+        
+        # Clean up temporary file if created
+        if [ "$TEMP_FIREBASE_OPTIONS" = true ]; then
+            rm -f lib/firebase_options.dart
+        fi
+        
+        if [ $ANALYZE_EXIT_CODE -ne 0 ]; then
+            echo ""
+            echo "❌ Lint errors found!"
+            echo "   Please fix the lint issues before committing."
+            echo "   Run: cd mobile && flutter analyze"
+            exit 1
+        fi
+    fi
+    
+    # Clean up temporary file if created
+    if [ "$TEMP_FIREBASE_OPTIONS" = true ]; then
+        rm -f lib/firebase_options.dart
+    fi
+    
+    cd ..
+    
+    echo "✅ All Flutter/Dart checks passed!"
+fi
+
+# Check for backend files
+BACKEND_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep "^backend/" || true)
+
+if [ -n "$BACKEND_FILES" ]; then
+    echo "🔧 Checking C# files..."
+    
+    # Check if dotnet is installed
+    if command -v dotnet &> /dev/null; then
+        cd backend
+        
+        echo "  ✓ Running dotnet format..."
+        if ! dotnet format --verify-no-changes --verbosity quiet; then
+            echo ""
+            echo "❌ Code formatting issues found in backend!"
+            echo "   Run: cd backend && dotnet format"
+            echo "   Then stage the changes and commit again."
+            exit 1
+        fi
+        
+        cd ..
+        echo "✅ All C# checks passed!"
+    else
+        echo "  ⚠ .NET SDK not found, skipping backend checks"
+    fi
+fi
+
+echo ""
+echo "✅ All pre-commit checks passed! Proceeding with commit..."
+echo ""
