@@ -36,7 +36,7 @@ class ContactsScreen extends ConsumerWidget {
             Text(l10n.emergencyContacts, style: theme.textTheme.headlineMedium),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'These contacts will be notified during an emergency',
+              l10n.contactsWillBeNotified,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: isDark
                     ? AppColors.darkTextSecondary
