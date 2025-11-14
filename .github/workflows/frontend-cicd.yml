@@ -222,7 +222,7 @@ jobs:
     name: Deploy to Firebase App Distribution
     runs-on: ubuntu-latest
     needs: [build-android]
-    if: github.ref == 'refs/heads/mobile'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/mobile'
     
     steps:
     - name: Checkout code
@@ -364,80 +364,109 @@ jobs:
     
     - name: Update README with Distribution Link
       run: |
+        set -euo pipefail
+        
         # Get latest release info from GitHub API
         LATEST_RELEASE=$(curl -s "https://api.github.com/repos/${{ github.repository }}/releases/latest")
-        RELEASE_TAG=$(echo "$LATEST_RELEASE" | jq -r '.tag_name // "N/A"')
-        RELEASE_URL=$(echo "$LATEST_RELEASE" | jq -r '.html_url // "N/A"')
+        RELEASE_TAG=$(echo "$LATEST_RELEASE" | jq -r '.tag_name // "v1.0.0-build.1"')
+        RELEASE_URL=$(echo "$LATEST_RELEASE" | jq -r '.html_url // "https://github.com/${{ github.repository }}/releases/latest"')
         RELEASE_DATE=$(echo "$LATEST_RELEASE" | jq -r '.published_at // "N/A"' | cut -d'T' -f1)
         
         # Firebase link
         FIREBASE_LINK="https://appdistribution.firebase.google.com/testerapps/${{ secrets.FIREBASE_APP_ID }}"
         
-        # Create distribution info section
-        cat > FIREBASE_DISTRIBUTION.md << EOF
-        # Firebase App Distribution
+        # Backup README
+        cp README.md README.md.bak
         
-        ## Latest Build
+        # Create mobile app section
+        {
+          echo "## 📱 Latest Mobile App Version"
+          echo ""
+          echo "**Version:** ${RELEASE_TAG}  "
+          echo "**Release Date:** ${RELEASE_DATE}  "
+          echo "**Platform:** Android (iOS coming soon)  "
+          echo "**Distribution:** Firebase App Distribution"
+          echo ""
+          echo "### Download Links"
+          echo ""
+          echo "- **Firebase App Distribution:** [Download Latest APK](${FIREBASE_LINK}) (Public - anyone with the link)"
+          echo "- **GitHub Releases:** [${RELEASE_TAG}](${RELEASE_URL})"
+          echo ""
+          echo "### In-App Updates"
+          echo ""
+          echo "✅ **Automatic Updates Enabled**"
+          echo "- Users with previous versions will receive update prompts"
+          echo "- Updates are delivered through Firebase App Distribution"
+          echo "- No manual download required for existing users"
+          echo ""
+          echo "### Features"
+          echo ""
+          echo "- Emergency SOS button with one-tap activation"
+          echo "- Real-time GPS location tracking"
+          echo "- Automatic emergency contact notifications"
+          echo "- Nearby responders finder"
+          echo ""
+          echo "---"
+          echo ""
+        } > mobile_section.md
         
-        **Version:** ${RELEASE_TAG}
-        **Release Date:** ${RELEASE_DATE}
-        **Status:** ✅ Available
+        # Check if mobile app section already exists
+        if grep -q "## 📱 Latest Mobile App Version" README.md; then
+          # Replace existing mobile app section
+          awk '
+            /## 📱 Latest Mobile App Version/ {
+              system("cat mobile_section.md")
+              skip=1
+              next
+            }
+            /^---$/ && skip {
+              skip=0
+              next
+            }
+            !skip
+          ' README.md > README.md.new
+          mv README.md.new README.md
+        else
+          # Insert after deployment section (after first ---)
+          awk '
+            BEGIN { found=0 }
+            /^---$/ && !found {
+              print
+              print ""
+              system("cat mobile_section.md")
+              found=1
+              next
+            }
+            { print }
+          ' README.md > README.md.new
+          mv README.md.new README.md
+        fi
         
-        ## Download Links
-        
-        ### Public Access (Anyone with the link)
-        📱 [Download Latest APK from Firebase](${FIREBASE_LINK})
-        
-        ### GitHub Releases
-        📦 [View All Releases](${RELEASE_URL})
-        
-        ### In-App Updates
-        ✅ **Automatic Updates Enabled**
-        - Users with previous versions will receive update prompts
-        - Updates are delivered through Firebase App Distribution
-        - No manual download required for existing users
-        
-        ## How to Get Access
-        
-        1. Click the Firebase App Distribution link above
-        2. Download the Firebase App Tester app if you don't have it
-        3. Install and launch Shongkot from Firebase App Tester
-        4. Future updates will be automatically prompted
-        
-        **Note:** This build is publicly accessible to anyone with the Firebase link.
-        
-        ## Release Information
-        
-        - **Repository:** ${{ github.server_url }}/${{ github.repository }}
-        - **Latest Release:** [View on GitHub](${RELEASE_URL})
-        - **CI/CD Pipeline:** [View Workflow](${{ github.server_url }}/${{ github.repository }}/actions)
-        
-        ---
-        
-        **⚠️ PROPRIETARY SOFTWARE** - This is a confidential build. Unauthorized distribution is prohibited.
-        
-        Copyright © 2025 Omar Khaium. All Rights Reserved.
-        EOF
-        
-        cat FIREBASE_DISTRIBUTION.md
+        # Clean up
+        rm mobile_section.md
     
-    - name: Upload Distribution Markdown
-      uses: actions/upload-artifact@v4
-      with:
-        name: firebase-distribution-doc
-        path: FIREBASE_DISTRIBUTION.md
-        retention-days: 90
-    
-    - name: Commit and push README updates if needed
+    - name: Commit and push README updates
       run: |
+        set -euo pipefail
+        
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        if git diff --quiet FIREBASE_DISTRIBUTION.md; then
-          echo "No changes to distribution info"
-        else
-          git add FIREBASE_DISTRIBUTION.md
-          git commit -m "docs: update Firebase distribution links and release info"
-          git pull --rebase origin main
-          git push origin HEAD:main
+        if git diff --quiet README.md; then
+          echo "No changes to README.md"
+          exit 0
         fi
+        
+        git add README.md
+        git commit -m "docs: update README with mobile app distribution info"
+        
+        # Pull latest changes and rebase before pushing to avoid conflicts
+        echo "Pulling latest changes from main..."
+        git pull --rebase origin main || {
+          echo "::warning::Rebase failed, attempting to abort and retry..."
+          git rebase --abort || true
+          git pull --rebase origin main
+        }
+        
+        echo "Pushing changes to main..."
+        git push origin HEAD:main
