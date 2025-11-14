@@ -3,14 +3,14 @@
 ## Project Overview
 
 Shongkot is an emergency responder mobile application with:
-- **Backend**: ASP.NET Core 9.0 API following Clean Architecture
+- **Backend**: .NET 9.0 API following Clean Architecture
 - **Mobile**: Flutter 3.19+ app following Clean Architecture
 - **Architecture**: Clean Architecture with Domain-Driven Design principles
 
 ## Technology Stack
 
 ### Backend
-- Framework: ASP.NET Core 9.0
+- Framework: .NET 9.0
 - Language: C# 12
 - Testing: xUnit, Moq
 - Architecture: Clean Architecture (API → Application → Domain ← Infrastructure)
