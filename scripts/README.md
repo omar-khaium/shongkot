@@ -64,7 +64,7 @@ Creates 8 milestones for development phases:
 - M7: Platform Polish (Week 21)
 - M8: Production Launch (Week 24)
 
-#### **`create_github_issues.py`** - Generate Issues
+#### **`create_github_issues.py`** - Generate Initial Issues (Phase 1-2)
 ```bash
 python3 scripts/create_github_issues.py
 ```
@@ -84,13 +84,45 @@ Generates 10 detailed issues for Phase 1 and Phase 2:
   - In-app notification center
   - Chat interface with responders
 
+#### **`create_all_github_issues.py`** - Generate Comprehensive Issues (Phase 1-3) ⭐ NEW
+```bash
+python3 scripts/create_all_github_issues.py
+```
+
+Generates **19 MVP-ready issues** for complete mobile app development:
+- **Phase 1 (9 issues):** Foundation & Core
+  - Complete authentication system (registration, verification, login, forgot password)
+  - GPS location tracking with battery optimization
+  - Robust API client with error handling
+  - Real emergency submission with offline queue
+  - Emergency history with filtering
+  - User profile management
+
+- **Phase 2 (5 issues):** Communication & Notifications
+  - Firebase Cloud Messaging setup
+  - In-app notification center
+  - Real-time chat with responders
+  - Emergency contacts CRUD
+  - Automatic SMS alerts to contacts
+
+- **Phase 3 (5 issues):** Responder Integration
+  - Responder discovery with real-time location
+  - Responder profile and details
+  - Direct call and messaging to responders
+  - Rating and review system
+  - ETA tracking and dispatch status
+
 Each issue includes:
-- Detailed description and user story
-- Acceptance criteria checklist
-- Technical implementation notes
-- API endpoints required
-- Dependencies
-- Testing requirements
+- 🎯 MVP Goal statement
+- 📋 User Story
+- ✅ Detailed Acceptance Criteria (10-15 items)
+- 🔧 Technical Implementation details
+- 🌐 API Endpoints required
+- 📦 Dependencies
+- 🧪 Comprehensive Testing Requirements
+- 📱 UI/UX Notes
+- 🔗 Related Issues (dependencies and blockers)
+- 📊 Definition of Done checklist
 - Proper labels and milestone assignment
 
 ---
