@@ -135,8 +135,10 @@ class _EmergencyTypeButton extends ConsumerWidget {
       child: InkWell(
         onTap: () async {
           // Update the emergency type
-          await ref.read(rapidCrimeSosProvider.notifier).updateEmergencyType(type);
-          
+          await ref
+              .read(rapidCrimeSosProvider.notifier)
+              .updateEmergencyType(type);
+
           // Close the sheet
           if (context.mounted) {
             Navigator.of(context).pop();

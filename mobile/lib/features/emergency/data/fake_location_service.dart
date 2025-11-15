@@ -9,10 +9,10 @@ class FakeLocationService implements LocationService {
   @override
   Future<EmergencyLocation?> getCurrentLocation() async {
     debugPrint('📍 FakeLocationService: Getting location...');
-    
+
     // Simulate location fetch delay
     await Future.delayed(const Duration(milliseconds: 200));
-    
+
     // Return a fake location (Dhaka, Bangladesh coordinates)
     // TODO: Replace with actual GPS coordinates
     return const EmergencyLocation(
