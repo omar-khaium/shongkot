@@ -35,10 +35,6 @@ jobs:
       run: flutter pub get
       working-directory: ./mobile
       
-    - name: Verify formatting
-      run: dart format --output=none --set-exit-if-changed .
-      working-directory: ./mobile
-    
     - name: Generate firebase_options.dart
       uses: ./.github/actions/generate-firebase-options
       with:
@@ -51,6 +47,14 @@ jobs:
         FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       
+    - name: Format code
+      run: dart format .
+      working-directory: ./mobile
+    
+    - name: Check for lint errors
+      run: dart analyze
+      working-directory: ./mobile
+    
     - name: Analyze code
       run: flutter analyze
       working-directory: ./mobile

@@ -188,5 +188,45 @@
   "termsOfService": "Terms of Service",
   "@termsOfService": {
     "description": "Terms of service label"
+  },
+  "crimeInProgress": "Crime in Progress",
+  "@crimeInProgress": {
+    "description": "Crime in progress button label"
+  },
+  "rapidCrimeTitle": "What type of emergency?",
+  "@rapidCrimeTitle": {
+    "description": "Title for rapid crime SOS type selector"
+  },
+  "rapidCrimeSubtitle": "This helps responders prepare (optional)",
+  "@rapidCrimeSubtitle": {
+    "description": "Subtitle for rapid crime SOS type selector"
+  },
+  "sexualAssault": "Sexual Assault / Rape",
+  "@sexualAssault": {
+    "description": "Sexual assault emergency type"
+  },
+  "physicalAssault": "Physical Assault / Beating",
+  "@physicalAssault": {
+    "description": "Physical assault emergency type"
+  },
+  "kidnapping": "Kidnapping / Abduction",
+  "@kidnapping": {
+    "description": "Kidnapping emergency type"
+  },
+  "otherViolentCrime": "Other Violent Crime",
+  "@otherViolentCrime": {
+    "description": "Other violent crime emergency type"
+  },
+  "skipThisStep": "Skip this step",
+  "@skipThisStep": {
+    "description": "Skip button for type selector"
+  },
+  "rapidSosSent": "Rapid Emergency Alert Sent",
+  "@rapidSosSent": {
+    "description": "Confirmation message for rapid SOS"
+  },
+  "rapidSosDescription": "Your location and alert have been recorded. Help is on the way.",
+  "@rapidSosDescription": {
+    "description": "Description for rapid SOS confirmation"
   }
 }
