@@ -39,6 +39,10 @@ jobs:
       run: dart format .
       working-directory: ./mobile
     
+    - name: Check for lint errors
+      run: dart analyze
+      working-directory: ./mobile
+    
     - name: Generate firebase_options.dart
       uses: ./.github/actions/generate-firebase-options
       with:
