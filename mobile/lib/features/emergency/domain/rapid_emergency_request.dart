@@ -1,5 +1,8 @@
 import 'emergency_type.dart';
 
+/// Sentinel value for copyWith to distinguish between null and not provided
+const _undefined = Object();
+
 /// Entity representing a rapid emergency request
 /// This is used for urgent crime reports that need immediate attention
 class RapidEmergencyRequest {
@@ -29,18 +32,23 @@ class RapidEmergencyRequest {
   });
 
   /// Create a copy with updated fields
+  /// To explicitly set nullable fields to null, use the provided wrapper:
+  /// - Pass `type: null` directly (not wrapped) to set type to null
+  /// - Same for `location`
   RapidEmergencyRequest copyWith({
     String? id,
-    EmergencyType? type,
+    Object? type = _undefined,
     DateTime? createdAt,
-    EmergencyLocation? location,
+    Object? location = _undefined,
     bool? isHighPriority,
   }) {
     return RapidEmergencyRequest(
       id: id ?? this.id,
-      type: type ?? this.type,
+      type: type == _undefined ? this.type : type as EmergencyType?,
       createdAt: createdAt ?? this.createdAt,
-      location: location ?? this.location,
+      location: location == _undefined
+          ? this.location
+          : location as EmergencyLocation?,
       isHighPriority: isHighPriority ?? this.isHighPriority,
     );
   }

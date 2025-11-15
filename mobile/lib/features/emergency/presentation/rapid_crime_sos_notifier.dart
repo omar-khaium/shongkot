@@ -5,6 +5,9 @@ import '../data/location_service_provider.dart';
 import '../domain/emergency_type.dart';
 import '../domain/rapid_emergency_request.dart';
 
+/// Sentinel value for copyWith to distinguish between null and not provided
+const _undefined = Object();
+
 /// State for Rapid Crime SOS
 class RapidCrimeSosState {
   final RapidEmergencyRequest? lastRequest;
@@ -19,16 +22,22 @@ class RapidCrimeSosState {
     this.showTypeSelector = false,
   });
 
+  /// Create a copy with updated fields
+  /// To explicitly set nullable fields to null, pass null directly
   RapidCrimeSosState copyWith({
-    RapidEmergencyRequest? lastRequest,
+    Object? lastRequest = _undefined,
     bool? isLoading,
-    String? errorMessage,
+    Object? errorMessage = _undefined,
     bool? showTypeSelector,
   }) {
     return RapidCrimeSosState(
-      lastRequest: lastRequest ?? this.lastRequest,
+      lastRequest: lastRequest == _undefined
+          ? this.lastRequest
+          : lastRequest as RapidEmergencyRequest?,
       isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage,
+      errorMessage: errorMessage == _undefined
+          ? this.errorMessage
+          : errorMessage as String?,
       showTypeSelector: showTypeSelector ?? this.showTypeSelector,
     );
   }

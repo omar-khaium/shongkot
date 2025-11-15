@@ -73,6 +73,29 @@ void main() {
       expect(updated.type, EmergencyType.sexualAssault);
       expect(original.type, isNull); // Original unchanged
     });
+
+    test('should explicitly set nullable fields to null with copyWith', () {
+      // Arrange
+      final location = const EmergencyLocation(latitude: 1.0, longitude: 2.0);
+      final original = RapidEmergencyRequest(
+        id: 'test-id',
+        createdAt: DateTime.now(),
+        location: location,
+        type: EmergencyType.violentCrime,
+      );
+
+      // Act - explicitly set nullable fields to null
+      final updated = original.copyWith(
+        type: null,
+        location: null,
+      );
+
+      // Assert
+      expect(updated.type, isNull);
+      expect(updated.location, isNull);
+      expect(original.type, EmergencyType.violentCrime); // Original unchanged
+      expect(original.location, location); // Original unchanged
+    });
   });
 
   group('EmergencyLocation', () {
