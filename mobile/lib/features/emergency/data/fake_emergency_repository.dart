@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../domain/emergency_repository.dart';
+import '../domain/emergency_type.dart';
 import '../domain/rapid_emergency_request.dart';
 
 /// Fake/stub implementation of EmergencyRepository for MVP

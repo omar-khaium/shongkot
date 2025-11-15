@@ -6,7 +6,7 @@ void main() {
   group('RapidEmergencyRequest', () {
     test('should create a valid emergency request', () {
       // Arrange
-      final location = const EmergencyLocation(
+      const location = EmergencyLocation(
         latitude: 23.8103,
         longitude: 90.4125,
       );
@@ -76,7 +76,7 @@ void main() {
 
     test('should explicitly set nullable fields to null with copyWith', () {
       // Arrange
-      final location = const EmergencyLocation(latitude: 1.0, longitude: 2.0);
+      const location = EmergencyLocation(latitude: 1.0, longitude: 2.0);
       final original = RapidEmergencyRequest(
         id: 'test-id',
         createdAt: DateTime.now(),
