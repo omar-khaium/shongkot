@@ -32,6 +32,9 @@ dependencies:
   firebase_core: ^2.24.2
   firebase_app_check: ^0.2.1+9
   
+  # Utilities
+  uuid: ^4.5.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
