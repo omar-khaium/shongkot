@@ -80,7 +80,8 @@ create_project() {
     fi
     
     # Extract project number from URL
-    PROJECT_NUMBER=$(echo "$PROJECT_URL" | grep -oP 'projects/\K[0-9]+')
+    # Compatible with both GNU and BSD grep
+    PROJECT_NUMBER=$(echo "$PROJECT_URL" | sed -n 's/.*projects\/\([0-9]*\).*/\1/p')
     
     echo -e "${GREEN}✓ Created: ${title}${NC}"
     echo "  URL: ${PROJECT_URL}"
