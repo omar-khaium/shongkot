@@ -9,11 +9,10 @@ and aligned with milestones and project flow.
 Generates issues for all 8 phases covering 150+ features.
 """
 
-import json
 import os
 import subprocess
 import sys
-from typing import List, Dict, Optional
+from typing import Dict
 
 # Check if we're in the right directory
 if not os.path.exists('mobile/pubspec.yaml'):
