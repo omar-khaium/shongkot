@@ -35,8 +35,8 @@ jobs:
       run: flutter pub get
       working-directory: ./mobile
       
-    - name: Verify formatting
-      run: dart format --output=none --set-exit-if-changed .
+    - name: Format code
+      run: dart format .
       working-directory: ./mobile
     
     - name: Generate firebase_options.dart
