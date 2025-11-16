@@ -60,7 +60,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
     try {
       final authRepository = _ref.read(authRepositoryProvider);
-      final biometricService = _ref.read(biometricServiceServiceProvider);
+      final biometricService = _ref.read(biometricServiceProvider);
 
       // Check if credentials are saved
       final hasSavedCredentials = await authRepository.hasSavedCredentials();
@@ -101,7 +101,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   /// Check if biometric authentication is available
   Future<bool> isBiometricAvailable() async {
-    final biometricService = _ref.read(biometricServiceServiceProvider);
+    final biometricService = _ref.read(biometricServiceProvider);
     return await biometricService.isBiometricAvailable();
   }
 
@@ -124,11 +124,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
     state = state.clearError();
   }
 }
-
-/// Provider for BiometricService (fix naming)
-final biometricServiceServiceProvider = Provider<BiometricService>((ref) {
-  return ref.read(biometricServiceProvider);
-});
 
 /// Provider for AuthNotifier
 final authNotifierProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
