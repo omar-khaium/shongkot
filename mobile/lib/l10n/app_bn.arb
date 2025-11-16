@@ -55,5 +55,14 @@
   "otherViolentCrime": "অন্যান্য সহিংস অপরাধ",
   "skipThisStep": "এই ধাপ এড়িয়ে যান",
   "rapidSosSent": "দ্রুত জরুরী সতর্কতা পাঠানো হয়েছে",
-  "rapidSosDescription": "আপনার অবস্থান এবং সতর্কতা রেকর্ড করা হয়েছে। সাহায্য আসছে।"
+  "rapidSosDescription": "আপনার অবস্থান এবং সতর্কতা রেকর্ড করা হয়েছে। সাহায্য আসছে।",
+  "verificationCode": "যাচাইকরণ কোড",
+  "verificationCodeSentTo": "আমরা যাচাইকরণ কোড পাঠিয়েছি\n{identifier}",
+  "verify": "যাচাই করুন",
+  "verifying": "যাচাই করা হচ্ছে...",
+  "resendCode": "কোড পুনরায় পাঠান",
+  "resendInSeconds": "{seconds} সেকেন্ডে পুনরায় পাঠান",
+  "codeExpiresAt": "কোড শেষ হবে {time}",
+  "enterAllDigits": "অনুগ্রহ করে সব ৬টি সংখ্যা লিখুন",
+  "verifyAccount": "অ্যাকাউন্ট যাচাই করুন"
 }

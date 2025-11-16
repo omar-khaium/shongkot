@@ -228,5 +228,56 @@
   "rapidSosDescription": "Your location and alert have been recorded. Help is on the way.",
   "@rapidSosDescription": {
     "description": "Description for rapid SOS confirmation"
+  },
+  "verificationCode": "Verification Code",
+  "@verificationCode": {
+    "description": "Verification code title"
+  },
+  "verificationCodeSentTo": "We sent a verification code to\n{identifier}",
+  "@verificationCodeSentTo": {
+    "description": "Verification code sent message",
+    "placeholders": {
+      "identifier": {
+        "type": "String"
+      }
+    }
+  },
+  "verify": "Verify",
+  "@verify": {
+    "description": "Verify button"
+  },
+  "verifying": "Verifying...",
+  "@verifying": {
+    "description": "Verifying loading state"
+  },
+  "resendCode": "Resend Code",
+  "@resendCode": {
+    "description": "Resend code button"
+  },
+  "resendInSeconds": "Resend in {seconds}s",
+  "@resendInSeconds": {
+    "description": "Resend countdown",
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "codeExpiresAt": "Code expires at {time}",
+  "@codeExpiresAt": {
+    "description": "Code expiration message",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "enterAllDigits": "Please enter all 6 digits",
+  "@enterAllDigits": {
+    "description": "Error message for incomplete OTP"
+  },
+  "verifyAccount": "Verify Account",
+  "@verifyAccount": {
+    "description": "Verify account title"
   }
 }
