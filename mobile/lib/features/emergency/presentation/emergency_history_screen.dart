@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import '../../core/constants/app_colors.dart';
-import '../../core/constants/app_spacing.dart';
-import '../../shared/widgets/app_card.dart';
-import '../../l10n/app_localizations.dart';
-import '../emergency/domain/emergency.dart';
-import '../emergency/presentation/emergency_history_notifier.dart';
+import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_spacing.dart';
+import '../../../shared/widgets/app_card.dart';
+import '../../../l10n/app_localizations.dart';
+import '../domain/emergency.dart';
+import 'emergency_history_notifier.dart';
 
 class EmergencyHistoryScreen extends ConsumerStatefulWidget {
   const EmergencyHistoryScreen({super.key});
