@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/verification_api_service_provider.dart';
 import '../domain/verification_request.dart';
-import '../domain/verification_response.dart';
 
 class VerificationState {
   final bool isLoading;

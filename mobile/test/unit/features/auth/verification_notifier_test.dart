@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shongkot_app/features/auth/domain/verification_request.dart';
-import 'package:shongkot_app/features/auth/domain/verification_response.dart';
 import 'package:shongkot_app/features/auth/presentation/verification_notifier.dart';
 import 'package:shongkot_app/features/auth/data/verification_api_service_provider.dart';
 import 'package:shongkot_app/features/auth/data/verification_api_service.dart';
@@ -60,7 +59,6 @@ void main() {
     });
 
     test('initial state is correct', () {
-      final notifier = container.read(verificationProvider.notifier);
       final state = container.read(verificationProvider);
 
       expect(state.isLoading, false);

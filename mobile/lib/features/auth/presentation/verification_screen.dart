@@ -71,12 +71,6 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
     }
   }
 
-  void _onBackspace(int index) {
-    if (index > 0 && _controllers[index].text.isEmpty) {
-      _focusNodes[index - 1].requestFocus();
-    }
-  }
-
   Future<void> _verifyCode() async {
     final code = _code;
     if (code.length != 6) {
