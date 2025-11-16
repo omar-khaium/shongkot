@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shongkot_app/features/emergency/data/fake_emergency_repository.dart';
 import 'package:shongkot_app/features/emergency/domain/emergency.dart';
 import 'package:shongkot_app/features/emergency/domain/emergency_type.dart';

@@ -148,4 +148,91 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get termsOfService => 'সেবার শর্তাবলী';
+
+  @override
+  String get crimeInProgress => 'অপরাধ চলছে';
+
+  @override
+  String get rapidCrimeTitle => 'কোন ধরনের জরুরী অবস্থা?';
+
+  @override
+  String get rapidCrimeSubtitle =>
+      'এটি সাহায্যকারীদের প্রস্তুত হতে সাহায্য করে (ঐচ্ছিক)';
+
+  @override
+  String get sexualAssault => 'যৌন নিপীড়ন / ধর্ষণ';
+
+  @override
+  String get physicalAssault => 'শারীরিক নিপীড়ন / মারধর';
+
+  @override
+  String get kidnapping => 'অপহরণ / হরণ';
+
+  @override
+  String get otherViolentCrime => 'অন্যান্য সহিংস অপরাধ';
+
+  @override
+  String get skipThisStep => 'এই ধাপ এড়িয়ে যান';
+
+  @override
+  String get rapidSosSent => 'দ্রুত জরুরী সতর্কতা পাঠানো হয়েছে';
+
+  @override
+  String get rapidSosDescription =>
+      'আপনার অবস্থান এবং সতর্কতা রেকর্ড করা হয়েছে। সাহায্য আসছে।';
+
+  @override
+  String get emergencyHistory => 'জরুরী ইতিহাস';
+
+  @override
+  String get noEmergencies => 'কোন জরুরী অবস্থা পাওয়া যায়নি';
+
+  @override
+  String get noEmergenciesDescription =>
+      'আপনার জরুরী ইতিহাস এখানে প্রদর্শিত হবে';
+
+  @override
+  String get filterByStatus => 'অবস্থা দ্বারা ফিল্টার করুন';
+
+  @override
+  String get allStatuses => 'সকল অবস্থা';
+
+  @override
+  String get pending => 'অপেক্ষারত';
+
+  @override
+  String get resolved => 'সমাধান করা';
+
+  @override
+  String get cancelled => 'বাতিল করা';
+
+  @override
+  String get searchEmergencies => 'ধরন বা অবস্থান দ্বারা অনুসন্ধান করুন';
+
+  @override
+  String get dateRange => 'তারিখ পরিসীমা';
+
+  @override
+  String get from => 'থেকে';
+
+  @override
+  String get to => 'পর্যন্ত';
+
+  @override
+  String get clearFilters => 'ফিল্টার সাফ করুন';
+
+  @override
+  String get sortBy => 'সাজান';
+
+  @override
+  String get newest => 'নতুন প্রথম';
+
+  @override
+  String get oldest => 'পুরাতন প্রথম';
+
+  @override
+  String get loadingEmergencies => 'জরুরী অবস্থা লোড হচ্ছে...';
+
+  @override
+  String get noTypeSpecified => 'কোন ধরন নির্দিষ্ট করা হয়নি';
 }

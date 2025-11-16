@@ -373,6 +373,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Terms of Service'**
   String get termsOfService;
+
+  /// Crime in progress button label
+  ///
+  /// In en, this message translates to:
+  /// **'Crime in Progress'**
+  String get crimeInProgress;
+
+  /// Title for rapid crime SOS type selector
+  ///
+  /// In en, this message translates to:
+  /// **'What type of emergency?'**
+  String get rapidCrimeTitle;
+
+  /// Subtitle for rapid crime SOS type selector
+  ///
+  /// In en, this message translates to:
+  /// **'This helps responders prepare (optional)'**
+  String get rapidCrimeSubtitle;
+
+  /// Sexual assault emergency type
+  ///
+  /// In en, this message translates to:
+  /// **'Sexual Assault / Rape'**
+  String get sexualAssault;
+
+  /// Physical assault emergency type
+  ///
+  /// In en, this message translates to:
+  /// **'Physical Assault / Beating'**
+  String get physicalAssault;
+
+  /// Kidnapping emergency type
+  ///
+  /// In en, this message translates to:
+  /// **'Kidnapping / Abduction'**
+  String get kidnapping;
+
+  /// Other violent crime emergency type
+  ///
+  /// In en, this message translates to:
+  /// **'Other Violent Crime'**
+  String get otherViolentCrime;
+
+  /// Skip button for type selector
+  ///
+  /// In en, this message translates to:
+  /// **'Skip this step'**
+  String get skipThisStep;
+
+  /// Confirmation message for rapid SOS
+  ///
+  /// In en, this message translates to:
+  /// **'Rapid Emergency Alert Sent'**
+  String get rapidSosSent;
+
+  /// Description for rapid SOS confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Your location and alert have been recorded. Help is on the way.'**
+  String get rapidSosDescription;
+
+  /// Emergency history screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency History'**
+  String get emergencyHistory;
+
+  /// Empty state message when no emergencies exist
+  ///
+  /// In en, this message translates to:
+  /// **'No emergencies found'**
+  String get noEmergencies;
+
+  /// Empty state description
+  ///
+  /// In en, this message translates to:
+  /// **'Your emergency history will appear here'**
+  String get noEmergenciesDescription;
+
+  /// Filter by status label
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Status'**
+  String get filterByStatus;
+
+  /// All statuses filter option
+  ///
+  /// In en, this message translates to:
+  /// **'All Statuses'**
+  String get allStatuses;
+
+  /// Pending status
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// Resolved status
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get resolved;
+
+  /// Cancelled status
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get cancelled;
+
+  /// Search field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Search by type or location'**
+  String get searchEmergencies;
+
+  /// Date range filter label
+  ///
+  /// In en, this message translates to:
+  /// **'Date Range'**
+  String get dateRange;
+
+  /// From date label
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get from;
+
+  /// To date label
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get to;
+
+  /// Clear filters button
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Filters'**
+  String get clearFilters;
+
+  /// Sort by label
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by'**
+  String get sortBy;
+
+  /// Newest first sort option
+  ///
+  /// In en, this message translates to:
+  /// **'Newest First'**
+  String get newest;
+
+  /// Oldest first sort option
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest First'**
+  String get oldest;
+
+  /// Loading message
+  ///
+  /// In en, this message translates to:
+  /// **'Loading emergencies...'**
+  String get loadingEmergencies;
+
+  /// Message when emergency type is not specified
+  ///
+  /// In en, this message translates to:
+  /// **'No Type Specified'**
+  String get noTypeSpecified;
 }
 
 class _AppLocalizationsDelegate

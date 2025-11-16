@@ -149,4 +149,90 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsOfService => 'Terms of Service';
+
+  @override
+  String get crimeInProgress => 'Crime in Progress';
+
+  @override
+  String get rapidCrimeTitle => 'What type of emergency?';
+
+  @override
+  String get rapidCrimeSubtitle => 'This helps responders prepare (optional)';
+
+  @override
+  String get sexualAssault => 'Sexual Assault / Rape';
+
+  @override
+  String get physicalAssault => 'Physical Assault / Beating';
+
+  @override
+  String get kidnapping => 'Kidnapping / Abduction';
+
+  @override
+  String get otherViolentCrime => 'Other Violent Crime';
+
+  @override
+  String get skipThisStep => 'Skip this step';
+
+  @override
+  String get rapidSosSent => 'Rapid Emergency Alert Sent';
+
+  @override
+  String get rapidSosDescription =>
+      'Your location and alert have been recorded. Help is on the way.';
+
+  @override
+  String get emergencyHistory => 'Emergency History';
+
+  @override
+  String get noEmergencies => 'No emergencies found';
+
+  @override
+  String get noEmergenciesDescription =>
+      'Your emergency history will appear here';
+
+  @override
+  String get filterByStatus => 'Filter by Status';
+
+  @override
+  String get allStatuses => 'All Statuses';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get resolved => 'Resolved';
+
+  @override
+  String get cancelled => 'Cancelled';
+
+  @override
+  String get searchEmergencies => 'Search by type or location';
+
+  @override
+  String get dateRange => 'Date Range';
+
+  @override
+  String get from => 'From';
+
+  @override
+  String get to => 'To';
+
+  @override
+  String get clearFilters => 'Clear Filters';
+
+  @override
+  String get sortBy => 'Sort by';
+
+  @override
+  String get newest => 'Newest First';
+
+  @override
+  String get oldest => 'Oldest First';
+
+  @override
+  String get loadingEmergencies => 'Loading emergencies...';
+
+  @override
+  String get noTypeSpecified => 'No Type Specified';
 }

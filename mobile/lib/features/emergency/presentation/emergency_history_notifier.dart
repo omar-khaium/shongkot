@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/emergency.dart';
-import '../../domain/emergency_repository.dart';
-import '../../data/emergency_repository_provider.dart';
+import '../domain/emergency.dart';
+import '../domain/emergency_repository.dart';
+import '../data/emergency_repository_provider.dart';
 
 /// State for emergency history
 class EmergencyHistoryState {
