@@ -31,8 +31,25 @@ if [ -n "$MOBILE_FILES" ]; then
         exit 1
     fi
     
-    # Check for lint errors (only if firebase_options.dart exists or can be skipped)
+    # Check for dart lint errors (only if firebase_options.dart exists or can be skipped)
     echo "  ✓ Running lint checks..."
+    if ! dart analyze; then
+        echo ""
+        echo "❌ Dart analyze issues found!"
+        echo "   Run: cd mobile && dart analyze"
+        echo "   Then fix the issues and commit again."
+        exit 1
+    fi
+    
+    # Check for flutter lint errors (only if firebase_options.dart exists or can be skipped)
+    echo "  ✓ Running lint checks..."
+    if ! flutter analyze; then
+        echo ""
+        echo "❌ Flutter analyze issues found!"
+        echo "   Run: cd mobile && flutter analyze"
+        echo "   Then fix the issues and commit again."
+        exit 1
+    fi
     
     # Create a temporary firebase_options.dart if it doesn't exist
     TEMP_FIREBASE_OPTIONS=false
