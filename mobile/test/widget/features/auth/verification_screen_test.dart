@@ -8,7 +8,7 @@ void main() {
   group('VerificationScreen Widget Tests', () {
     testWidgets('displays verification screen with OTP input fields', (WidgetTester tester) async {
       await tester.pumpWidget(
-        ProviderScope(
+        const ProviderScope(
           child: MaterialApp(
             home: VerificationScreen(
               identifier: 'test@example.com',
@@ -35,7 +35,7 @@ void main() {
 
     testWidgets('OTP fields accept only digits', (WidgetTester tester) async {
       await tester.pumpWidget(
-        ProviderScope(
+        const ProviderScope(
           child: MaterialApp(
             home: VerificationScreen(
               identifier: 'test@example.com',
@@ -67,7 +67,7 @@ void main() {
 
     testWidgets('verify button is initially enabled', (WidgetTester tester) async {
       await tester.pumpWidget(
-        ProviderScope(
+        const ProviderScope(
           child: MaterialApp(
             home: VerificationScreen(
               identifier: 'test@example.com',
@@ -98,7 +98,7 @@ void main() {
       const testEmail = 'test@example.com';
       
       await tester.pumpWidget(
-        ProviderScope(
+        const ProviderScope(
           child: MaterialApp(
             home: VerificationScreen(
               identifier: testEmail,
