@@ -149,4 +149,68 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsOfService => 'Terms of Service';
+
+  @override
+  String get crimeInProgress => 'Crime in Progress';
+
+  @override
+  String get rapidCrimeTitle => 'What type of emergency?';
+
+  @override
+  String get rapidCrimeSubtitle => 'This helps responders prepare (optional)';
+
+  @override
+  String get sexualAssault => 'Sexual Assault / Rape';
+
+  @override
+  String get physicalAssault => 'Physical Assault / Beating';
+
+  @override
+  String get kidnapping => 'Kidnapping / Abduction';
+
+  @override
+  String get otherViolentCrime => 'Other Violent Crime';
+
+  @override
+  String get skipThisStep => 'Skip this step';
+
+  @override
+  String get rapidSosSent => 'Rapid Emergency Alert Sent';
+
+  @override
+  String get rapidSosDescription =>
+      'Your location and alert have been recorded. Help is on the way.';
+
+  @override
+  String get verificationCode => 'Verification Code';
+
+  @override
+  String verificationCodeSentTo(String identifier) {
+    return 'We sent a verification code to\n$identifier';
+  }
+
+  @override
+  String get verify => 'Verify';
+
+  @override
+  String get verifying => 'Verifying...';
+
+  @override
+  String get resendCode => 'Resend Code';
+
+  @override
+  String resendInSeconds(int seconds) {
+    return 'Resend in ${seconds}s';
+  }
+
+  @override
+  String codeExpiresAt(String time) {
+    return 'Code expires at $time';
+  }
+
+  @override
+  String get enterAllDigits => 'Please enter all 6 digits';
+
+  @override
+  String get verifyAccount => 'Verify Account';
 }

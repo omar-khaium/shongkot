@@ -373,6 +373,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Terms of Service'**
   String get termsOfService;
+
+  /// Crime in progress button label
+  ///
+  /// In en, this message translates to:
+  /// **'Crime in Progress'**
+  String get crimeInProgress;
+
+  /// Title for rapid crime SOS type selector
+  ///
+  /// In en, this message translates to:
+  /// **'What type of emergency?'**
+  String get rapidCrimeTitle;
+
+  /// Subtitle for rapid crime SOS type selector
+  ///
+  /// In en, this message translates to:
+  /// **'This helps responders prepare (optional)'**
+  String get rapidCrimeSubtitle;
+
+  /// Sexual assault emergency type
+  ///
+  /// In en, this message translates to:
+  /// **'Sexual Assault / Rape'**
+  String get sexualAssault;
+
+  /// Physical assault emergency type
+  ///
+  /// In en, this message translates to:
+  /// **'Physical Assault / Beating'**
+  String get physicalAssault;
+
+  /// Kidnapping emergency type
+  ///
+  /// In en, this message translates to:
+  /// **'Kidnapping / Abduction'**
+  String get kidnapping;
+
+  /// Other violent crime emergency type
+  ///
+  /// In en, this message translates to:
+  /// **'Other Violent Crime'**
+  String get otherViolentCrime;
+
+  /// Skip button for type selector
+  ///
+  /// In en, this message translates to:
+  /// **'Skip this step'**
+  String get skipThisStep;
+
+  /// Confirmation message for rapid SOS
+  ///
+  /// In en, this message translates to:
+  /// **'Rapid Emergency Alert Sent'**
+  String get rapidSosSent;
+
+  /// Description for rapid SOS confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Your location and alert have been recorded. Help is on the way.'**
+  String get rapidSosDescription;
+
+  /// Verification code title
+  ///
+  /// In en, this message translates to:
+  /// **'Verification Code'**
+  String get verificationCode;
+
+  /// Verification code sent message
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a verification code to\n{identifier}'**
+  String verificationCodeSentTo(String identifier);
+
+  /// Verify button
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get verify;
+
+  /// Verifying loading state
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying...'**
+  String get verifying;
+
+  /// Resend code button
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Code'**
+  String get resendCode;
+
+  /// Resend countdown
+  ///
+  /// In en, this message translates to:
+  /// **'Resend in {seconds}s'**
+  String resendInSeconds(int seconds);
+
+  /// Code expiration message
+  ///
+  /// In en, this message translates to:
+  /// **'Code expires at {time}'**
+  String codeExpiresAt(String time);
+
+  /// Error message for incomplete OTP
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter all 6 digits'**
+  String get enterAllDigits;
+
+  /// Verify account title
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Account'**
+  String get verifyAccount;
 }
 
 class _AppLocalizationsDelegate
