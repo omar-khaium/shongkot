@@ -20,18 +20,18 @@ void main() {
         overrides: [
           emergencyRepositoryProvider.overrideWithValue(repository),
         ],
-        child: MaterialApp(
-          localizationsDelegates: const [
+        child: const MaterialApp(
+          localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [
+          supportedLocales: [
             Locale('en'),
             Locale('bn'),
           ],
-          home: const EmergencyHistoryScreen(),
+          home: EmergencyHistoryScreen(),
         ),
       );
     }
@@ -67,8 +67,7 @@ void main() {
       expect(find.text('Violent Crime'), findsAtLeastNWidgets(1));
     });
 
-    testWidgets('should display empty state when no emergencies',
-        (WidgetTester tester) async {
+    testWidgets('should display empty state when no emergencies', (WidgetTester tester) async {
       // Arrange - clear sample data
       repository.clearHistory();
 
@@ -85,8 +84,7 @@ void main() {
       );
     });
 
-    testWidgets('should open filter sheet when filter button tapped',
-        (WidgetTester tester) async {
+    testWidgets('should open filter sheet when filter button tapped', (WidgetTester tester) async {
       // Act
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
@@ -171,8 +169,7 @@ void main() {
       expect(find.text('PENDING'), findsWidgets);
     });
 
-    testWidgets('should display high priority indicator',
-        (WidgetTester tester) async {
+    testWidgets('should display high priority indicator', (WidgetTester tester) async {
       // Act
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
@@ -204,8 +201,7 @@ void main() {
       expect(find.byType(RefreshIndicator), findsOneWidget);
     });
 
-    testWidgets('should display clear filters button when filters active',
-        (WidgetTester tester) async {
+    testWidgets('should display clear filters button when filters active', (WidgetTester tester) async {
       // Act
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
