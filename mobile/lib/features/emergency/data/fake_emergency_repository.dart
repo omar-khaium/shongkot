@@ -10,6 +10,60 @@ import '../domain/rapid_emergency_request.dart';
 class FakeEmergencyRepository implements EmergencyRepository {
   RapidEmergencyRequest? _lastEmergency;
   final List<Emergency> _emergencyHistory = [];
+  
+  FakeEmergencyRepository() {
+    _initializeSampleData();
+  }
+
+  /// Initialize with some sample data for testing
+  void _initializeSampleData() {
+    // Add sample emergencies with different statuses and dates
+    final now = DateTime.now();
+    
+    _emergencyHistory.addAll([
+      Emergency(
+        id: 'sample-1',
+        type: EmergencyType.violentCrime,
+        createdAt: now.subtract(const Duration(days: 2)),
+        updatedAt: now.subtract(const Duration(days: 1)),
+        location: const EmergencyLocation(latitude: 23.8103, longitude: 90.4125),
+        status: EmergencyStatus.resolved,
+        isHighPriority: true,
+      ),
+      Emergency(
+        id: 'sample-2',
+        type: EmergencyType.sexualAssault,
+        createdAt: now.subtract(const Duration(days: 5)),
+        updatedAt: now.subtract(const Duration(days: 4)),
+        location: const EmergencyLocation(latitude: 23.7104, longitude: 90.4074),
+        status: EmergencyStatus.resolved,
+        isHighPriority: true,
+      ),
+      Emergency(
+        id: 'sample-3',
+        type: EmergencyType.physicalAssault,
+        createdAt: now.subtract(const Duration(days: 10)),
+        location: const EmergencyLocation(latitude: 23.8859, longitude: 90.3937),
+        status: EmergencyStatus.cancelled,
+        isHighPriority: false,
+      ),
+      Emergency(
+        id: 'sample-4',
+        type: EmergencyType.kidnapping,
+        createdAt: now.subtract(const Duration(hours: 2)),
+        location: const EmergencyLocation(latitude: 23.7805, longitude: 90.2792),
+        status: EmergencyStatus.active,
+        isHighPriority: true,
+      ),
+      Emergency(
+        id: 'sample-5',
+        createdAt: now.subtract(const Duration(hours: 12)),
+        location: const EmergencyLocation(latitude: 23.8607, longitude: 90.3706),
+        status: EmergencyStatus.pending,
+        isHighPriority: true,
+      ),
+    ]);
+  }
 
   @override
   Future<void> sendRapidEmergency(RapidEmergencyRequest request) async {

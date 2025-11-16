@@ -7,6 +7,7 @@ import '../../shared/widgets/app_button.dart';
 import '../../l10n/app_localizations.dart';
 import '../emergency/presentation/rapid_crime_sos_notifier.dart';
 import '../emergency/presentation/rapid_crime_sos_sheet.dart';
+import '../emergency/presentation/emergency_history_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -141,6 +142,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                         ),
                       ],
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.history),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EmergencyHistoryScreen(),
+                          ),
+                        );
+                      },
+                      tooltip: l10n.emergencyHistory,
                     ),
                   ],
                 ),
