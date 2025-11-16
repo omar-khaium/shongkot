@@ -1,0 +1,169 @@
+using Microsoft.AspNetCore.Mvc;
+using Shongkot.Domain.Entities;
+
+namespace Shongkot.Api.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class AuthController : ControllerBase
+{
+    private readonly ILogger<AuthController> _logger;
+    private static readonly List<User> _users = new();
+
+    public AuthController(ILogger<AuthController> logger)
+    {
+        _logger = logger;
+    }
+
+    /// <summary>
+    /// Register a new user with email or phone
+    /// </summary>
+    [HttpPost("register")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public ActionResult<RegisterResponse> Register([FromBody] RegisterRequest request)
+    {
+        // Validate request
+        if (string.IsNullOrWhiteSpace(request.Email) && string.IsNullOrWhiteSpace(request.PhoneNumber))
+        {
+            return BadRequest(new { message = "Email or phone number is required" });
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Password))
+        {
+            return BadRequest(new { message = "Password is required" });
+        }
+
+        if (!request.AcceptedTerms)
+        {
+            return BadRequest(new { message = "You must accept the terms and privacy policy" });
+        }
+
+        // Check if user already exists
+        var identifier = request.Email ?? request.PhoneNumber;
+        var existingUser = _users.FirstOrDefault(u => 
+            u.Email == request.Email || u.PhoneNumber == request.PhoneNumber);
+
+        if (existingUser != null)
+        {
+            return Conflict(new { message = "An account with this email/phone already exists" });
+        }
+
+        // Create new user
+        var user = new User
+        {
+            Id = Guid.NewGuid(),
+            Email = request.Email,
+            PhoneNumber = request.PhoneNumber,
+            PasswordHash = HashPassword(request.Password), // In production, use proper hashing
+            IsEmailVerified = false,
+            IsPhoneVerified = false,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _users.Add(user);
+
+        _logger.LogInformation("User registered: Email={Email}, Phone={Phone}", 
+            user.Email, user.PhoneNumber);
+
+        // In a real application, this would:
+        // - Hash password securely (e.g., using BCrypt)
+        // - Save to database
+        // - Send verification email/SMS
+        // - Generate JWT token
+
+        var response = new RegisterResponse
+        {
+            UserId = user.Id.ToString(),
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            Message = "Registration successful"
+        };
+
+        return CreatedAtAction(nameof(GetUser), new { id = user.Id }, response);
+    }
+
+    /// <summary>
+    /// Get user by ID
+    /// </summary>
+    [HttpGet("users/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<UserResponse> GetUser(Guid id)
+    {
+        var user = _users.FirstOrDefault(u => u.Id == id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var response = new UserResponse
+        {
+            Id = user.Id.ToString(),
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            Name = user.Name,
+            IsEmailVerified = user.IsEmailVerified,
+            IsPhoneVerified = user.IsPhoneVerified,
+            CreatedAt = user.CreatedAt
+        };
+
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Check if email or phone is already registered
+    /// </summary>
+    [HttpGet("check-availability")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<AvailabilityResponse> CheckAvailability([FromQuery] string emailOrPhone)
+    {
+        if (string.IsNullOrWhiteSpace(emailOrPhone))
+        {
+            return BadRequest(new { message = "Email or phone is required" });
+        }
+
+        var exists = _users.Any(u => 
+            u.Email == emailOrPhone || u.PhoneNumber == emailOrPhone);
+
+        return Ok(new AvailabilityResponse { IsAvailable = !exists });
+    }
+
+    // Simple password hashing for demonstration (use proper hashing in production)
+    private static string HashPassword(string password)
+    {
+        return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(password));
+    }
+}
+
+public record RegisterRequest(
+    string? Email,
+    string? PhoneNumber,
+    string Password,
+    bool AcceptedTerms
+);
+
+public record RegisterResponse
+{
+    public string UserId { get; set; } = string.Empty;
+    public string? Email { get; set; }
+    public string? PhoneNumber { get; set; }
+    public string Message { get; set; } = string.Empty;
+}
+
+public record UserResponse
+{
+    public string Id { get; set; } = string.Empty;
+    public string? Email { get; set; }
+    public string? PhoneNumber { get; set; }
+    public string? Name { get; set; }
+    public bool IsEmailVerified { get; set; }
+    public bool IsPhoneVerified { get; set; }
+    public DateTime CreatedAt { get; set; }
+}
+
+public record AvailabilityResponse
+{
+    public bool IsAvailable { get; set; }
+}
