@@ -4,6 +4,7 @@ Emergency responder mobile application built with Flutter.
 
 ## Features
 
+- 🔐 **Authentication** - Login with email/phone and password, plus biometric support
 - 🚨 **Emergency SOS Button** - One-tap emergency activation with hold-to-confirm
 - 📱 **Modern UI** - Clean, minimal design inspired by shadcn
 - 🌓 **Dark/Light Theme** - Full theme support with system preference detection
