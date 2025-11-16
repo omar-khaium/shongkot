@@ -6,9 +6,9 @@
 
 ## 🚀 Latest Deployment
 
-**Version:** v2025.11.14-7d9fec2  
-**Deployed:** 2025-11-14 10:19:19 UTC  
-**Commit:** 7d9fec2
+**Version:** v2025.11.16-8736dbf  
+**Deployed:** 2025-11-16 13:15:03 UTC  
+**Commit:** 8736dbf
 
 ### Service Status
 
@@ -16,26 +16,27 @@
 - **API Documentation:** ✅ available - [https://shongkot-mumbai-gyeuv4je3q-el.a.run.app/swagger](https://shongkot-mumbai-gyeuv4je3q-el.a.run.app/swagger)
 - **Base URL:** [https://shongkot-mumbai-gyeuv4je3q-el.a.run.app](https://shongkot-mumbai-gyeuv4je3q-el.a.run.app)
 
-### What's New in v2025.11.14-7d9fec2
+### What's New in v2025.11.16-8736dbf
 
-Merge pull request #20 from omar-khaium/mobile
+Merge pull request #43 from omar-khaium/mobile
 
 Mobile
 
 ### Recent Changes
 
-- Merge pull request #20 from omar-khaium/mobile (7d9fec2)
-- Merge pull request #19 from omar-khaium/copilot/fix-dart-format-issues (da02b22)
-- Fix Dart formatting after flutter pub get (CI compatibility) (ae15108)
-- Add pre-commit hooks to enforce code quality checks locally (431af99)
-- Fix Dart formatting issues in mobile app files (e447b1d)
-- Initial plan (539dfb4)
-- Merge pull request #17 from omar-khaium/copilot/fix-theme-change-bug (5417f4c)
-- Fix theme change not taking effect immediately (062cd17)
-- Initial plan (369dd39)
-- Merge pull request #12 from omar-khaium/copilot/fix-release-date-output (6268290)
+- Merge pull request #43 from omar-khaium/mobile (8736dbf)
+- Merge pull request #44 from omar-khaium/copilot/sub-pr-43 (91414c4)
+- Fix C# syntax error in AuthController by merging duplicate class members (cf94e29)
+- Initial plan (fe770bf)
+- Merge pull request #40 from omar-khaium/copilot/implement-biometric-login (68d822b)
+- Implement biometric login functionality and enhance authentication flow (2d28a8d)
+- Fix merge conflicts: remove duplicate User and FakeAuthRepository classes, add localized password validation (fe577bd)
+- Merge branch 'mobile' into copilot/implement-biometric-login (605ebb4)
+- Merge pull request #42 from omar-khaium/copilot/create-emergency-history-screen (546dca0)
+- Merge branch 'mobile' into copilot/create-emergency-history-screen (f4f6a81)
 
 ---
+
 
 
 <<<<<<< HEAD
