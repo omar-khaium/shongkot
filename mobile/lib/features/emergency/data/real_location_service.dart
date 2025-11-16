@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart' as geolocator;
 import 'package:permission_handler/permission_handler.dart' as ph;
 import '../domain/rapid_emergency_request.dart';
 import 'location_service.dart';
@@ -36,9 +36,9 @@ class RealLocationService implements LocationService {
       }
 
       // Get current position with high accuracy
-      final position = await Geolocator.getCurrentPosition(
-        locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.high,
+      final position = await geolocator.Geolocator.getCurrentPosition(
+        locationSettings: const geolocator.LocationSettings(
+          accuracy: geolocator.LocationAccuracy.high,
           distanceFilter: 10, // Only update if moved 10 meters
         ),
       );
@@ -63,7 +63,7 @@ class RealLocationService implements LocationService {
   @override
   Future<bool> isLocationEnabled() async {
     try {
-      return await Geolocator.isLocationServiceEnabled();
+      return await geolocator.Geolocator.isLocationServiceEnabled();
     } catch (e) {
       debugPrint('📍 Error checking location service: $e');
       return false;
@@ -157,12 +157,12 @@ class RealLocationService implements LocationService {
   }) {
     debugPrint('📍 Starting location stream with ${interval.inSeconds}s interval...');
     
-    const locationSettings = LocationSettings(
-      accuracy: LocationAccuracy.high,
+    const locationSettings = geolocator.LocationSettings(
+      accuracy: geolocator.LocationAccuracy.high,
       distanceFilter: 10, // Update every 10 meters
     );
 
-    return Geolocator.getPositionStream(
+    return geolocator.Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).map((position) {
       final location = _positionToEmergencyLocation(position);
@@ -190,7 +190,7 @@ class RealLocationService implements LocationService {
   }
 
   /// Convert Geolocator Position to EmergencyLocation
-  EmergencyLocation _positionToEmergencyLocation(Position position) {
+  EmergencyLocation _positionToEmergencyLocation(geolocator.Position position) {
     final accuracyLevel = 
         LocationAccuracy.fromAccuracyValue(position.accuracy);
     
@@ -233,7 +233,7 @@ class RealLocationService implements LocationService {
     try {
       debugPrint('📍 Getting last known location...');
       
-      final position = await Geolocator.getLastKnownPosition();
+      final position = await geolocator.Geolocator.getLastKnownPosition();
       if (position == null) {
         debugPrint('📍 No last known position available');
         return _getCachedLocationIfValid();
@@ -260,7 +260,7 @@ class RealLocationService implements LocationService {
         return null;
       }
 
-      final distance = Geolocator.distanceBetween(
+      final distance = geolocator.Geolocator.distanceBetween(
         currentLocation.latitude,
         currentLocation.longitude,
         latitude,
