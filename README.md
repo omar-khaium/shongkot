@@ -58,8 +58,15 @@ Merge a4006f6f4c323407c8a01d1dd1eda6cb2126528a into 426782731a263928457ae4f59d2a
 
 ## 📚 Documentation
 
-For comprehensive documentation, please visit:
+### 🚀 Mobile App Development
+- **[Quick Start Guide](QUICK_START.md)** - Get started developing the mobile app
+- **[Development Plan](MOBILE_APP_DEVELOPMENT_PLAN.md)** - Complete 6-month development roadmap
+- **[GitHub Projects Setup](GITHUB_PROJECTS_SETUP.md)** - How to use GitHub Projects for task management
+- **[Mobile App README](mobile/README.md)** - Mobile-specific documentation
+- **[Design System](mobile/DESIGN_SYSTEM.md)** - UI/UX design guidelines
+- **[Component Guide](mobile/COMPONENT_GUIDE.md)** - Reusable component documentation
 
+### 📖 General Documentation
 - **[Complete Wiki](docs/WIKI.md)** - Full documentation including architecture, setup, deployment
 - **[Branch Strategy](docs/BRANCH_STRATEGY.md)** - Development workflow and branch management
 - **[Architecture](docs/ARCHITECTURE.md)** - System architecture and design
@@ -112,6 +119,28 @@ flutter run
 - Backend features → `backend` branch → `main`
 
 See [Branch Strategy](docs/BRANCH_STRATEGY.md) for detailed workflow.
+
+---
+
+## 🎯 Development Roadmap
+
+We're actively developing the mobile app following a comprehensive 6-month roadmap:
+
+**Current Phase**: Phase 1 - Foundation & Core Features (Weeks 1-4)
+
+### Development Phases
+1. **Phase 1**: Authentication, Location Services, API Integration
+2. **Phase 2**: Push Notifications, Messaging, Contacts Management
+3. **Phase 3**: Responder Discovery, Interaction, Tracking
+4. **Phase 4**: Interactive Maps, Navigation, Geofencing
+5. **Phase 5**: Media Capture, Evidence Documentation
+6. **Phase 6**: Advanced Safety & Social Features
+7. **Phase 7**: iOS Support, Performance, Accessibility
+8. **Phase 8**: Testing, Beta Program, Production Launch
+
+**📋 View the complete plan**: [MOBILE_APP_DEVELOPMENT_PLAN.md](MOBILE_APP_DEVELOPMENT_PLAN.md)  
+**🚀 Get started developing**: [QUICK_START.md](QUICK_START.md)  
+**📊 Track progress**: [GitHub Projects](https://github.com/omar-khaium/shongkot/projects)
 
 ---
 
