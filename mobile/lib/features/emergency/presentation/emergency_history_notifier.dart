@@ -151,15 +151,21 @@ class EmergencyHistoryNotifier extends StateNotifier<EmergencyHistoryState> {
 
   /// Set status filter
   Future<void> setStatusFilter(EmergencyStatus? status) async {
-    state = state.copyWith(statusFilter: status, currentPage: 0);
+    state = state.copyWithNullable(
+      statusFilter: status,
+      clearStatusFilter: status == null,
+      currentPage: 0,
+    );
     await loadHistory(refresh: true);
   }
 
   /// Set date range filter
   Future<void> setDateRangeFilter(DateTime? from, DateTime? to) async {
-    state = state.copyWith(
+    state = state.copyWithNullable(
       fromDateFilter: from,
+      clearFromDateFilter: from == null,
       toDateFilter: to,
+      clearToDateFilter: to == null,
       currentPage: 0,
     );
     await loadHistory(refresh: true);
@@ -167,7 +173,11 @@ class EmergencyHistoryNotifier extends StateNotifier<EmergencyHistoryState> {
 
   /// Set search query
   Future<void> setSearchQuery(String? query) async {
-    state = state.copyWith(searchQuery: query, currentPage: 0);
+    state = state.copyWithNullable(
+      searchQuery: query,
+      clearSearchQuery: query == null,
+      currentPage: 0,
+    );
     await loadHistory(refresh: true);
   }
 

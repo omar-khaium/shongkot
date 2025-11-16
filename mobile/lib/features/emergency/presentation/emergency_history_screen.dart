@@ -83,30 +83,35 @@ class _EmergencyHistoryScreenState
           // Search bar
           Padding(
             padding: const EdgeInsets.all(AppSpacing.screenPadding),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: l10n.searchEmergencies,
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: _searchController.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          _searchController.clear();
-                          ref
-                              .read(emergencyHistoryProvider.notifier)
-                              .setSearchQuery(null);
-                        },
-                      )
-                    : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              onChanged: (value) {
-                ref
-                    .read(emergencyHistoryProvider.notifier)
-                    .setSearchQuery(value.isEmpty ? null : value);
+            child: ValueListenableBuilder<TextEditingValue>(
+              valueListenable: _searchController,
+              builder: (context, value, _) {
+                return TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: l10n.searchEmergencies,
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: value.text.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: () {
+                              _searchController.clear();
+                              ref
+                                  .read(emergencyHistoryProvider.notifier)
+                                  .setSearchQuery(null);
+                            },
+                          )
+                        : null,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    ref
+                        .read(emergencyHistoryProvider.notifier)
+                        .setSearchQuery(value.isEmpty ? null : value);
+                  },
+                );
               },
             ),
           ),
@@ -195,7 +200,7 @@ class _EmergencyHistoryScreenState
                         const SizedBox(height: AppSpacing.md),
                         ElevatedButton(
                           onPressed: _onRefresh,
-                          child: const Text('Retry'),
+                          child: Text(l10n.retry),
                         ),
                       ],
                     ),
@@ -262,13 +267,14 @@ class _EmergencyHistoryScreenState
   }
 
   String _getDateRangeText(DateTime? from, DateTime? to) {
+    final l10n = AppLocalizations.of(context)!;
     final dateFormat = DateFormat.yMMMd();
     if (from != null && to != null) {
       return '${dateFormat.format(from)} - ${dateFormat.format(to)}';
     } else if (from != null) {
-      return 'From ${dateFormat.format(from)}';
+      return '${l10n.from} ${dateFormat.format(from)}';
     } else if (to != null) {
-      return 'To ${dateFormat.format(to)}';
+      return '${l10n.to} ${dateFormat.format(to)}';
     }
     return '';
   }
@@ -303,7 +309,7 @@ class _EmergencyListItem extends StatelessWidget {
                     vertical: AppSpacing.xs,
                   ),
                   decoration: BoxDecoration(
-                    color: _getStatusColor(emergency.status).withAlpha(30),
+                    color: _getStatusColor(emergency.status).withOpacity(30 / 255),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(

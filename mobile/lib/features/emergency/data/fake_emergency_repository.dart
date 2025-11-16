@@ -165,12 +165,23 @@ class FakeEmergencyRepository implements EmergencyRepository {
     );
   }
 
-  /// Get all emergency history (useful for testing)
+  /// Returns an unmodifiable view of all emergencies in the repository.
+  ///
+  /// This method is primarily intended for testing purposes and should not be used
+  /// in production code. The returned list cannot be modified.
   List<Emergency> getAllEmergencies() {
     return List.unmodifiable(_emergencyHistory);
   }
 
-  /// Update emergency status (useful for testing)
+  /// Updates the status of an emergency with the given ID.
+  ///
+  /// This method is primarily for testing purposes. It finds the emergency by [id]
+  /// and updates its [status] along with setting the [updatedAt] timestamp to now.
+  /// If no emergency with the given ID is found, no action is taken.
+  ///
+  /// Parameters:
+  /// - [id]: The unique identifier of the emergency to update
+  /// - [status]: The new status to set for the emergency
   void updateEmergencyStatus(String id, EmergencyStatus status) {
     final index = _emergencyHistory.indexWhere((e) => e.id == id);
     if (index != -1) {

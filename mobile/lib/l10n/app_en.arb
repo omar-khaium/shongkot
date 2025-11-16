@@ -300,5 +300,9 @@
   "noTypeSpecified": "No Type Specified",
   "@noTypeSpecified": {
     "description": "Message when emergency type is not specified"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button text"
   }
 }
