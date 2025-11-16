@@ -149,4 +149,121 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsOfService => 'Terms of Service';
+
+  @override
+  String get crimeInProgress => 'Crime in Progress';
+
+  @override
+  String get rapidCrimeTitle => 'What type of emergency?';
+
+  @override
+  String get rapidCrimeSubtitle => 'This helps responders prepare (optional)';
+
+  @override
+  String get sexualAssault => 'Sexual Assault / Rape';
+
+  @override
+  String get physicalAssault => 'Physical Assault / Beating';
+
+  @override
+  String get kidnapping => 'Kidnapping / Abduction';
+
+  @override
+  String get otherViolentCrime => 'Other Violent Crime';
+
+  @override
+  String get skipThisStep => 'Skip this step';
+
+  @override
+  String get rapidSosSent => 'Rapid Emergency Alert Sent';
+
+  @override
+  String get rapidSosDescription =>
+      'Your location and alert have been recorded. Help is on the way.';
+
+  @override
+  String get register => 'Register';
+
+  @override
+  String get registerTitle => 'Create Account';
+
+  @override
+  String get registerSubtitle =>
+      'Sign up to access emergency response features';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get alreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get emailOrPhone => 'Email or Phone Number';
+
+  @override
+  String get iAgreeToThe => 'I agree to the';
+
+  @override
+  String get and => 'and';
+
+  @override
+  String get registrationSuccess => 'Registration Successful!';
+
+  @override
+  String get registrationSuccessMessage =>
+      'Your account has been created successfully. Please verify your contact information.';
+
+  @override
+  String get continueToApp => 'Continue to App';
+
+  @override
+  String get verifyAccount => 'Verify Account';
+
+  @override
+  String get emailRequired => 'Email is required';
+
+  @override
+  String get emailInvalid => 'Please enter a valid email';
+
+  @override
+  String get phoneRequired => 'Phone number is required';
+
+  @override
+  String get phoneInvalid => 'Please enter a valid phone number';
+
+  @override
+  String get passwordRequired => 'Password is required';
+
+  @override
+  String get passwordTooShort => 'Password must be at least 8 characters';
+
+  @override
+  String get passwordNoUppercase => 'Password must contain an uppercase letter';
+
+  @override
+  String get passwordNoLowercase => 'Password must contain a lowercase letter';
+
+  @override
+  String get passwordNoNumber => 'Password must contain a number';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get termsRequired => 'You must accept the terms and privacy policy';
+
+  @override
+  String get accountExists => 'An account with this email/phone already exists';
+
+  @override
+  String get registrationFailed => 'Registration failed. Please try again.';
+
+  @override
+  String get networkError => 'Network error. Please check your connection.';
 }
