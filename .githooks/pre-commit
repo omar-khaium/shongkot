@@ -50,6 +50,15 @@ if [ -n "$MOBILE_FILES" ]; then
         echo "   Then fix the issues and commit again."
         exit 1
     fi
+    # Check for flutter test errors (only if firebase_options.dart exists or can be skipped)
+    echo "  ✓ Running flutter tests with coverage..."
+    if ! flutter test --coverage; then
+        echo ""
+        echo "❌ Flutter tests failed!"
+        echo "   Run: cd mobile && flutter test --coverage"
+        echo "   Then fix the issues and commit again."
+        exit 1
+    fi
     
     # Create a temporary firebase_options.dart if it doesn't exist
     TEMP_FIREBASE_OPTIONS=false
