@@ -70,24 +70,6 @@ class RegistrationSuccessScreen extends StatelessWidget {
                 },
                 fullWidth: true,
               ),
-              const SizedBox(height: AppSpacing.md),
-
-              // Verify account button (optional)
-              AppButton(
-                text: l10n.verifyAccount,
-                onPressed: () {
-                  // TODO: Navigate to verification screen
-                  // For now, just navigate to main app
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => const AppNavigation(),
-                    ),
-                    (route) => false,
-                  );
-                },
-                variant: ButtonVariant.secondary,
-                fullWidth: true,
-              ),
             ],
           ),
         ),

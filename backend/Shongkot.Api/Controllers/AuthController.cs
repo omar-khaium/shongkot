@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Shongkot.Domain.Entities;
+using System.Collections.Concurrent;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Shongkot.Api.Controllers;
 
@@ -8,7 +11,8 @@ namespace Shongkot.Api.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly ILogger<AuthController> _logger;
-    private static readonly List<User> _users = new();
+    // Thread-safe collection for storing users
+    private static readonly ConcurrentDictionary<string, User> _users = new();
 
     public AuthController(ILogger<AuthController> logger)
     {
@@ -41,8 +45,8 @@ public class AuthController : ControllerBase
         }
 
         // Check if user already exists
-        var identifier = request.Email ?? request.PhoneNumber;
-        var existingUser = _users.FirstOrDefault(u => 
+        var key = request.Email ?? request.PhoneNumber ?? string.Empty;
+        var existingUser = _users.Values.FirstOrDefault(u => 
             u.Email == request.Email || u.PhoneNumber == request.PhoneNumber);
 
         if (existingUser != null)
@@ -56,20 +60,23 @@ public class AuthController : ControllerBase
             Id = Guid.NewGuid(),
             Email = request.Email,
             PhoneNumber = request.PhoneNumber,
-            PasswordHash = HashPassword(request.Password), // In production, use proper hashing
+            PasswordHash = HashPassword(request.Password),
             IsEmailVerified = false,
             IsPhoneVerified = false,
             CreatedAt = DateTime.UtcNow
         };
 
-        _users.Add(user);
+        // Use TryAdd for thread-safe insertion
+        if (!_users.TryAdd(key, user))
+        {
+            return Conflict(new { message = "An account with this email/phone already exists" });
+        }
 
         _logger.LogInformation("User registered: Email={Email}, Phone={Phone}", 
             user.Email, user.PhoneNumber);
 
         // In a real application, this would:
-        // - Hash password securely (e.g., using BCrypt)
-        // - Save to database
+        // - Save to database with proper transaction handling
         // - Send verification email/SMS
         // - Generate JWT token
 
@@ -92,7 +99,7 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<UserResponse> GetUser(Guid id)
     {
-        var user = _users.FirstOrDefault(u => u.Id == id);
+        var user = _users.Values.FirstOrDefault(u => u.Id == id);
         if (user == null)
         {
             return NotFound();
@@ -124,16 +131,21 @@ public class AuthController : ControllerBase
             return BadRequest(new { message = "Email or phone is required" });
         }
 
-        var exists = _users.Any(u => 
+        var exists = _users.Values.Any(u => 
             u.Email == emailOrPhone || u.PhoneNumber == emailOrPhone);
 
         return Ok(new AvailabilityResponse { IsAvailable = !exists });
     }
 
-    // Simple password hashing for demonstration (use proper hashing in production)
+    /// <summary>
+    /// Hash password using SHA256 (better than Base64 but still not production-grade)
+    /// For production, use BCrypt, Argon2, or ASP.NET Core Identity's PasswordHasher
+    /// </summary>
     private static string HashPassword(string password)
     {
-        return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(password));
+        using var sha256 = SHA256.Create();
+        var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+        return Convert.ToBase64String(hashedBytes);
     }
 }
 
