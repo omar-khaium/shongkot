@@ -182,6 +182,59 @@ class AppLocalizationsBn extends AppLocalizations {
       'আপনার অবস্থান এবং সতর্কতা রেকর্ড করা হয়েছে। সাহায্য আসছে।';
 
   @override
+  String get emergencyHistory => 'জরুরী ইতিহাস';
+
+  @override
+  String get noEmergencies => 'কোন জরুরী অবস্থা পাওয়া যায়নি';
+
+  @override
+  String get noEmergenciesDescription =>
+      'আপনার জরুরী ইতিহাস এখানে প্রদর্শিত হবে';
+
+  @override
+  String get filterByStatus => 'অবস্থা দ্বারা ফিল্টার করুন';
+
+  @override
+  String get allStatuses => 'সকল অবস্থা';
+
+  @override
+  String get pending => 'অপেক্ষারত';
+
+  @override
+  String get resolved => 'সমাধান করা';
+
+  @override
+  String get cancelled => 'বাতিল করা';
+
+  @override
+  String get searchEmergencies => 'ধরন বা অবস্থান দ্বারা অনুসন্ধান করুন';
+
+  @override
+  String get dateRange => 'তারিখ পরিসীমা';
+
+  @override
+  String get from => 'থেকে';
+
+  @override
+  String get to => 'পর্যন্ত';
+
+  @override
+  String get clearFilters => 'ফিল্টার সাফ করুন';
+
+  @override
+  String get sortBy => 'সাজান';
+
+  @override
+  String get newest => 'নতুন প্রথম';
+
+  @override
+  String get oldest => 'পুরাতন প্রথম';
+
+  @override
+  String get loadingEmergencies => 'জরুরী অবস্থা লোড হচ্ছে...';
+
+  @override
+  String get noTypeSpecified => 'কোন ধরন নির্দিষ্ট করা হয়নি';
   String get register => 'নিবন্ধন';
 
   @override

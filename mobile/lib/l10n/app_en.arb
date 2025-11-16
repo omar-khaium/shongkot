@@ -229,6 +229,81 @@
   "@rapidSosDescription": {
     "description": "Description for rapid SOS confirmation"
   },
+  "emergencyHistory": "Emergency History",
+  "@emergencyHistory": {
+    "description": "Emergency history screen title"
+  },
+  "noEmergencies": "No emergencies found",
+  "@noEmergencies": {
+    "description": "Empty state message when no emergencies exist"
+  },
+  "noEmergenciesDescription": "Your emergency history will appear here",
+  "@noEmergenciesDescription": {
+    "description": "Empty state description"
+  },
+  "filterByStatus": "Filter by Status",
+  "@filterByStatus": {
+    "description": "Filter by status label"
+  },
+  "allStatuses": "All Statuses",
+  "@allStatuses": {
+    "description": "All statuses filter option"
+  },
+  "pending": "Pending",
+  "@pending": {
+    "description": "Pending status"
+  },
+  "resolved": "Resolved",
+  "@resolved": {
+    "description": "Resolved status"
+  },
+  "cancelled": "Cancelled",
+  "@cancelled": {
+    "description": "Cancelled status"
+  },
+  "searchEmergencies": "Search by type or location",
+  "@searchEmergencies": {
+    "description": "Search field hint"
+  },
+  "dateRange": "Date Range",
+  "@dateRange": {
+    "description": "Date range filter label"
+  },
+  "from": "From",
+  "@from": {
+    "description": "From date label"
+  },
+  "to": "To",
+  "@to": {
+    "description": "To date label"
+  },
+  "clearFilters": "Clear Filters",
+  "@clearFilters": {
+    "description": "Clear filters button"
+  },
+  "sortBy": "Sort by",
+  "@sortBy": {
+    "description": "Sort by label"
+  },
+  "newest": "Newest First",
+  "@newest": {
+    "description": "Newest first sort option"
+  },
+  "oldest": "Oldest First",
+  "@oldest": {
+    "description": "Oldest first sort option"
+  },
+  "loadingEmergencies": "Loading emergencies...",
+  "@loadingEmergencies": {
+    "description": "Loading message"
+  },
+  "noTypeSpecified": "No Type Specified",
+  "@noTypeSpecified": {
+    "description": "Message when emergency type is not specified"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button text"
   "register": "Register",
   "@register": {
     "description": "Register button label"

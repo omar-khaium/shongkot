@@ -182,6 +182,59 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your location and alert have been recorded. Help is on the way.';
 
   @override
+  String get emergencyHistory => 'Emergency History';
+
+  @override
+  String get noEmergencies => 'No emergencies found';
+
+  @override
+  String get noEmergenciesDescription =>
+      'Your emergency history will appear here';
+
+  @override
+  String get filterByStatus => 'Filter by Status';
+
+  @override
+  String get allStatuses => 'All Statuses';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get resolved => 'Resolved';
+
+  @override
+  String get cancelled => 'Cancelled';
+
+  @override
+  String get searchEmergencies => 'Search by type or location';
+
+  @override
+  String get dateRange => 'Date Range';
+
+  @override
+  String get from => 'From';
+
+  @override
+  String get to => 'To';
+
+  @override
+  String get clearFilters => 'Clear Filters';
+
+  @override
+  String get sortBy => 'Sort by';
+
+  @override
+  String get newest => 'Newest First';
+
+  @override
+  String get oldest => 'Oldest First';
+
+  @override
+  String get loadingEmergencies => 'Loading emergencies...';
+
+  @override
+  String get noTypeSpecified => 'No Type Specified';
   String get register => 'Register';
 
   @override
