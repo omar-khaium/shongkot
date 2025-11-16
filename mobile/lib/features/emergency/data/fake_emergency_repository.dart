@@ -10,9 +10,13 @@ import '../domain/rapid_emergency_request.dart';
 class FakeEmergencyRepository implements EmergencyRepository {
   RapidEmergencyRequest? _lastEmergency;
   final List<Emergency> _emergencyHistory = [];
+  final bool _seedSampleData;
   
-  FakeEmergencyRepository() {
-    _initializeSampleData();
+  FakeEmergencyRepository({bool seedSampleData = true})
+      : _seedSampleData = seedSampleData {
+    if (_seedSampleData) {
+      _initializeSampleData();
+    }
   }
 
   /// Initialize with some sample data for testing

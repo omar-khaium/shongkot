@@ -11,7 +11,7 @@ void main() {
     late EmergencyHistoryNotifier notifier;
 
     setUp(() {
-      repository = FakeEmergencyRepository();
+      repository = FakeEmergencyRepository(seedSampleData: false);
       notifier = EmergencyHistoryNotifier(repository);
     });
 

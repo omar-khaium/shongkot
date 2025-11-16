@@ -9,7 +9,7 @@ void main() {
     late FakeEmergencyRepository repository;
 
     setUp(() {
-      repository = FakeEmergencyRepository();
+      repository = FakeEmergencyRepository(seedSampleData: false);
     });
 
     tearDown(() {
