@@ -34,6 +34,10 @@ jobs:
     - name: Get dependencies
       run: flutter pub get
       working-directory: ./mobile
+      
+    - name: Verify formatting
+      run: dart format --output=none --set-exit-if-changed .
+      working-directory: ./mobile
     
     - name: Generate firebase_options.dart
       uses: ./.github/actions/generate-firebase-options
@@ -47,15 +51,7 @@ jobs:
         FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       
-    - name: Verify formatting
-      run: dart format --output=none --set-exit-if-changed .
-      working-directory: ./mobile
-      
-    - name: Run dart analyze
-      run: dart analyze
-      working-directory: ./mobile
-      
-    - name: Run flutter analyze
+    - name: Analyze code
       run: flutter analyze
       working-directory: ./mobile
       
@@ -113,6 +109,12 @@ jobs:
     name: Build Android APK & AAB
     runs-on: ubuntu-latest
     needs: analyze-and-test
+<<<<<<< HEAD
+    env:
+      FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+=======
+>>>>>>> origin/main
     
     steps:
     - name: Checkout code
