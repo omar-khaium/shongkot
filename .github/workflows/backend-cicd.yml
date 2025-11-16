@@ -85,9 +85,14 @@ jobs:
         
     - name: Test Docker image
       run: |
-        docker run -d -p 8080:8080 --name test-container shongkot-api:latest
-        sleep 10
-        curl -f http://localhost:8080/health || exit 1
+        docker run -d -p 8080:8080 \
+          -e ASPNETCORE_ENVIRONMENT=Development \
+          -e Jwt__SecretKey="TestSecretKeyForDockerHealthCheckOnly123456" \
+          --name test-container shongkot-api:latest
+        echo "Waiting for container to start..."
+        sleep 15
+        echo "Testing health endpoint..."
+        curl -f http://localhost:8080/health || (docker logs test-container && exit 1)
         docker stop test-container
         docker rm test-container
         

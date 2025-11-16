@@ -33,8 +33,10 @@ COPY --from=build /app/publish .
 EXPOSE 8080
 
 # Set environment variables
+# Use Development by default to avoid startup failures with default secrets
+# Production deployments should override ASPNETCORE_ENVIRONMENT and set proper secrets
 ENV ASPNETCORE_URLS=http://+:8080
-ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ASPNETCORE_ENVIRONMENT=Development
 
 # Run the application
 ENTRYPOINT ["dotnet", "Shongkot.Api.dll"]
