@@ -19,4 +19,13 @@ final biometricServiceProvider = Provider<BiometricService>((ref) {
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   final secureStorage = ref.watch(secureStorageServiceProvider);
   return FakeAuthRepository(secureStorage: secureStorage);
+
+/// Singleton instance of the auth repository to maintain state across the app
+final _authRepositoryInstance = FakeAuthRepository();
+
+/// Provider for the auth repository
+/// Currently using fake implementation for development
+/// Uses singleton pattern to ensure user data persists across widget rebuilds
+final authRepositoryProvider = Provider<AuthRepository>((ref) {
+  return _authRepositoryInstance;
 });

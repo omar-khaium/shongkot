@@ -7,6 +7,7 @@ import 'core/theme/app_theme.dart';
 import 'core/providers/theme_provider.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/navigation/auth_wrapper.dart';
+import 'core/widgets/auth_gate.dart';
 import 'l10n/app_localizations.dart';
 
 void main() async {

@@ -244,6 +244,92 @@
   "emailOrPhone": "Email or Phone",
   "@emailOrPhone": {
     "description": "Email or phone field label"
+  "emergencyHistory": "Emergency History",
+  "@emergencyHistory": {
+    "description": "Emergency history screen title"
+  },
+  "noEmergencies": "No emergencies found",
+  "@noEmergencies": {
+    "description": "Empty state message when no emergencies exist"
+  },
+  "noEmergenciesDescription": "Your emergency history will appear here",
+  "@noEmergenciesDescription": {
+    "description": "Empty state description"
+  },
+  "filterByStatus": "Filter by Status",
+  "@filterByStatus": {
+    "description": "Filter by status label"
+  },
+  "allStatuses": "All Statuses",
+  "@allStatuses": {
+    "description": "All statuses filter option"
+  },
+  "pending": "Pending",
+  "@pending": {
+    "description": "Pending status"
+  },
+  "resolved": "Resolved",
+  "@resolved": {
+    "description": "Resolved status"
+  },
+  "cancelled": "Cancelled",
+  "@cancelled": {
+    "description": "Cancelled status"
+  },
+  "searchEmergencies": "Search by type or location",
+  "@searchEmergencies": {
+    "description": "Search field hint"
+  },
+  "dateRange": "Date Range",
+  "@dateRange": {
+    "description": "Date range filter label"
+  },
+  "from": "From",
+  "@from": {
+    "description": "From date label"
+  },
+  "to": "To",
+  "@to": {
+    "description": "To date label"
+  },
+  "clearFilters": "Clear Filters",
+  "@clearFilters": {
+    "description": "Clear filters button"
+  },
+  "sortBy": "Sort by",
+  "@sortBy": {
+    "description": "Sort by label"
+  },
+  "newest": "Newest First",
+  "@newest": {
+    "description": "Newest first sort option"
+  },
+  "oldest": "Oldest First",
+  "@oldest": {
+    "description": "Oldest first sort option"
+  },
+  "loadingEmergencies": "Loading emergencies...",
+  "@loadingEmergencies": {
+    "description": "Loading message"
+  },
+  "noTypeSpecified": "No Type Specified",
+  "@noTypeSpecified": {
+    "description": "Message when emergency type is not specified"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button text"
+  "register": "Register",
+  "@register": {
+    "description": "Register button label"
+  },
+  "registerTitle": "Create Account",
+  "@registerTitle": {
+    "description": "Registration screen title"
+  },
+  "registerSubtitle": "Sign up to access emergency response features",
+  "@registerSubtitle": {
+    "description": "Registration screen subtitle"
   },
   "password": "Password",
   "@password": {
@@ -288,5 +374,104 @@
   "invalidEmail": "Please enter a valid email",
   "@invalidEmail": {
     "description": "Invalid email validation message"
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "Confirm password field label"
+  },
+  "alreadyHaveAccount": "Already have an account?",
+  "@alreadyHaveAccount": {
+    "description": "Prompt for existing users"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login button label"
+  },
+  "emailOrPhone": "Email or Phone Number",
+  "@emailOrPhone": {
+    "description": "Email or phone input label"
+  },
+  "iAgreeToThe": "I agree to the",
+  "@iAgreeToThe": {
+    "description": "Terms acceptance prefix"
+  },
+  "and": "and",
+  "@and": {
+    "description": "Conjunction between terms and privacy"
+  },
+  "registrationSuccess": "Registration Successful!",
+  "@registrationSuccess": {
+    "description": "Registration success title"
+  },
+  "registrationSuccessMessage": "Your account has been created successfully. Please verify your contact information.",
+  "@registrationSuccessMessage": {
+    "description": "Registration success message"
+  },
+  "continueToApp": "Continue to App",
+  "@continueToApp": {
+    "description": "Continue button after registration"
+  },
+  "verifyAccount": "Verify Account",
+  "@verifyAccount": {
+    "description": "Verify account button"
+  },
+  "emailRequired": "Email is required",
+  "@emailRequired": {
+    "description": "Email required error"
+  },
+  "emailInvalid": "Please enter a valid email",
+  "@emailInvalid": {
+    "description": "Email invalid error"
+  },
+  "phoneRequired": "Phone number is required",
+  "@phoneRequired": {
+    "description": "Phone required error"
+  },
+  "phoneInvalid": "Please enter a valid phone number",
+  "@phoneInvalid": {
+    "description": "Phone invalid error"
+  },
+  "passwordRequired": "Password is required",
+  "@passwordRequired": {
+    "description": "Password required error"
+  },
+  "passwordTooShort": "Password must be at least 8 characters",
+  "@passwordTooShort": {
+    "description": "Password too short error"
+  },
+  "passwordNoUppercase": "Password must contain an uppercase letter",
+  "@passwordNoUppercase": {
+    "description": "Password no uppercase error"
+  },
+  "passwordNoLowercase": "Password must contain a lowercase letter",
+  "@passwordNoLowercase": {
+    "description": "Password no lowercase error"
+  },
+  "passwordNoNumber": "Password must contain a number",
+  "@passwordNoNumber": {
+    "description": "Password no number error"
+  },
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {
+    "description": "Passwords mismatch error"
+  },
+  "termsRequired": "You must accept the terms and privacy policy",
+  "@termsRequired": {
+    "description": "Terms acceptance required error"
+  },
+  "accountExists": "An account with this email/phone already exists",
+  "@accountExists": {
+    "description": "Account already exists error"
+  },
+  "registrationFailed": "Registration failed. Please try again.",
+  "@registrationFailed": {
+    "description": "Generic registration failure message"
+  },
+  "networkError": "Network error. Please check your connection.",
+  "@networkError": {
+    "description": "Network error message"
+  },
+  "pleaseEnterAllSixDigits": "Please enter all 6 digits",
+  "@pleaseEnterAllSixDigits": {
+    "description": "Error message when OTP is incomplete"
   }
 }

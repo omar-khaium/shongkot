@@ -6,6 +6,7 @@ Emergency responder mobile application built with Flutter.
 
 - 🔐 **Authentication** - Login with email/phone and password, plus biometric support
 - 🚨 **Emergency SOS Button** - One-tap emergency activation with hold-to-confirm
+- 📍 **GPS Location Tracking** - Real-time location tracking with high accuracy during emergencies
 - 📱 **Modern UI** - Clean, minimal design inspired by shadcn
 - 🌓 **Dark/Light Theme** - Full theme support with system preference detection
 - 🌍 **Multi-language** - Support for English and Bengali
@@ -176,6 +177,81 @@ The app supports three theme modes:
 
 Theme preference is persisted using SharedPreferences.
 
+## GPS Location Tracking
+
+The app includes comprehensive GPS location tracking for emergency situations:
+
+### Features
+
+- **High Accuracy Tracking** - Uses GPS for precise location (< 10m accuracy)
+- **Background Updates** - Continuous location tracking during active emergencies
+- **Battery Optimization** - Smart caching and configurable update intervals
+- **Permission Management** - Handles both foreground and background location permissions
+- **Offline Support** - Location caching for scenarios with poor connectivity
+- **Accuracy Indicators** - Classifies location quality (high/medium/low)
+- **Fallback Options** - Uses last known location when GPS is unavailable
+
+### Location Service
+
+The app uses two location service implementations:
+
+- **RealLocationService** - Production GPS tracking using `geolocator` package
+- **FakeLocationService** - Development/testing with mock locations
+
+Switch between services in `lib/features/emergency/data/location_service_provider.dart`.
+
+### Platform Configuration
+
+#### Android
+Location permissions are configured in `android/app/src/main/AndroidManifest.xml`:
+- `ACCESS_FINE_LOCATION` - High accuracy GPS
+- `ACCESS_COARSE_LOCATION` - Network-based location
+- `ACCESS_BACKGROUND_LOCATION` - Background tracking (Android 10+)
+
+#### iOS
+Location setup requires configuration in `ios/Runner/Info.plist`. 
+See **[IOS_LOCATION_SETUP.md](IOS_LOCATION_SETUP.md)** for detailed instructions.
+
+### Usage
+
+```dart
+// Get location service
+final locationService = ref.read(locationServiceProvider);
+
+// Request permissions
+final hasPermission = await locationService.requestLocationPermission();
+
+// Get current location
+final location = await locationService.getCurrentLocation();
+
+// Start location stream for background tracking
+final stream = locationService.getLocationStream(
+  interval: Duration(seconds: 30),
+);
+```
+
+### Location Data Model
+
+```dart
+EmergencyLocation(
+  latitude: 23.8103,
+  longitude: 90.4125,
+  accuracy: 8.5,              // meters
+  altitude: 15.0,             // meters above sea level
+  timestamp: DateTime.now(),
+  accuracyLevel: LocationAccuracy.high,
+);
+```
+
+### Testing
+
+Run location tests:
+```bash
+flutter test test/unit/features/emergency/
+```
+
+Note: Real GPS testing requires physical devices.
+
 ## CI/CD
 
 The app is automatically built and deployed via GitHub Actions:
@@ -208,6 +284,7 @@ Note: `firebase_options.dart` is generated during CI/CD. For local development, 
 
 - [Design System](DESIGN_SYSTEM.md) - Complete design system
 - [Component Guide](COMPONENT_GUIDE.md) - Component usage examples
+- [iOS Location Setup](IOS_LOCATION_SETUP.md) - iOS GPS configuration guide
 - [Main README](../README.md) - Project overview
 - [Architecture](../docs/ARCHITECTURE.md) - System architecture
 
