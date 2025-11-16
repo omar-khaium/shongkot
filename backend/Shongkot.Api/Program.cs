@@ -17,6 +17,16 @@ var jwtSettings = new JwtSettings
     RefreshTokenExpirationDays = int.Parse(builder.Configuration["Jwt:RefreshTokenExpirationDays"] ?? "7")
 };
 
+// Security check: Warn if using default JWT secret key in production
+if (builder.Environment.IsProduction() && 
+    jwtSettings.SecretKey == "YourSuperSecretKeyThatIsAtLeast32CharactersLongForHS256")
+{
+    throw new InvalidOperationException(
+        "SECURITY ERROR: Default JWT secret key detected in production environment. " +
+        "You must set a secure JWT:SecretKey in environment variables or configuration. " +
+        "Generate a secure key with: openssl rand -base64 32");
+}
+
 builder.Services.Configure<JwtSettings>(options =>
 {
     options.SecretKey = jwtSettings.SecretKey;

@@ -8,7 +8,17 @@ namespace Shongkot.Infrastructure.Services;
 
 /// <summary>
 /// Implementation of authentication service
-/// In production, this should use a real database
+/// 
+/// ⚠️ WARNING: This implementation uses in-memory storage for MVP/development purposes only.
+/// DO NOT deploy to production without implementing a real database.
+/// 
+/// Issues with current implementation:
+/// - All user data lost on application restart
+/// - No audit trail for security incidents  
+/// - Not scalable beyond a single instance
+/// - Sessions invalidated on every deployment
+/// 
+/// TODO: Implement database storage using Entity Framework Core before production deployment.
 /// </summary>
 public class AuthService : IAuthService
 {
@@ -198,10 +208,26 @@ public class AuthService : IAuthService
             throw new ArgumentException("Password must contain at least one special character");
     }
 
+    /// <summary>
+    /// Login with Google OAuth token
+    /// 
+    /// ⚠️ SECURITY WARNING: This implementation does NOT verify the Google token.
+    /// The current mock implementation is INSECURE and must be replaced before production.
+    /// 
+    /// TODO: Implement proper Google token verification:
+    /// 1. Use Google.Apis.Auth.OAuth2 library
+    /// 2. Verify token signature using Google's public keys
+    /// 3. Validate audience, issuer, and expiration
+    /// 4. Extract verified user information from the validated token
+    /// 
+    /// Without proper verification, an attacker could bypass authentication
+    /// by providing any token string.
+    /// </summary>
     public async Task<(User user, TokenResponse tokens)> LoginWithGoogleAsync(string googleToken)
     {
         await Task.CompletedTask; // Simulate async
         
+        // ⚠️ MOCK IMPLEMENTATION - NOT SECURE
         // In production, verify the Google token with Google's API
         // For now, we'll extract a fake Google ID from the token
         var googleId = ExtractGoogleId(googleToken);
@@ -239,10 +265,25 @@ public class AuthService : IAuthService
         return (user, tokens);
     }
 
+    /// <summary>
+    /// Login with Facebook OAuth token
+    /// 
+    /// ⚠️ SECURITY WARNING: This implementation does NOT verify the Facebook token.
+    /// The current mock implementation is INSECURE and must be replaced before production.
+    /// 
+    /// TODO: Implement proper Facebook token verification:
+    /// 1. Call Facebook Graph API /me endpoint with the token
+    /// 2. Verify the app_id matches your Facebook app
+    /// 3. Validate token expiration and scope
+    /// 4. Extract verified user information
+    /// 
+    /// Without proper verification, an attacker could bypass authentication.
+    /// </summary>
     public async Task<(User user, TokenResponse tokens)> LoginWithFacebookAsync(string facebookToken)
     {
         await Task.CompletedTask; // Simulate async
         
+        // ⚠️ MOCK IMPLEMENTATION - NOT SECURE
         // In production, verify the Facebook token with Facebook's API
         var facebookId = ExtractFacebookId(facebookToken);
         
@@ -278,10 +319,26 @@ public class AuthService : IAuthService
         return (user, tokens);
     }
 
+    /// <summary>
+    /// Login with Apple Sign In token
+    /// 
+    /// ⚠️ SECURITY WARNING: This implementation does NOT verify the Apple token.
+    /// The current mock implementation is INSECURE and must be replaced before production.
+    /// 
+    /// TODO: Implement proper Apple token verification:
+    /// 1. Verify the identity token (JWT) using Apple's public keys
+    /// 2. Validate issuer is https://appleid.apple.com
+    /// 3. Validate audience matches your client_id
+    /// 4. Verify token signature and expiration
+    /// 5. Extract verified user information from validated token
+    /// 
+    /// Without proper verification, an attacker could bypass authentication.
+    /// </summary>
     public async Task<(User user, TokenResponse tokens)> LoginWithAppleAsync(string appleToken)
     {
         await Task.CompletedTask; // Simulate async
         
+        // ⚠️ MOCK IMPLEMENTATION - NOT SECURE
         // In production, verify the Apple token with Apple's API
         var appleId = ExtractAppleId(appleToken);
         
