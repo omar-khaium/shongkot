@@ -1,9 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shongkot.Application.Services;
 using Shongkot.Domain.Entities;
-using System.Collections.Concurrent;
-using System.Security.Cryptography;
-using System.Text;
+using System.Security.Claims;
 
 namespace Shongkot.Api.Controllers;
 
@@ -13,14 +12,16 @@ public class AuthController : ControllerBase
 {
     private readonly ILogger<AuthController> _logger;
     private readonly IVerificationService _verificationService;
-    
-    // Thread-safe collection for storing users
-    private static readonly ConcurrentDictionary<string, User> _users = new();
+    private readonly IAuthService _authService;
 
-    public AuthController(ILogger<AuthController> logger, IVerificationService verificationService)
+    public AuthController(
+        ILogger<AuthController> logger, 
+        IVerificationService verificationService,
+        IAuthService authService)
     {
         _logger = logger;
         _verificationService = verificationService;
+        _authService = authService;
     }
 
     /// <summary>
@@ -99,69 +100,351 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public ActionResult<RegisterResponse> Register([FromBody] RegisterRequest request)
+    public async Task<ActionResult<AuthResponse>> Register([FromBody] RegisterRequest request)
     {
-        // Validate request
-        if (string.IsNullOrWhiteSpace(request.Email) && string.IsNullOrWhiteSpace(request.PhoneNumber))
+        try
         {
-            return BadRequest(new { message = "Email or phone number is required" });
+            // Validate request
+            if (string.IsNullOrWhiteSpace(request.Email) && string.IsNullOrWhiteSpace(request.PhoneNumber))
+            {
+                return BadRequest(new { message = "Email or phone number is required" });
+            }
+
+            if (string.IsNullOrWhiteSpace(request.Password))
+            {
+                return BadRequest(new { message = "Password is required" });
+            }
+
+            if (!request.AcceptedTerms)
+            {
+                return BadRequest(new { message = "You must accept the terms and privacy policy" });
+            }
+
+            // Register user
+            var user = await _authService.RegisterAsync(
+                request.Email, 
+                request.PhoneNumber, 
+                request.Password,
+                request.Name
+            );
+
+            _logger.LogInformation("User registered: Email={Email}, Phone={Phone}", 
+                user.Email, user.PhoneNumber);
+
+            // Auto-login after registration
+            var result = await _authService.LoginAsync(
+                request.Email ?? request.PhoneNumber ?? string.Empty, 
+                request.Password
+            );
+
+            if (result == null)
+            {
+                return Problem("Failed to auto-login after registration");
+            }
+
+            var response = new AuthResponse
+            {
+                UserId = user.Id.ToString(),
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Name = user.Name,
+                AccessToken = result.Value.tokens.AccessToken,
+                RefreshToken = result.Value.tokens.RefreshToken,
+                ExpiresAt = result.Value.tokens.ExpiresAt,
+                TokenType = "Bearer"
+            };
+
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, response);
         }
-
-        if (string.IsNullOrWhiteSpace(request.Password))
+        catch (ArgumentException ex)
         {
-            return BadRequest(new { message = "Password is required" });
+            return BadRequest(new { message = ex.Message });
         }
-
-        if (!request.AcceptedTerms)
+        catch (InvalidOperationException ex)
         {
-            return BadRequest(new { message = "You must accept the terms and privacy policy" });
+            return Conflict(new { message = ex.Message });
         }
+    }
 
-        // Check if user already exists
-        var key = request.Email ?? request.PhoneNumber ?? string.Empty;
-        var existingUser = _users.Values.FirstOrDefault(u => 
-            u.Email == request.Email || u.PhoneNumber == request.PhoneNumber);
-
-        if (existingUser != null)
+    /// <summary>
+    /// Login with email/phone and password
+    /// </summary>
+    [HttpPost("login")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<AuthResponse>> Login([FromBody] LoginRequest request)
+    {
+        try
         {
-            return Conflict(new { message = "An account with this email/phone already exists" });
+            if (string.IsNullOrWhiteSpace(request.EmailOrPhone) || string.IsNullOrWhiteSpace(request.Password))
+            {
+                return BadRequest(new { message = "Email/phone and password are required" });
+            }
+
+            var result = await _authService.LoginAsync(request.EmailOrPhone, request.Password);
+
+            if (result == null)
+            {
+                return Unauthorized(new { message = "Invalid email/phone or password" });
+            }
+
+            var (user, tokens) = result.Value;
+
+            var response = new AuthResponse
+            {
+                UserId = user.Id.ToString(),
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Name = user.Name,
+                PhotoUrl = user.PhotoUrl,
+                AccessToken = tokens.AccessToken,
+                RefreshToken = tokens.RefreshToken,
+                ExpiresAt = tokens.ExpiresAt,
+                TokenType = "Bearer"
+            };
+
+            _logger.LogInformation("User logged in: {UserId}", user.Id);
+
+            return Ok(response);
         }
-
-        // Create new user
-        var user = new User
+        catch (Exception ex)
         {
-            Id = Guid.NewGuid(),
-            Email = request.Email,
-            PhoneNumber = request.PhoneNumber,
-            PasswordHash = HashPassword(request.Password),
-            IsEmailVerified = false,
-            IsPhoneVerified = false,
-            CreatedAt = DateTime.UtcNow
-        };
-
-        // Use TryAdd for thread-safe insertion
-        if (!_users.TryAdd(key, user))
-        {
-            return Conflict(new { message = "An account with this email/phone already exists" });
+            _logger.LogError(ex, "Login error");
+            return Problem("An error occurred during login");
         }
+    }
 
-        _logger.LogInformation("User registered: Email={Email}, Phone={Phone}", 
-            user.Email, user.PhoneNumber);
-
-        // In a real application, this would:
-        // - Save to database with proper transaction handling
-        // - Send verification email/SMS
-        // - Generate JWT token
-
-        var response = new RegisterResponse
+    /// <summary>
+    /// Refresh access token using refresh token
+    /// </summary>
+    [HttpPost("refresh")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<RefreshTokenResponse>> RefreshToken([FromBody] RefreshTokenRequest request)
+    {
+        try
         {
-            UserId = user.Id.ToString(),
-            Email = user.Email,
-            PhoneNumber = user.PhoneNumber,
-            Message = "Registration successful"
-        };
+            if (string.IsNullOrWhiteSpace(request.RefreshToken))
+            {
+                return BadRequest(new { message = "Refresh token is required" });
+            }
 
-        return CreatedAtAction(nameof(GetUser), new { id = user.Id }, response);
+            var tokens = await _authService.RefreshTokenAsync(request.RefreshToken);
+
+            if (tokens == null)
+            {
+                return Unauthorized(new { message = "Invalid or expired refresh token" });
+            }
+
+            var response = new RefreshTokenResponse
+            {
+                AccessToken = tokens.AccessToken,
+                RefreshToken = tokens.RefreshToken,
+                ExpiresAt = tokens.ExpiresAt,
+                TokenType = "Bearer"
+            };
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Token refresh error");
+            return Problem("An error occurred during token refresh");
+        }
+    }
+
+    /// <summary>
+    /// Logout and revoke refresh token
+    /// </summary>
+    [Authorize]
+    [HttpPost("logout")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult> Logout()
+    {
+        try
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized();
+            }
+
+            await _authService.RevokeRefreshTokenAsync(userId);
+
+            _logger.LogInformation("User logged out: {UserId}", userId);
+
+            return Ok(new { message = "Logged out successfully" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Logout error");
+            return Problem("An error occurred during logout");
+        }
+    }
+
+    /// <summary>
+    /// Change password
+    /// </summary>
+    [Authorize]
+    [HttpPost("change-password")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+    {
+        try
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized();
+            }
+
+            if (string.IsNullOrWhiteSpace(request.OldPassword) || string.IsNullOrWhiteSpace(request.NewPassword))
+            {
+                return BadRequest(new { message = "Old and new passwords are required" });
+            }
+
+            await _authService.ChangePasswordAsync(userId, request.OldPassword, request.NewPassword);
+
+            _logger.LogInformation("Password changed for user: {UserId}", userId);
+
+            return Ok(new { message = "Password changed successfully. Please login again." });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Change password error");
+            return Problem("An error occurred while changing password");
+        }
+    }
+
+    /// <summary>
+    /// Login with Google
+    /// </summary>
+    [HttpPost("google")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<AuthResponse>> LoginWithGoogle([FromBody] SocialLoginRequest request)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(request.Token))
+            {
+                return BadRequest(new { message = "Google token is required" });
+            }
+
+            var (user, tokens) = await _authService.LoginWithGoogleAsync(request.Token);
+
+            var response = new AuthResponse
+            {
+                UserId = user.Id.ToString(),
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Name = user.Name,
+                PhotoUrl = user.PhotoUrl,
+                AccessToken = tokens.AccessToken,
+                RefreshToken = tokens.RefreshToken,
+                ExpiresAt = tokens.ExpiresAt,
+                TokenType = "Bearer"
+            };
+
+            _logger.LogInformation("User logged in with Google: {UserId}", user.Id);
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Google login error");
+            return Problem("An error occurred during Google login");
+        }
+    }
+
+    /// <summary>
+    /// Login with Facebook
+    /// </summary>
+    [HttpPost("facebook")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<AuthResponse>> LoginWithFacebook([FromBody] SocialLoginRequest request)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(request.Token))
+            {
+                return BadRequest(new { message = "Facebook token is required" });
+            }
+
+            var (user, tokens) = await _authService.LoginWithFacebookAsync(request.Token);
+
+            var response = new AuthResponse
+            {
+                UserId = user.Id.ToString(),
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Name = user.Name,
+                PhotoUrl = user.PhotoUrl,
+                AccessToken = tokens.AccessToken,
+                RefreshToken = tokens.RefreshToken,
+                ExpiresAt = tokens.ExpiresAt,
+                TokenType = "Bearer"
+            };
+
+            _logger.LogInformation("User logged in with Facebook: {UserId}", user.Id);
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Facebook login error");
+            return Problem("An error occurred during Facebook login");
+        }
+    }
+
+    /// <summary>
+    /// Login with Apple
+    /// </summary>
+    [HttpPost("apple")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<AuthResponse>> LoginWithApple([FromBody] SocialLoginRequest request)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(request.Token))
+            {
+                return BadRequest(new { message = "Apple token is required" });
+            }
+
+            var (user, tokens) = await _authService.LoginWithAppleAsync(request.Token);
+
+            var response = new AuthResponse
+            {
+                UserId = user.Id.ToString(),
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Name = user.Name,
+                PhotoUrl = user.PhotoUrl,
+                AccessToken = tokens.AccessToken,
+                RefreshToken = tokens.RefreshToken,
+                ExpiresAt = tokens.ExpiresAt,
+                TokenType = "Bearer"
+            };
+
+            _logger.LogInformation("User logged in with Apple: {UserId}", user.Id);
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Apple login error");
+            return Problem("An error occurred during Apple login");
+        }
     }
 
     /// <summary>
@@ -172,21 +455,12 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<UserResponse> GetUser(Guid id)
     {
-        var user = _users.Values.FirstOrDefault(u => u.Id == id);
-        if (user == null)
-        {
-            return NotFound();
-        }
-
+        // This would normally query the database
+        // For now, return a simple response
         var response = new UserResponse
         {
-            Id = user.Id.ToString(),
-            Email = user.Email,
-            PhoneNumber = user.PhoneNumber,
-            Name = user.Name,
-            IsEmailVerified = user.IsEmailVerified,
-            IsPhoneVerified = user.IsPhoneVerified,
-            CreatedAt = user.CreatedAt
+            Id = id.ToString(),
+            Message = "User endpoint - implementation in progress"
         };
 
         return Ok(response);
@@ -204,24 +478,13 @@ public class AuthController : ControllerBase
             return BadRequest(new { message = "Email or phone is required" });
         }
 
-        var exists = _users.Values.Any(u => 
-            u.Email == emailOrPhone || u.PhoneNumber == emailOrPhone);
-
-        return Ok(new AvailabilityResponse { IsAvailable = !exists });
-    }
-
-    /// <summary>
-    /// Hash password using SHA256 (better than Base64 but still not production-grade)
-    /// For production, use BCrypt, Argon2, or ASP.NET Core Identity's PasswordHasher
-    /// </summary>
-    private static string HashPassword(string password)
-    {
-        using var sha256 = SHA256.Create();
-        var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-        return Convert.ToBase64String(hashedBytes);
+        // This would normally query the database
+        // For now, return available
+        return Ok(new AvailabilityResponse { IsAvailable = true });
     }
 }
 
+// Request/Response DTOs
 public record SendCodeRequest(
     string Identifier,
     VerificationType Type
@@ -247,15 +510,47 @@ public record RegisterRequest(
     string? Email,
     string? PhoneNumber,
     string Password,
+    string? Name,
     bool AcceptedTerms
 );
 
-public record RegisterResponse
+public record LoginRequest(
+    string EmailOrPhone,
+    string Password
+);
+
+public record SocialLoginRequest(
+    string Token
+);
+
+public record RefreshTokenRequest(
+    string RefreshToken
+);
+
+public record ChangePasswordRequest(
+    string OldPassword,
+    string NewPassword
+);
+
+public record AuthResponse
 {
     public string UserId { get; set; } = string.Empty;
     public string? Email { get; set; }
     public string? PhoneNumber { get; set; }
-    public string Message { get; set; } = string.Empty;
+    public string? Name { get; set; }
+    public string? PhotoUrl { get; set; }
+    public string AccessToken { get; set; } = string.Empty;
+    public string RefreshToken { get; set; } = string.Empty;
+    public DateTime ExpiresAt { get; set; }
+    public string TokenType { get; set; } = "Bearer";
+}
+
+public record RefreshTokenResponse
+{
+    public string AccessToken { get; set; } = string.Empty;
+    public string RefreshToken { get; set; } = string.Empty;
+    public DateTime ExpiresAt { get; set; }
+    public string TokenType { get; set; } = "Bearer";
 }
 
 public record UserResponse
@@ -267,6 +562,7 @@ public record UserResponse
     public bool IsEmailVerified { get; set; }
     public bool IsPhoneVerified { get; set; }
     public DateTime CreatedAt { get; set; }
+    public string? Message { get; set; }
 }
 
 public record AvailabilityResponse
