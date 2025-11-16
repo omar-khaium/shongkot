@@ -6,9 +6,9 @@
 
 ## 🚀 Latest Deployment
 
-**Version:** v2025.11.16-8736dbf  
-**Deployed:** 2025-11-16 13:15:03 UTC  
-**Commit:** 8736dbf
+**Version:** v2025.11.16-5d57a8a  
+**Deployed:** 2025-11-16 18:05:41 UTC  
+**Commit:** 5d57a8a
 
 ### Service Status
 
@@ -16,26 +16,27 @@
 - **API Documentation:** ✅ available - [https://shongkot-mumbai-gyeuv4je3q-el.a.run.app/swagger](https://shongkot-mumbai-gyeuv4je3q-el.a.run.app/swagger)
 - **Base URL:** [https://shongkot-mumbai-gyeuv4je3q-el.a.run.app](https://shongkot-mumbai-gyeuv4je3q-el.a.run.app)
 
-### What's New in v2025.11.16-8736dbf
+### What's New in v2025.11.16-5d57a8a
 
-Merge pull request #43 from omar-khaium/mobile
+Merge pull request #46 from omar-khaium/copilot/complete-auth-system-implementation
 
-Mobile
+Implement OAuth2 authentication with JWT tokens and social login
 
 ### Recent Changes
 
-- Merge pull request #43 from omar-khaium/mobile (8736dbf)
-- Merge pull request #44 from omar-khaium/copilot/sub-pr-43 (91414c4)
-- Fix C# syntax error in AuthController by merging duplicate class members (cf94e29)
-- Initial plan (fe770bf)
-- Merge pull request #40 from omar-khaium/copilot/implement-biometric-login (68d822b)
-- Implement biometric login functionality and enhance authentication flow (2d28a8d)
-- Fix merge conflicts: remove duplicate User and FakeAuthRepository classes, add localized password validation (fe577bd)
-- Merge branch 'mobile' into copilot/implement-biometric-login (605ebb4)
-- Merge pull request #42 from omar-khaium/copilot/create-emergency-history-screen (546dca0)
-- Merge branch 'mobile' into copilot/create-emergency-history-screen (f4f6a81)
+- Merge pull request #46 from omar-khaium/copilot/complete-auth-system-implementation (5d57a8a)
+- fix: configure Docker for health check - set Development env and provide test JWT secret (28a5616)
+- Fix merge conflict in frontend-cicd.yml (cf2dad3)
+- docs: add security warnings for social login and in-memory storage, add JWT secret validation (cbd100a)
+- fix: address code review comments - error handling, password validation, magic numbers (4d190f4)
+- Update CI workflow to verify Dart formatting (e7cc710)
+- fix: resolve CI auto-format detached HEAD push failure (job 55524044985) (e5d65e2)
+- ci: add auto-formatting to CI workflow with proper ordering (ef02b89)
+- Add comprehensive documentation and deployment guides for auth system (0e521a0)
+- Add OAuth2 API integration for mobile with token refresh (9750cf0)
 
 ---
+
 
 
 
