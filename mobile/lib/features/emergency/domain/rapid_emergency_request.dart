@@ -64,15 +64,35 @@ class RapidEmergencyRequest {
 class EmergencyLocation {
   final double latitude;
   final double longitude;
+  
+  /// Accuracy of the location in meters
+  final double? accuracy;
+  
+  /// Altitude in meters above sea level
+  final double? altitude;
+  
+  /// Timestamp when the location was captured
+  final DateTime? timestamp;
+  
+  /// Indicates the quality of the location data
+  final LocationAccuracy? accuracyLevel;
 
   const EmergencyLocation({
     required this.latitude,
     required this.longitude,
+    this.accuracy,
+    this.altitude,
+    this.timestamp,
+    this.accuracyLevel,
   });
 
   @override
   String toString() {
-    return 'EmergencyLocation(lat: $latitude, lng: $longitude)';
+    return 'EmergencyLocation(lat: $latitude, lng: $longitude, '
+        'accuracy: ${accuracy?.toStringAsFixed(1)}m, '
+        'accuracyLevel: $accuracyLevel, '
+        'altitude: ${altitude?.toStringAsFixed(1)}m, '
+        'timestamp: $timestamp)';
   }
 
   @override
@@ -80,9 +100,42 @@ class EmergencyLocation {
     if (identical(this, other)) return true;
     return other is EmergencyLocation &&
         other.latitude == latitude &&
-        other.longitude == longitude;
+        other.longitude == longitude &&
+        other.accuracy == accuracy &&
+        other.altitude == altitude &&
+        other.timestamp == timestamp &&
+        other.accuracyLevel == accuracyLevel;
   }
 
   @override
-  int get hashCode => latitude.hashCode ^ longitude.hashCode;
+  int get hashCode =>
+      latitude.hashCode ^
+      longitude.hashCode ^
+      accuracy.hashCode ^
+      altitude.hashCode ^
+      timestamp.hashCode ^
+      accuracyLevel.hashCode;
+}
+
+/// Enum representing the accuracy level of a location reading
+enum LocationAccuracy {
+  /// High accuracy (< 10 meters)
+  high,
+  
+  /// Medium accuracy (10-50 meters)
+  medium,
+  
+  /// Low accuracy (> 50 meters)
+  low,
+  
+  /// Unknown or unavailable accuracy
+  unknown;
+  
+  /// Create LocationAccuracy from accuracy value in meters
+  static LocationAccuracy fromAccuracyValue(double? accuracy) {
+    if (accuracy == null) return LocationAccuracy.unknown;
+    if (accuracy < 10) return LocationAccuracy.high;
+    if (accuracy < 50) return LocationAccuracy.medium;
+    return LocationAccuracy.low;
+  }
 }
