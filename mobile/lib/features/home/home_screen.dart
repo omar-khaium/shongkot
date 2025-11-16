@@ -259,7 +259,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ),
 <<<<<<< HEAD
                         const SizedBox(height: AppSpacing.lg),
-                        
+
                         // Rapid Crime SOS Button
                         AppButton(
                           text: l10n.crimeInProgress,

@@ -6,7 +6,7 @@ import 'firebase_options.dart';
 import 'core/theme/app_theme.dart';
 import 'core/providers/theme_provider.dart';
 import 'core/providers/locale_provider.dart';
-import 'core/navigation/app_navigation.dart';
+import 'core/widgets/auth_gate.dart';
 import 'l10n/app_localizations.dart';
 
 void main() async {
@@ -38,7 +38,7 @@ class ShongkotApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: supportedLocales,
-      home: const AppNavigation(),
+      home: const AuthGate(),
     );
   }
 }

@@ -235,4 +235,92 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get noTypeSpecified => 'কোন ধরন নির্দিষ্ট করা হয়নি';
+  String get register => 'নিবন্ধন';
+
+  @override
+  String get registerTitle => 'অ্যাকাউন্ট তৈরি করুন';
+
+  @override
+  String get registerSubtitle => 'জরুরী সেবা ব্যবহার করতে সাইন আপ করুন';
+
+  @override
+  String get password => 'পাসওয়ার্ড';
+
+  @override
+  String get confirmPassword => 'পাসওয়ার্ড নিশ্চিত করুন';
+
+  @override
+  String get alreadyHaveAccount => 'ইতিমধ্যে অ্যাকাউন্ট আছে?';
+
+  @override
+  String get login => 'লগইন';
+
+  @override
+  String get emailOrPhone => 'ইমেইল বা ফোন নম্বর';
+
+  @override
+  String get iAgreeToThe => 'আমি সম্মত';
+
+  @override
+  String get and => 'এবং';
+
+  @override
+  String get registrationSuccess => 'নিবন্ধন সফল!';
+
+  @override
+  String get registrationSuccessMessage =>
+      'আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে। অনুগ্রহ করে আপনার যোগাযোগের তথ্য যাচাই করুন।';
+
+  @override
+  String get continueToApp => 'অ্যাপে যান';
+
+  @override
+  String get verifyAccount => 'অ্যাকাউন্ট যাচাই করুন';
+
+  @override
+  String get emailRequired => 'ইমেইল প্রয়োজন';
+
+  @override
+  String get emailInvalid => 'অনুগ্রহ করে একটি বৈধ ইমেইল লিখুন';
+
+  @override
+  String get phoneRequired => 'ফোন নম্বর প্রয়োজন';
+
+  @override
+  String get phoneInvalid => 'অনুগ্রহ করে একটি বৈধ ফোন নম্বর লিখুন';
+
+  @override
+  String get passwordRequired => 'পাসওয়ার্ড প্রয়োজন';
+
+  @override
+  String get passwordTooShort => 'পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে';
+
+  @override
+  String get passwordNoUppercase =>
+      'পাসওয়ার্ডে একটি বড় হাতের অক্ষর থাকতে হবে';
+
+  @override
+  String get passwordNoLowercase =>
+      'পাসওয়ার্ডে একটি ছোট হাতের অক্ষর থাকতে হবে';
+
+  @override
+  String get passwordNoNumber => 'পাসওয়ার্ডে একটি সংখ্যা থাকতে হবে';
+
+  @override
+  String get passwordsDoNotMatch => 'পাসওয়ার্ড মিলছে না';
+
+  @override
+  String get termsRequired =>
+      'আপনাকে শর্তাবলী এবং গোপনীয়তা নীতি স্বীকার করতে হবে';
+
+  @override
+  String get accountExists => 'এই ইমেইল/ফোন দিয়ে ইতিমধ্যে একটি অ্যাকাউন্ট আছে';
+
+  @override
+  String get registrationFailed =>
+      'নিবন্ধন ব্যর্থ। অনুগ্রহ করে আবার চেষ্টা করুন।';
+
+  @override
+  String get networkError =>
+      'নেটওয়ার্ক ত্রুটি। অনুগ্রহ করে আপনার সংযোগ পরীক্ষা করুন।';
 }
