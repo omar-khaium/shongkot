@@ -373,6 +373,432 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Terms of Service'**
   String get termsOfService;
+
+  /// Crime in progress button label
+  ///
+  /// In en, this message translates to:
+  /// **'Crime in Progress'**
+  String get crimeInProgress;
+
+  /// Title for rapid crime SOS type selector
+  ///
+  /// In en, this message translates to:
+  /// **'What type of emergency?'**
+  String get rapidCrimeTitle;
+
+  /// Subtitle for rapid crime SOS type selector
+  ///
+  /// In en, this message translates to:
+  /// **'This helps responders prepare (optional)'**
+  String get rapidCrimeSubtitle;
+
+  /// Sexual assault emergency type
+  ///
+  /// In en, this message translates to:
+  /// **'Sexual Assault / Rape'**
+  String get sexualAssault;
+
+  /// Physical assault emergency type
+  ///
+  /// In en, this message translates to:
+  /// **'Physical Assault / Beating'**
+  String get physicalAssault;
+
+  /// Kidnapping emergency type
+  ///
+  /// In en, this message translates to:
+  /// **'Kidnapping / Abduction'**
+  String get kidnapping;
+
+  /// Other violent crime emergency type
+  ///
+  /// In en, this message translates to:
+  /// **'Other Violent Crime'**
+  String get otherViolentCrime;
+
+  /// Skip button for type selector
+  ///
+  /// In en, this message translates to:
+  /// **'Skip this step'**
+  String get skipThisStep;
+
+  /// Confirmation message for rapid SOS
+  ///
+  /// In en, this message translates to:
+  /// **'Rapid Emergency Alert Sent'**
+  String get rapidSosSent;
+
+  /// Description for rapid SOS confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Your location and alert have been recorded. Help is on the way.'**
+  String get rapidSosDescription;
+
+  /// Login button label
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// Login screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back'**
+  String get loginTitle;
+
+  /// Login screen subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to access emergency features'**
+  String get loginSubtitle;
+
+  /// Email or phone input label
+  ///
+  /// In en, this message translates to:
+  /// **'Email or Phone Number'**
+  String get emailOrPhone;
+
+  /// Emergency history screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency History'**
+  String get emergencyHistory;
+
+  /// Empty state message when no emergencies exist
+  ///
+  /// In en, this message translates to:
+  /// **'No emergencies found'**
+  String get noEmergencies;
+
+  /// Empty state description
+  ///
+  /// In en, this message translates to:
+  /// **'Your emergency history will appear here'**
+  String get noEmergenciesDescription;
+
+  /// Filter by status label
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Status'**
+  String get filterByStatus;
+
+  /// All statuses filter option
+  ///
+  /// In en, this message translates to:
+  /// **'All Statuses'**
+  String get allStatuses;
+
+  /// Pending status
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// Resolved status
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get resolved;
+
+  /// Cancelled status
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get cancelled;
+
+  /// Search field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Search by type or location'**
+  String get searchEmergencies;
+
+  /// Date range filter label
+  ///
+  /// In en, this message translates to:
+  /// **'Date Range'**
+  String get dateRange;
+
+  /// From date label
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get from;
+
+  /// To date label
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get to;
+
+  /// Clear filters button
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Filters'**
+  String get clearFilters;
+
+  /// Sort by label
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by'**
+  String get sortBy;
+
+  /// Newest first sort option
+  ///
+  /// In en, this message translates to:
+  /// **'Newest First'**
+  String get newest;
+
+  /// Oldest first sort option
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest First'**
+  String get oldest;
+
+  /// Loading message
+  ///
+  /// In en, this message translates to:
+  /// **'Loading emergencies...'**
+  String get loadingEmergencies;
+
+  /// Message when emergency type is not specified
+  ///
+  /// In en, this message translates to:
+  /// **'No Type Specified'**
+  String get noTypeSpecified;
+
+  /// Retry button text
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// Register button label
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register;
+
+  /// Registration screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get registerTitle;
+
+  /// Registration screen subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up to access emergency response features'**
+  String get registerSubtitle;
+
+  /// Password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// Confirm password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// Remember me checkbox label
+  ///
+  /// In en, this message translates to:
+  /// **'Remember me'**
+  String get rememberMe;
+
+  /// Forgot password link
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPassword;
+
+  /// Biometric login button label
+  ///
+  /// In en, this message translates to:
+  /// **'Login with Biometric'**
+  String get loginWithBiometric;
+
+  /// Biometric authentication reason
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticate to login quickly'**
+  String get biometricReason;
+
+  /// Message when no credentials are saved for biometric login
+  ///
+  /// In en, this message translates to:
+  /// **'No saved credentials. Please login with password first.'**
+  String get noBiometricCredentials;
+
+  /// Message when biometric is not available
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric authentication is not available on this device'**
+  String get biometricNotAvailable;
+
+  /// Generic login error message
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed. Please try again.'**
+  String get loginError;
+
+  /// Invalid credentials error
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email/phone or password'**
+  String get invalidCredentials;
+
+  /// Required field validation message
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get fieldRequired;
+
+  /// Invalid email validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get invalidEmail;
+
+  /// Password minimum length validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get passwordMinLength;
+
+  /// Prompt for existing users
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyHaveAccount;
+
+  /// Terms acceptance prefix
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the'**
+  String get iAgreeToThe;
+
+  /// Conjunction between terms and privacy
+  ///
+  /// In en, this message translates to:
+  /// **'and'**
+  String get and;
+
+  /// Registration success title
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Successful!'**
+  String get registrationSuccess;
+
+  /// Registration success message
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been created successfully. Please verify your contact information.'**
+  String get registrationSuccessMessage;
+
+  /// Continue button after registration
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to App'**
+  String get continueToApp;
+
+  /// Verify account button
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Account'**
+  String get verifyAccount;
+
+  /// Email required error
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get emailRequired;
+
+  /// Email invalid error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get emailInvalid;
+
+  /// Phone required error
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get phoneRequired;
+
+  /// Phone invalid error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number'**
+  String get phoneInvalid;
+
+  /// Password required error
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get passwordRequired;
+
+  /// Password too short error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get passwordTooShort;
+
+  /// Password no uppercase error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain an uppercase letter'**
+  String get passwordNoUppercase;
+
+  /// Password no lowercase error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain a lowercase letter'**
+  String get passwordNoLowercase;
+
+  /// Password no number error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain a number'**
+  String get passwordNoNumber;
+
+  /// Passwords mismatch error
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// Terms acceptance required error
+  ///
+  /// In en, this message translates to:
+  /// **'You must accept the terms and privacy policy'**
+  String get termsRequired;
+
+  /// Account already exists error
+  ///
+  /// In en, this message translates to:
+  /// **'An account with this email/phone already exists'**
+  String get accountExists;
+
+  /// Generic registration failure message
+  ///
+  /// In en, this message translates to:
+  /// **'Registration failed. Please try again.'**
+  String get registrationFailed;
+
+  /// Network error message
+  ///
+  /// In en, this message translates to:
+  /// **'Network error. Please check your connection.'**
+  String get networkError;
+
+  /// Error message when OTP is incomplete
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter all 6 digits'**
+  String get pleaseEnterAllSixDigits;
 }
 
 class _AppLocalizationsDelegate

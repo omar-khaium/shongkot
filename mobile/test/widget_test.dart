@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shongkot_app/features/auth/presentation/login_screen.dart';
 import 'package:shongkot_app/main.dart';
 
 void main() {
@@ -12,7 +13,7 @@ void main() {
     // Verify that the app loads without errors
     expect(find.byType(MaterialApp), findsOneWidget);
 
-    // Verify navigation bar is present
-    expect(find.byType(NavigationBar), findsOneWidget);
+    // Verify that the unauthenticated state shows the login screen
+    expect(find.byType(LoginScreen), findsOneWidget);
   });
 }
