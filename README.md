@@ -39,7 +39,6 @@ Mobile
 
 
 
-<<<<<<< HEAD
 ## 📱 Latest Mobile App Version
 
 **Version:** v1.0.0-build.167  
@@ -67,35 +66,6 @@ Mobile
 - Nearby responders finder
 
 ---
-
-## 📱 Latest Mobile App Version
-
-**Version:** v1.0.0-build.167  
-**Release Date:** 2025-11-16  
-**Platform:** Android (iOS coming soon)  
-**Distribution:** Firebase App Distribution
-
-### Download Links
-
-- **Firebase App Distribution:** [Download Latest APK](https://appdistribution.firebase.google.com/testerapps/1:657665364433:android:33fc8763de2c42867390f0) (Public - anyone with the link)
-- **GitHub Releases:** [v1.0.0-build.167](https://github.com/omar-khaium/shongkot/releases/tag/v1.0.0-build.167)
-
-### In-App Updates
-
-✅ **Automatic Updates Enabled**
-- Users with previous versions will receive update prompts
-- Updates are delivered through Firebase App Distribution
-- No manual download required for existing users
-
-### Features
-
-- Emergency SOS button with one-tap activation
-- Real-time GPS location tracking
-- Automatic emergency contact notifications
-- Nearby responders finder
-
----
-
 
 
 ## 📚 Documentation
