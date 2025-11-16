@@ -95,7 +95,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Enter invalid email
-      await tester.enterText(find.byType(TextFormField).first, 'invalid-email');
+      await tester.enterText(
+        find.byType(TextFormField).first,
+        'invalid-email@domain',
+      );
       
       // Tap register button
       final registerButton = find.widgetWithText(ElevatedButton, 'Register');
