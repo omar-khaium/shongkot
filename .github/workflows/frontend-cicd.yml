@@ -47,21 +47,9 @@ jobs:
         FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       
-    - name: Format Dart code
-      run: dart format .
+    - name: Verify formatting
+      run: dart format --output=none --set-exit-if-changed .
       working-directory: ./mobile
-      
-    - name: Commit formatting changes
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add -A
-        if git diff --staged --quiet; then
-          echo "No formatting changes to commit"
-        else
-          git commit -m "chore: format dart code [skip ci]"
-          git push
-        fi
       
     - name: Run dart analyze
       run: dart analyze
