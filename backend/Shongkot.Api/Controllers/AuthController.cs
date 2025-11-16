@@ -13,6 +13,9 @@ public class AuthController : ControllerBase
 {
     private readonly ILogger<AuthController> _logger;
     private readonly IVerificationService _verificationService;
+    
+    // Thread-safe collection for storing users
+    private static readonly ConcurrentDictionary<string, User> _users = new();
 
     public AuthController(ILogger<AuthController> logger, IVerificationService verificationService)
     {
@@ -87,35 +90,6 @@ public class AuthController : ControllerBase
     {
         // Reuse the SendCode endpoint logic
         return await SendCode(request);
-    }
-}
-
-public record SendCodeRequest(
-    string Identifier,
-    VerificationType Type
-);
-
-public record SendCodeResponse(
-    bool Success,
-    string Message,
-    DateTime ExpiresAt
-);
-
-public record VerifyCodeRequest(
-    string Identifier,
-    string Code
-);
-
-public record VerifyCodeResponse(
-    bool Success,
-    string Message
-);
-    // Thread-safe collection for storing users
-    private static readonly ConcurrentDictionary<string, User> _users = new();
-
-    public AuthController(ILogger<AuthController> logger)
-    {
-        _logger = logger;
     }
 
     /// <summary>
@@ -247,6 +221,27 @@ public record VerifyCodeResponse(
         return Convert.ToBase64String(hashedBytes);
     }
 }
+
+public record SendCodeRequest(
+    string Identifier,
+    VerificationType Type
+);
+
+public record SendCodeResponse(
+    bool Success,
+    string Message,
+    DateTime ExpiresAt
+);
+
+public record VerifyCodeRequest(
+    string Identifier,
+    string Code
+);
+
+public record VerifyCodeResponse(
+    bool Success,
+    string Message
+);
 
 public record RegisterRequest(
     string? Email,
