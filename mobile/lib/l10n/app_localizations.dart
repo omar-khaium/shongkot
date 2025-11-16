@@ -373,6 +373,7 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Terms of Service'**
   String get termsOfService;
+
   /// Crime in progress button label
   ///
   /// In en, this message translates to:
@@ -433,59 +434,173 @@ abstract class AppLocalizations {
   /// **'Your location and alert have been recorded. Help is on the way.'**
   String get rapidSosDescription;
 
-  /// Verification code title
+  /// Register button label
   ///
   /// In en, this message translates to:
-  /// **'Verification Code'**
-  String get verificationCode;
+  /// **'Register'**
+  String get register;
 
-  /// Verification code sent message
+  /// Registration screen title
   ///
   /// In en, this message translates to:
-  /// **'We sent a verification code to\n{identifier}'**
-  String verificationCodeSentTo(String identifier);
+  /// **'Create Account'**
+  String get registerTitle;
 
-  /// Verify button
+  /// Registration screen subtitle
   ///
   /// In en, this message translates to:
-  /// **'Verify'**
-  String get verify;
+  /// **'Sign up to access emergency response features'**
+  String get registerSubtitle;
 
-  /// Verifying loading state
+  /// Password field label
   ///
   /// In en, this message translates to:
-  /// **'Verifying...'**
-  String get verifying;
+  /// **'Password'**
+  String get password;
 
-  /// Resend code button
+  /// Confirm password field label
   ///
   /// In en, this message translates to:
-  /// **'Resend Code'**
-  String get resendCode;
+  /// **'Confirm Password'**
+  String get confirmPassword;
 
-  /// Resend countdown
+  /// Prompt for existing users
   ///
   /// In en, this message translates to:
-  /// **'Resend in {seconds}s'**
-  String resendInSeconds(int seconds);
+  /// **'Already have an account?'**
+  String get alreadyHaveAccount;
 
-  /// Code expiration message
+  /// Login button label
   ///
   /// In en, this message translates to:
-  /// **'Code expires at {time}'**
-  String codeExpiresAt(String time);
+  /// **'Login'**
+  String get login;
 
-  /// Error message for incomplete OTP
+  /// Email or phone input label
   ///
   /// In en, this message translates to:
-  /// **'Please enter all 6 digits'**
-  String get enterAllDigits;
+  /// **'Email or Phone Number'**
+  String get emailOrPhone;
 
-  /// Verify account title
+  /// Terms acceptance prefix
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the'**
+  String get iAgreeToThe;
+
+  /// Conjunction between terms and privacy
+  ///
+  /// In en, this message translates to:
+  /// **'and'**
+  String get and;
+
+  /// Registration success title
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Successful!'**
+  String get registrationSuccess;
+
+  /// Registration success message
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been created successfully. Please verify your contact information.'**
+  String get registrationSuccessMessage;
+
+  /// Continue button after registration
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to App'**
+  String get continueToApp;
+
+  /// Verify account button
   ///
   /// In en, this message translates to:
   /// **'Verify Account'**
   String get verifyAccount;
+
+  /// Email required error
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get emailRequired;
+
+  /// Email invalid error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get emailInvalid;
+
+  /// Phone required error
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get phoneRequired;
+
+  /// Phone invalid error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number'**
+  String get phoneInvalid;
+
+  /// Password required error
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get passwordRequired;
+
+  /// Password too short error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get passwordTooShort;
+
+  /// Password no uppercase error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain an uppercase letter'**
+  String get passwordNoUppercase;
+
+  /// Password no lowercase error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain a lowercase letter'**
+  String get passwordNoLowercase;
+
+  /// Password no number error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain a number'**
+  String get passwordNoNumber;
+
+  /// Passwords mismatch error
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// Terms acceptance required error
+  ///
+  /// In en, this message translates to:
+  /// **'You must accept the terms and privacy policy'**
+  String get termsRequired;
+
+  /// Account already exists error
+  ///
+  /// In en, this message translates to:
+  /// **'An account with this email/phone already exists'**
+  String get accountExists;
+
+  /// Generic registration failure message
+  ///
+  /// In en, this message translates to:
+  /// **'Registration failed. Please try again.'**
+  String get registrationFailed;
+
+  /// Network error message
+  ///
+  /// In en, this message translates to:
+  /// **'Network error. Please check your connection.'**
+  String get networkError;
 }
 
 class _AppLocalizationsDelegate
