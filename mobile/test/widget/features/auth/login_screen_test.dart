@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shongkot_app/features/auth/presentation/login_screen.dart';
-import 'package:shongkot_app/features/auth/presentation/auth_notifier.dart';
-import 'package:shongkot_app/features/auth/presentation/auth_state.dart';
 import 'package:shongkot_app/l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -49,20 +47,17 @@ void main() {
       await tester.pumpWidget(createTestWidget(const LoginScreen()));
       await tester.pumpAndSettle();
 
-      // Find password field
-      final passwordField = find.byType(TextFormField).last;
-      final passwordWidget = tester.widget<TextFormField>(passwordField);
-      
-      // Assert initial state (password hidden)
-      expect(passwordWidget.obscureText, isTrue);
+      // Assert initial state - visibility_outlined icon (password hidden)
+      expect(find.byIcon(Icons.visibility_outlined), findsOneWidget);
+      expect(find.byIcon(Icons.visibility_off_outlined), findsNothing);
 
       // Act - tap visibility toggle
       await tester.tap(find.byIcon(Icons.visibility_outlined));
       await tester.pumpAndSettle();
 
-      // Assert - password visible
-      final passwordFieldAfter = tester.widget<TextFormField>(passwordField);
-      expect(passwordFieldAfter.obscureText, isFalse);
+      // Assert - visibility_off_outlined icon (password visible)
+      expect(find.byIcon(Icons.visibility_outlined), findsNothing);
+      expect(find.byIcon(Icons.visibility_off_outlined), findsOneWidget);
     });
 
     testWidgets('should toggle remember me checkbox', (WidgetTester tester) async {

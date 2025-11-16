@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/login_credentials.dart';
 import '../data/auth_repository_provider.dart';
-import '../data/biometric_service.dart';
 import 'auth_state.dart';
 
 /// Notifier for managing authentication state
