@@ -84,10 +84,11 @@ void main() {
       expect(verifyButton, findsOneWidget);
 
       // Verify button should be present and tappable
-      final button = tester.widget<TextButton>(
+      // AppButton uses ElevatedButton by default (primary variant)
+      final button = tester.widget<ElevatedButton>(
         find.ancestor(
           of: verifyButton,
-          matching: find.byType(TextButton),
+          matching: find.byType(ElevatedButton),
         ).first,
       );
       
