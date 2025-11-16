@@ -25,7 +25,10 @@ builder.Services.AddCors(options =>
 // Add application services
 builder.Services.AddMemoryCache();
 builder.Services.AddHttpClient();
+<<<<<<< HEAD
 builder.Services.AddScoped<Shongkot.Application.Services.IVerificationService, Shongkot.Infrastructure.Services.MockVerificationService>();
+=======
+>>>>>>> origin/main
 
 var app = builder.Build();
 

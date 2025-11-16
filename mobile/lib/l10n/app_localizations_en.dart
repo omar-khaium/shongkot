@@ -149,6 +149,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsOfService => 'Terms of Service';
+<<<<<<< HEAD
 
   @override
   String get crimeInProgress => 'Crime in Progress';
@@ -213,4 +214,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get verifyAccount => 'Verify Account';
+=======
+>>>>>>> origin/main
 }

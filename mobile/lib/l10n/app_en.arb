@@ -188,6 +188,7 @@
   "termsOfService": "Terms of Service",
   "@termsOfService": {
     "description": "Terms of service label"
+<<<<<<< HEAD
   },
   "crimeInProgress": "Crime in Progress",
   "@crimeInProgress": {
@@ -279,5 +280,7 @@
   "verifyAccount": "Verify Account",
   "@verifyAccount": {
     "description": "Verify account title"
+=======
+>>>>>>> origin/main
   }
 }

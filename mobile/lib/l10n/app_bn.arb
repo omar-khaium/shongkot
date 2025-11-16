@@ -45,6 +45,7 @@
   "profilePlaceholderName": "ব্যবহারকারীর নাম",
   "profilePlaceholderEmail": "user@example.com",
   "privacyPolicy": "গোপনীয়তা নীতি",
+<<<<<<< HEAD
   "termsOfService": "সেবার শর্তাবলী",
   "crimeInProgress": "অপরাধ চলছে",
   "rapidCrimeTitle": "কোন ধরনের জরুরী অবস্থা?",
@@ -65,4 +66,7 @@
   "codeExpiresAt": "কোড শেষ হবে {time}",
   "enterAllDigits": "অনুগ্রহ করে সব ৬টি সংখ্যা লিখুন",
   "verifyAccount": "অ্যাকাউন্ট যাচাই করুন"
+=======
+  "termsOfService": "সেবার শর্তাবলী"
+>>>>>>> origin/main
 }

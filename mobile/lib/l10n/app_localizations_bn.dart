@@ -148,6 +148,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get termsOfService => 'সেবার শর্তাবলী';
+<<<<<<< HEAD
 
   @override
   String get crimeInProgress => 'অপরাধ চলছে';
@@ -213,4 +214,6 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get verifyAccount => 'অ্যাকাউন্ট যাচাই করুন';
+=======
+>>>>>>> origin/main
 }

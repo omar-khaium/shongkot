@@ -373,6 +373,7 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Terms of Service'**
   String get termsOfService;
+<<<<<<< HEAD
 
   /// Crime in progress button label
   ///
@@ -487,6 +488,8 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Verify Account'**
   String get verifyAccount;
+=======
+>>>>>>> origin/main
 }
 
 class _AppLocalizationsDelegate
