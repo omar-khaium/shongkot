@@ -35,7 +35,7 @@ void main() {
       expect(find.text('Welcome Back'), findsOneWidget);
       expect(find.text('Sign in to access emergency features'), findsOneWidget);
       expect(find.byType(TextFormField), findsNWidgets(2));
-      expect(find.text('Email or Phone'), findsOneWidget);
+      expect(find.text('Email or Phone Number'), findsOneWidget);
       expect(find.text('Password'), findsOneWidget);
       expect(find.text('Remember me'), findsOneWidget);
       expect(find.text('Forgot Password?'), findsOneWidget);

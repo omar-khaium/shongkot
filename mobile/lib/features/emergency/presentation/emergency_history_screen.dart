@@ -309,7 +309,9 @@ class _EmergencyListItem extends StatelessWidget {
                     vertical: AppSpacing.xs,
                   ),
                   decoration: BoxDecoration(
-                    color: _getStatusColor(emergency.status).withOpacity(30 / 255),
+                    color: _getStatusColor(emergency.status).withValues(
+                      alpha: 30 / 255,
+                    ),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(

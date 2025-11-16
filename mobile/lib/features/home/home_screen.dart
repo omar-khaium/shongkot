@@ -3,15 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_spacing.dart';
 import '../../shared/widgets/app_card.dart';
-<<<<<<< HEAD
 import '../../shared/widgets/app_button.dart';
 import '../../l10n/app_localizations.dart';
 import '../emergency/presentation/rapid_crime_sos_notifier.dart';
 import '../emergency/presentation/rapid_crime_sos_sheet.dart';
 import '../emergency/presentation/emergency_history_screen.dart';
-=======
-import '../../l10n/app_localizations.dart';
->>>>>>> origin/main
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -69,7 +65,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-<<<<<<< HEAD
   Future<void> _triggerRapidCrimeSos() async {
     // Trigger the rapid crime SOS
     await ref.read(rapidCrimeSosProvider.notifier).triggerRapidCrimeSos();
@@ -113,8 +108,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
   }
 
-=======
->>>>>>> origin/main
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -150,7 +143,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ),
                       ],
                     ),
-<<<<<<< HEAD
                     IconButton(
                       icon: const Icon(Icons.history),
                       onPressed: () {
@@ -163,8 +155,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       },
                       tooltip: l10n.emergencyHistory,
                     ),
-=======
->>>>>>> origin/main
                   ],
                 ),
                 const SizedBox(height: AppSpacing.xxl),
@@ -257,9 +247,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 : AppColors.lightTextSecondary,
                           ),
                         ),
-<<<<<<< HEAD
                         const SizedBox(height: AppSpacing.lg),
-
                         // Rapid Crime SOS Button
                         AppButton(
                           text: l10n.crimeInProgress,
@@ -268,8 +256,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           icon: Icons.warning_amber_rounded,
                           fullWidth: true,
                         ),
-=======
->>>>>>> origin/main
                       ],
                     ),
                   ),

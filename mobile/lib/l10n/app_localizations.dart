@@ -434,6 +434,30 @@ abstract class AppLocalizations {
   /// **'Your location and alert have been recorded. Help is on the way.'**
   String get rapidSosDescription;
 
+  /// Login button label
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// Login screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back'**
+  String get loginTitle;
+
+  /// Login screen subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to access emergency features'**
+  String get loginSubtitle;
+
+  /// Email or phone input label
+  ///
+  /// In en, this message translates to:
+  /// **'Email or Phone Number'**
+  String get emailOrPhone;
+
   /// Emergency history screen title
   ///
   /// In en, this message translates to:
@@ -541,6 +565,13 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Type Specified'**
   String get noTypeSpecified;
+
+  /// Retry button text
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
   /// Register button label
   ///
   /// In en, this message translates to:
@@ -571,23 +602,77 @@ abstract class AppLocalizations {
   /// **'Confirm Password'**
   String get confirmPassword;
 
+  /// Remember me checkbox label
+  ///
+  /// In en, this message translates to:
+  /// **'Remember me'**
+  String get rememberMe;
+
+  /// Forgot password link
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPassword;
+
+  /// Biometric login button label
+  ///
+  /// In en, this message translates to:
+  /// **'Login with Biometric'**
+  String get loginWithBiometric;
+
+  /// Biometric authentication reason
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticate to login quickly'**
+  String get biometricReason;
+
+  /// Message when no credentials are saved for biometric login
+  ///
+  /// In en, this message translates to:
+  /// **'No saved credentials. Please login with password first.'**
+  String get noBiometricCredentials;
+
+  /// Message when biometric is not available
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric authentication is not available on this device'**
+  String get biometricNotAvailable;
+
+  /// Generic login error message
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed. Please try again.'**
+  String get loginError;
+
+  /// Invalid credentials error
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email/phone or password'**
+  String get invalidCredentials;
+
+  /// Required field validation message
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get fieldRequired;
+
+  /// Invalid email validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get invalidEmail;
+
+  /// Password minimum length validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get passwordMinLength;
+
   /// Prompt for existing users
   ///
   /// In en, this message translates to:
   /// **'Already have an account?'**
   String get alreadyHaveAccount;
-
-  /// Login button label
-  ///
-  /// In en, this message translates to:
-  /// **'Login'**
-  String get login;
-
-  /// Email or phone input label
-  ///
-  /// In en, this message translates to:
-  /// **'Email or Phone Number'**
-  String get emailOrPhone;
 
   /// Terms acceptance prefix
   ///
@@ -708,6 +793,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Network error. Please check your connection.'**
   String get networkError;
+
+  /// Error message when OTP is incomplete
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter all 6 digits'**
+  String get pleaseEnterAllSixDigits;
 }
 
 class _AppLocalizationsDelegate

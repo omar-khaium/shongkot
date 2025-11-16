@@ -41,12 +41,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future<void> _checkBiometric() async {
     final authNotifier = ref.read(authNotifierProvider.notifier);
     final available = await authNotifier.isBiometricAvailable();
-    final hasCreds = await authNotifier.hasSavedCredentials();
+    final credentialsAvailable = await authNotifier.hasSavedCredentials();
     
     if (mounted) {
       setState(() {
         _biometricAvailable = available;
-        _hasSavedCredentials = hasCreds;
+        _hasSavedCredentials = credentialsAvailable;
       });
     }
   }
@@ -56,7 +56,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       return;
     }
 
-    final l10n = AppLocalizations.of(context)!;
     final credentials = LoginCredentials(
       emailOrPhone: _emailOrPhoneController.text.trim(),
       password: _passwordController.text,

@@ -244,6 +244,7 @@
   "emailOrPhone": "Email or Phone",
   "@emailOrPhone": {
     "description": "Email or phone field label"
+  },
   "emergencyHistory": "Emergency History",
   "@emergencyHistory": {
     "description": "Emergency history screen title"
@@ -319,6 +320,7 @@
   "retry": "Retry",
   "@retry": {
     "description": "Retry button text"
+  },
   "register": "Register",
   "@register": {
     "description": "Register button label"
@@ -334,6 +336,10 @@
   "password": "Password",
   "@password": {
     "description": "Password field label"
+  },
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "Confirm password field label"
   },
   "rememberMe": "Remember me",
   "@rememberMe": {

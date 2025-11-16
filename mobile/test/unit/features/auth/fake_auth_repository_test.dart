@@ -3,6 +3,7 @@ import 'package:shongkot_app/features/auth/data/fake_auth_repository.dart';
 import 'package:shongkot_app/features/auth/domain/login_credentials.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   late FakeAuthRepository repository;
 
   setUp(() {

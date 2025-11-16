@@ -140,7 +140,7 @@ void main() {
 
       final newState = state.copyWith(
         isLoading: true,
-        error: 'Test error',
+        error: () => 'Test error',
       );
 
       expect(newState.isLoading, true);

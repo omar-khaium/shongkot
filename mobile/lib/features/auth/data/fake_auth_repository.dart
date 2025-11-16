@@ -1,11 +1,13 @@
 import '../domain/auth_repository.dart';
 import '../domain/user.dart';
 import '../domain/login_credentials.dart';
+import '../domain/auth_models.dart';
 import 'secure_storage_service.dart';
 
 /// Fake implementation of AuthRepository for testing and development
 class FakeAuthRepository implements AuthRepository {
   final SecureStorageService _secureStorage;
+  static final Map<String, RegisterRequest> _registeredAccounts = {};
 
   FakeAuthRepository({SecureStorageService? secureStorage})
       : _secureStorage = secureStorage ?? SecureStorageService();
@@ -20,6 +22,37 @@ class FakeAuthRepository implements AuthRepository {
     token: 'fake-jwt-token',
     refreshToken: 'fake-refresh-token',
   );
+
+  String _normalizeKey(String value) => value.trim().toLowerCase();
+
+  @override
+  Future<RegisterResponse> register(RegisterRequest request) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    final key = _normalizeKey(request.emailOrPhone);
+    if (_registeredAccounts.containsKey(key)) {
+      throw const AuthException(
+        'An account with this email/phone already exists',
+        code: 'account-exists',
+      );
+    }
+
+    _registeredAccounts[key] = request;
+
+    final isEmail = request.emailOrPhone.contains('@');
+    return RegisterResponse(
+      userId: 'user_${DateTime.now().millisecondsSinceEpoch}',
+      email: isEmail ? request.emailOrPhone : null,
+      phoneNumber: isEmail ? null : request.emailOrPhone,
+      message: 'Registration successful',
+    );
+  }
+
+  @override
+  Future<bool> isAccountExists(String emailOrPhone) async {
+    final key = _normalizeKey(emailOrPhone);
+    return _registeredAccounts.containsKey(key);
+  }
 
   @override
   Future<User> login(LoginCredentials credentials) async {
@@ -59,6 +92,7 @@ class FakeAuthRepository implements AuthRepository {
   @override
   Future<void> logout() async {
     await _secureStorage.deleteUser();
+    await clearCredentials();
   }
 
   @override
