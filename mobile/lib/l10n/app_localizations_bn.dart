@@ -182,6 +182,18 @@ class AppLocalizationsBn extends AppLocalizations {
       'আপনার অবস্থান এবং সতর্কতা রেকর্ড করা হয়েছে। সাহায্য আসছে।';
 
   @override
+  String get login => 'লগইন';
+
+  @override
+  String get loginTitle => 'স্বাগতম';
+
+  @override
+  String get loginSubtitle => 'জরুরী সেবা ব্যবহার করতে সাইন ইন করুন';
+
+  @override
+  String get emailOrPhone => 'ইমেইল বা ফোন নম্বর';
+
+  @override
   String get emergencyHistory => 'জরুরী ইতিহাস';
 
   @override
@@ -235,6 +247,11 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get noTypeSpecified => 'কোন ধরন নির্দিষ্ট করা হয়নি';
+
+  @override
+  String get retry => 'পুনরায় চেষ্টা করুন';
+
+  @override
   String get register => 'নিবন্ধন';
 
   @override
@@ -250,13 +267,42 @@ class AppLocalizationsBn extends AppLocalizations {
   String get confirmPassword => 'পাসওয়ার্ড নিশ্চিত করুন';
 
   @override
+  String get rememberMe => 'আমাকে মনে রাখুন';
+
+  @override
+  String get forgotPassword => 'পাসওয়ার্ড ভুলে গেছেন?';
+
+  @override
+  String get loginWithBiometric => 'বায়োমেট্রিক দিয়ে লগইন';
+
+  @override
+  String get biometricReason => 'দ্রুত লগইন করতে প্রমাণীকরণ করুন';
+
+  @override
+  String get noBiometricCredentials =>
+      'কোন সংরক্ষিত শংসাপত্র নেই। প্রথমে পাসওয়ার্ড দিয়ে লগইন করুন।';
+
+  @override
+  String get biometricNotAvailable =>
+      'এই ডিভাইসে বায়োমেট্রিক প্রমাণীকরণ উপলব্ধ নেই';
+
+  @override
+  String get loginError => 'লগইন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।';
+
+  @override
+  String get invalidCredentials => 'ভুল ইমেইল/ফোন বা পাসওয়ার্ড';
+
+  @override
+  String get fieldRequired => 'এই ক্ষেত্রটি আবশ্যক';
+
+  @override
+  String get invalidEmail => 'অনুগ্রহ করে একটি বৈধ ইমেইল লিখুন';
+
+  @override
+  String get passwordMinLength => 'পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে';
+
+  @override
   String get alreadyHaveAccount => 'ইতিমধ্যে অ্যাকাউন্ট আছে?';
-
-  @override
-  String get login => 'লগইন';
-
-  @override
-  String get emailOrPhone => 'ইমেইল বা ফোন নম্বর';
 
   @override
   String get iAgreeToThe => 'আমি সম্মত';
@@ -323,4 +369,7 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get networkError =>
       'নেটওয়ার্ক ত্রুটি। অনুগ্রহ করে আপনার সংযোগ পরীক্ষা করুন।';
+
+  @override
+  String get pleaseEnterAllSixDigits => 'অনুগ্রহ করে সব ৬টি সংখ্যা লিখুন';
 }

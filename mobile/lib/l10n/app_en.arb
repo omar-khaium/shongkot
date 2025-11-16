@@ -229,6 +229,22 @@
   "@rapidSosDescription": {
     "description": "Description for rapid SOS confirmation"
   },
+  "login": "Login",
+  "@login": {
+    "description": "Login button label"
+  },
+  "loginTitle": "Welcome Back",
+  "@loginTitle": {
+    "description": "Login screen title"
+  },
+  "loginSubtitle": "Sign in to access emergency features",
+  "@loginSubtitle": {
+    "description": "Login screen subtitle"
+  },
+  "emailOrPhone": "Email or Phone",
+  "@emailOrPhone": {
+    "description": "Email or phone field label"
+  },
   "emergencyHistory": "Emergency History",
   "@emergencyHistory": {
     "description": "Emergency history screen title"
@@ -304,6 +320,7 @@
   "retry": "Retry",
   "@retry": {
     "description": "Retry button text"
+  },
   "register": "Register",
   "@register": {
     "description": "Register button label"
@@ -323,6 +340,50 @@
   "confirmPassword": "Confirm Password",
   "@confirmPassword": {
     "description": "Confirm password field label"
+  },
+  "rememberMe": "Remember me",
+  "@rememberMe": {
+    "description": "Remember me checkbox label"
+  },
+  "forgotPassword": "Forgot Password?",
+  "@forgotPassword": {
+    "description": "Forgot password link"
+  },
+  "loginWithBiometric": "Login with Biometric",
+  "@loginWithBiometric": {
+    "description": "Biometric login button label"
+  },
+  "biometricReason": "Authenticate to login quickly",
+  "@biometricReason": {
+    "description": "Biometric authentication reason"
+  },
+  "noBiometricCredentials": "No saved credentials. Please login with password first.",
+  "@noBiometricCredentials": {
+    "description": "Message when no credentials are saved for biometric login"
+  },
+  "biometricNotAvailable": "Biometric authentication is not available on this device",
+  "@biometricNotAvailable": {
+    "description": "Message when biometric is not available"
+  },
+  "loginError": "Login failed. Please try again.",
+  "@loginError": {
+    "description": "Generic login error message"
+  },
+  "invalidCredentials": "Invalid email/phone or password",
+  "@invalidCredentials": {
+    "description": "Invalid credentials error"
+  },
+  "fieldRequired": "This field is required",
+  "@fieldRequired": {
+    "description": "Required field validation message"
+  },
+  "invalidEmail": "Please enter a valid email",
+  "@invalidEmail": {
+    "description": "Invalid email validation message"
+  },
+  "passwordMinLength": "Password must be at least 6 characters",
+  "@passwordMinLength": {
+    "description": "Password minimum length validation message"
   },
   "alreadyHaveAccount": "Already have an account?",
   "@alreadyHaveAccount": {

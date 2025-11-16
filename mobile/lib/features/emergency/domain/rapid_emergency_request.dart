@@ -88,11 +88,21 @@ class EmergencyLocation {
 
   @override
   String toString() {
-    return 'EmergencyLocation(lat: $latitude, lng: $longitude, '
-        'accuracy: ${accuracy?.toStringAsFixed(1)}m, '
-        'accuracyLevel: $accuracyLevel, '
-        'altitude: ${altitude?.toStringAsFixed(1)}m, '
-        'timestamp: $timestamp)';
+    final buffer = StringBuffer('EmergencyLocation(lat: $latitude, lng: $longitude');
+    if (accuracy != null) {
+      buffer.write(', accuracy: ${accuracy!.toStringAsFixed(1)}m');
+    }
+    if (accuracyLevel != null) {
+      buffer.write(', accuracyLevel: $accuracyLevel');
+    }
+    if (altitude != null) {
+      buffer.write(', altitude: ${altitude!.toStringAsFixed(1)}m');
+    }
+    if (timestamp != null) {
+      buffer.write(', timestamp: $timestamp');
+    }
+    buffer.write(')');
+    return buffer.toString();
   }
 
   @override

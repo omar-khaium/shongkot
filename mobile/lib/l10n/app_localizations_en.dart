@@ -182,6 +182,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your location and alert have been recorded. Help is on the way.';
 
   @override
+  String get login => 'Login';
+
+  @override
+  String get loginTitle => 'Welcome Back';
+
+  @override
+  String get loginSubtitle => 'Sign in to access emergency features';
+
+  @override
+  String get emailOrPhone => 'Email or Phone Number';
+
+  @override
   String get emergencyHistory => 'Emergency History';
 
   @override
@@ -235,6 +247,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noTypeSpecified => 'No Type Specified';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
   String get register => 'Register';
 
   @override
@@ -251,13 +268,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirmPassword => 'Confirm Password';
 
   @override
+  String get rememberMe => 'Remember me';
+
+  @override
+  String get forgotPassword => 'Forgot Password?';
+
+  @override
+  String get loginWithBiometric => 'Login with Biometric';
+
+  @override
+  String get biometricReason => 'Authenticate to login quickly';
+
+  @override
+  String get noBiometricCredentials =>
+      'No saved credentials. Please login with password first.';
+
+  @override
+  String get biometricNotAvailable =>
+      'Biometric authentication is not available on this device';
+
+  @override
+  String get loginError => 'Login failed. Please try again.';
+
+  @override
+  String get invalidCredentials => 'Invalid email/phone or password';
+
+  @override
+  String get fieldRequired => 'This field is required';
+
+  @override
+  String get invalidEmail => 'Please enter a valid email';
+
+  @override
+  String get passwordMinLength => 'Password must be at least 6 characters';
+
+  @override
   String get alreadyHaveAccount => 'Already have an account?';
-
-  @override
-  String get login => 'Login';
-
-  @override
-  String get emailOrPhone => 'Email or Phone Number';
 
   @override
   String get iAgreeToThe => 'I agree to the';
@@ -319,4 +365,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get networkError => 'Network error. Please check your connection.';
+
+  @override
+  String get pleaseEnterAllSixDigits => 'Please enter all 6 digits';
 }
