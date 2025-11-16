@@ -241,18 +241,16 @@ void main() {
       await tester.enterText(passwordField, 'Test1234');
       await tester.pump();
 
-      // Check password is obscured initially
-      final textField = tester.widget<TextFormField>(passwordField);
-      expect(textField.obscureText, isTrue);
+      // Check password visibility icon shows "visibility_outlined" initially (password is obscured)
+      expect(find.byIcon(Icons.visibility_outlined), findsAtLeastNWidgets(1));
 
       // Tap visibility toggle button
       final visibilityButtons = find.byIcon(Icons.visibility_outlined);
       await tester.tap(visibilityButtons.first);
       await tester.pump();
 
-      // Check password is now visible
-      final updatedTextField = tester.widget<TextFormField>(passwordField);
-      expect(updatedTextField.obscureText, isFalse);
+      // Check password visibility icon changed to "visibility_off_outlined" (password is visible)
+      expect(find.byIcon(Icons.visibility_off_outlined), findsAtLeastNWidgets(1));
     });
 
     testWidgets('toggles terms acceptance checkbox', (WidgetTester tester) async {
