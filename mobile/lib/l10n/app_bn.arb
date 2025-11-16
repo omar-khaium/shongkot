@@ -70,7 +70,8 @@
   "loginError": "লগইন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।",
   "invalidCredentials": "ভুল ইমেইল/ফোন বা পাসওয়ার্ড",
   "fieldRequired": "এই ক্ষেত্রটি আবশ্যক",
-  "invalidEmail": "অনুগ্রহ করে একটি বৈধ ইমেইল লিখুন"
+  "invalidEmail": "অনুগ্রহ করে একটি বৈধ ইমেইল লিখুন",
+  "passwordMinLength": "পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে",
   "emergencyHistory": "জরুরী ইতিহাস",
   "noEmergencies": "কোন জরুরী অবস্থা পাওয়া যায়নি",
   "noEmergenciesDescription": "আপনার জরুরী ইতিহাস এখানে প্রদর্শিত হবে",

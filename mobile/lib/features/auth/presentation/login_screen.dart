@@ -181,7 +181,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       return l10n.fieldRequired;
                     }
                     if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
+                      return l10n.passwordMinLength;
                     }
                     return null;
                   },

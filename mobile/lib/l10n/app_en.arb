@@ -374,9 +374,10 @@
   "invalidEmail": "Please enter a valid email",
   "@invalidEmail": {
     "description": "Invalid email validation message"
-  "confirmPassword": "Confirm Password",
-  "@confirmPassword": {
-    "description": "Confirm password field label"
+  },
+  "passwordMinLength": "Password must be at least 6 characters",
+  "@passwordMinLength": {
+    "description": "Password minimum length validation message"
   },
   "alreadyHaveAccount": "Already have an account?",
   "@alreadyHaveAccount": {
