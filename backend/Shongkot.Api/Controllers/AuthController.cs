@@ -208,9 +208,19 @@ public class AuthController : ControllerBase
 
             return Ok(response);
         }
+        catch (ArgumentException ex)
+        {
+            _logger.LogWarning(ex, "Invalid argument during login");
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            _logger.LogWarning(ex, "Invalid operation during login");
+            return BadRequest(new { message = ex.Message });
+        }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Login error");
+            _logger.LogError(ex, "Unexpected error during login");
             return Problem("An error occurred during login");
         }
     }

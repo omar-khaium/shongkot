@@ -8,6 +8,9 @@ class TokenManager {
   final AuthApiClient _apiClient;
   final SecureStorageService _secureStorage;
   Timer? _refreshTimer;
+  
+  /// Time before token expiration to trigger refresh
+  static const Duration _refreshBeforeExpiration = Duration(minutes: 2);
 
   TokenManager({
     required AuthApiClient apiClient,
@@ -22,7 +25,7 @@ class TokenManager {
 
     // Calculate when to refresh (2 minutes before expiration)
     final now = DateTime.now();
-    final refreshAt = expiresAt.subtract(const Duration(minutes: 2));
+    final refreshAt = expiresAt.subtract(_refreshBeforeExpiration);
     final duration = refreshAt.difference(now);
 
     if (duration.isNegative) {
@@ -68,10 +71,26 @@ class TokenManager {
       startAutoRefresh(updatedUser, response.expiresAt);
 
       return updatedUser;
+    } on AuthApiException catch (e) {
+      // Authentication error (invalid/expired token) - log out user
+      if (e.message.contains('invalid') || e.message.contains('expired') || e.message.contains('Token refresh failed')) {
+        stopAutoRefresh();
+        await _secureStorage.deleteUser();
+        return null;
+      }
+      // Network or other error - retry later, don't log out
+      // Schedule a retry in 30 seconds
+      _refreshTimer?.cancel();
+      _refreshTimer = Timer(const Duration(seconds: 30), () {
+        _refreshToken(refreshToken);
+      });
+      return null;
     } catch (e) {
-      // If refresh fails, clear user data and stop auto-refresh
-      stopAutoRefresh();
-      await _secureStorage.deleteUser();
+      // Unexpected error - don't log out, retry later
+      _refreshTimer?.cancel();
+      _refreshTimer = Timer(const Duration(seconds: 30), () {
+        _refreshToken(refreshToken);
+      });
       return null;
     }
   }

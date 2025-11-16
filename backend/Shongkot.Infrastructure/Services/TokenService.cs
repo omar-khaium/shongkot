@@ -37,39 +37,18 @@ public class TokenService : ITokenService
         };
     }
 
+    /// <summary>
+    /// Validates a refresh token. Note: Refresh tokens are random strings stored in the database,
+    /// not JWTs. This method is not used in the current implementation as validation is done
+    /// by comparing stored tokens in AuthService.
+    /// </summary>
     public Guid? ValidateRefreshToken(string refreshToken)
     {
-        try
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_jwtSettings.SecretKey);
-
-            var validationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = true,
-                ValidIssuer = _jwtSettings.Issuer,
-                ValidateAudience = true,
-                ValidAudience = _jwtSettings.Audience,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
-
-            var principal = tokenHandler.ValidateToken(refreshToken, validationParameters, out var validatedToken);
-            
-            var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim != null && Guid.TryParse(userIdClaim.Value, out var userId))
-            {
-                return userId;
-            }
-
-            return null;
-        }
-        catch
-        {
-            return null;
-        }
+        // Refresh tokens are random strings, not JWTs.
+        // Token validation is done by the AuthService by comparing stored tokens.
+        // This method exists for interface compliance but should not be used.
+        throw new NotImplementedException(
+            "Refresh token validation is handled by AuthService through token comparison, not JWT validation");
     }
 
     public string GenerateRefreshToken()

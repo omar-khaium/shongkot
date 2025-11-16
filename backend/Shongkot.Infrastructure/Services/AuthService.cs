@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using Microsoft.Extensions.Options;
 using Shongkot.Application.Models;
 using Shongkot.Application.Services;
 using Shongkot.Domain.Entities;
@@ -13,6 +14,7 @@ public class AuthService : IAuthService
 {
     private readonly ITokenService _tokenService;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly JwtSettings _jwtSettings;
     
     // Thread-safe in-memory storage (replace with database in production)
     private static readonly ConcurrentDictionary<Guid, User> _users = new();
@@ -22,10 +24,11 @@ public class AuthService : IAuthService
     private static readonly ConcurrentDictionary<string, Guid> _facebookIdIndex = new();
     private static readonly ConcurrentDictionary<string, Guid> _appleIdIndex = new();
 
-    public AuthService(ITokenService tokenService, IPasswordHasher passwordHasher)
+    public AuthService(ITokenService tokenService, IPasswordHasher passwordHasher, IOptions<JwtSettings> jwtSettings)
     {
         _tokenService = tokenService;
         _passwordHasher = passwordHasher;
+        _jwtSettings = jwtSettings.Value;
     }
 
     public async Task<(User user, TokenResponse tokens)?> LoginAsync(string emailOrPhone, string password)
@@ -59,7 +62,7 @@ public class AuthService : IAuthService
         
         // Update refresh token in user
         user.RefreshToken = tokens.RefreshToken;
-        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(7); // Should match JWT settings
+        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays); // Should match JWT settings
         
         return (user, tokens);
     }
@@ -81,7 +84,7 @@ public class AuthService : IAuthService
         
         // Update refresh token
         user.RefreshToken = tokens.RefreshToken;
-        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(7);
+        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
         
         return tokens;
     }
@@ -107,6 +110,9 @@ public class AuthService : IAuthService
 
         if (string.IsNullOrWhiteSpace(password))
             throw new ArgumentException("Password is required");
+
+        // Validate password strength
+        ValidatePasswordStrength(password);
 
         // Check if user already exists
         var normalizedEmail = email?.Trim().ToLowerInvariant();
@@ -153,12 +159,43 @@ public class AuthService : IAuthService
         if (!_passwordHasher.VerifyPassword(oldPassword, user.PasswordHash))
             throw new InvalidOperationException("Invalid current password");
 
+        // Validate new password strength
+        ValidatePasswordStrength(newPassword);
+
         // Update password and invalidate all sessions
         user.PasswordHash = _passwordHasher.HashPassword(newPassword);
         user.PasswordChangedAt = DateTime.UtcNow;
         user.RefreshToken = null;
         user.RefreshTokenExpiresAt = null;
         user.UpdatedAt = DateTime.UtcNow;
+    }
+
+    private static void ValidatePasswordStrength(string password)
+    {
+        const int minLength = 8;
+        const int maxLength = 128;
+
+        if (password.Length < minLength)
+            throw new ArgumentException($"Password must be at least {minLength} characters long");
+
+        if (password.Length > maxLength)
+            throw new ArgumentException($"Password must not exceed {maxLength} characters");
+
+        // Check for at least one uppercase letter
+        if (!password.Any(char.IsUpper))
+            throw new ArgumentException("Password must contain at least one uppercase letter");
+
+        // Check for at least one lowercase letter
+        if (!password.Any(char.IsLower))
+            throw new ArgumentException("Password must contain at least one lowercase letter");
+
+        // Check for at least one digit
+        if (!password.Any(char.IsDigit))
+            throw new ArgumentException("Password must contain at least one number");
+
+        // Check for at least one special character
+        if (!password.Any(ch => !char.IsLetterOrDigit(ch)))
+            throw new ArgumentException("Password must contain at least one special character");
     }
 
     public async Task<(User user, TokenResponse tokens)> LoginWithGoogleAsync(string googleToken)
@@ -197,7 +234,7 @@ public class AuthService : IAuthService
         
         var tokens = _tokenService.GenerateTokens(user);
         user.RefreshToken = tokens.RefreshToken;
-        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(7);
+        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
         
         return (user, tokens);
     }
@@ -236,7 +273,7 @@ public class AuthService : IAuthService
         
         var tokens = _tokenService.GenerateTokens(user);
         user.RefreshToken = tokens.RefreshToken;
-        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(7);
+        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
         
         return (user, tokens);
     }
@@ -275,7 +312,7 @@ public class AuthService : IAuthService
         
         var tokens = _tokenService.GenerateTokens(user);
         user.RefreshToken = tokens.RefreshToken;
-        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(7);
+        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
         
         return (user, tokens);
     }

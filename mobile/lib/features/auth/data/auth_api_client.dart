@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import '../domain/user.dart';
 
@@ -20,23 +21,36 @@ class AuthApiClient {
     String? name,
     required bool acceptedTerms,
   }) async {
-    final response = await _client.post(
-      Uri.parse('$baseUrl/api/auth/register'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'email': email,
-        'phoneNumber': phoneNumber,
-        'password': password,
-        'name': name,
-        'acceptedTerms': acceptedTerms,
-      }),
-    );
+    try {
+      final response = await _client.post(
+        Uri.parse('$baseUrl/api/auth/register'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': email,
+          'phoneNumber': phoneNumber,
+          'password': password,
+          'name': name,
+          'acceptedTerms': acceptedTerms,
+        }),
+      );
 
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      return AuthResponse.fromJson(jsonDecode(response.body));
-    } else {
-      final error = jsonDecode(response.body);
-      throw AuthApiException(error['message'] ?? 'Registration failed');
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        return AuthResponse.fromJson(jsonDecode(response.body));
+      } else {
+        try {
+          final error = jsonDecode(response.body);
+          throw AuthApiException(error['message'] ?? 'Registration failed');
+        } catch (e) {
+          if (e is AuthApiException) rethrow;
+          throw AuthApiException('Registration failed: ${response.statusCode}');
+        }
+      }
+    } on SocketException {
+      throw AuthApiException('Network error: Please check your internet connection');
+    } on http.ClientException catch (e) {
+      throw AuthApiException('Network error: ${e.message}');
+    } on FormatException {
+      throw AuthApiException('Invalid response from server');
     }
   }
 
@@ -45,39 +59,66 @@ class AuthApiClient {
     required String emailOrPhone,
     required String password,
   }) async {
-    final response = await _client.post(
-      Uri.parse('$baseUrl/api/auth/login'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'emailOrPhone': emailOrPhone,
-        'password': password,
-      }),
-    );
+    try {
+      final response = await _client.post(
+        Uri.parse('$baseUrl/api/auth/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'emailOrPhone': emailOrPhone,
+          'password': password,
+        }),
+      );
 
-    if (response.statusCode == 200) {
-      return AuthResponse.fromJson(jsonDecode(response.body));
-    } else if (response.statusCode == 401) {
-      throw AuthApiException('Invalid email/phone or password');
-    } else {
-      final error = jsonDecode(response.body);
-      throw AuthApiException(error['message'] ?? 'Login failed');
+      if (response.statusCode == 200) {
+        return AuthResponse.fromJson(jsonDecode(response.body));
+      } else if (response.statusCode == 401) {
+        throw AuthApiException('Invalid email/phone or password');
+      } else {
+        try {
+          final error = jsonDecode(response.body);
+          throw AuthApiException(error['message'] ?? 'Login failed');
+        } catch (e) {
+          if (e is AuthApiException) rethrow;
+          throw AuthApiException('Login failed: ${response.statusCode}');
+        }
+      }
+    } on SocketException {
+      throw AuthApiException('Network error: Please check your internet connection');
+    } on http.ClientException catch (e) {
+      throw AuthApiException('Network error: ${e.message}');
+    } on FormatException {
+      throw AuthApiException('Invalid response from server');
     }
   }
 
   /// Refresh access token
   Future<RefreshTokenResponse> refreshToken(String refreshToken) async {
-    final response = await _client.post(
-      Uri.parse('$baseUrl/api/auth/refresh'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'refreshToken': refreshToken,
-      }),
-    );
+    try {
+      final response = await _client.post(
+        Uri.parse('$baseUrl/api/auth/refresh'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'refreshToken': refreshToken,
+        }),
+      );
 
-    if (response.statusCode == 200) {
-      return RefreshTokenResponse.fromJson(jsonDecode(response.body));
-    } else {
-      throw AuthApiException('Token refresh failed');
+      if (response.statusCode == 200) {
+        return RefreshTokenResponse.fromJson(jsonDecode(response.body));
+      } else {
+        try {
+          final error = jsonDecode(response.body);
+          throw AuthApiException(error['message'] ?? 'Token refresh failed');
+        } catch (e) {
+          if (e is AuthApiException) rethrow;
+          throw AuthApiException('Token refresh failed: ${response.statusCode}');
+        }
+      }
+    } on SocketException {
+      throw AuthApiException('Network error: Please check your internet connection');
+    } on http.ClientException catch (e) {
+      throw AuthApiException('Network error: ${e.message}');
+    } on FormatException {
+      throw AuthApiException('Invalid response from server');
     }
   }
 
