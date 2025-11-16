@@ -55,14 +55,13 @@ void main() {
       await tester.pump();
 
       // Verify that no text was entered
-      final firstTextFieldWidget = tester.widget<TextField>(firstTextField);
-      expect(firstTextFieldWidget.controller?.text, isEmpty);
+      expect(find.text('a'), findsNothing);
 
       // Try to enter a digit (should work)
       await tester.enterText(firstTextField, '1');
       await tester.pump();
       
-      expect(firstTextFieldWidget.controller?.text, '1');
+      expect(find.text('1'), findsOneWidget);
     });
 
     testWidgets('verify button is initially enabled', (WidgetTester tester) async {

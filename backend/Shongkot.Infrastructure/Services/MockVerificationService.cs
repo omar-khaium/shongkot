@@ -1,12 +1,14 @@
 using Shongkot.Application.Services;
 using Shongkot.Domain.Entities;
+using System.Collections.Concurrent;
+using System.Security.Cryptography;
 
 namespace Shongkot.Infrastructure.Services;
 
 public class MockVerificationService : IVerificationService
 {
-    private static readonly Dictionary<string, VerificationCode> _codes = new();
-    private static readonly Dictionary<string, DateTime> _lastSent = new();
+    private static readonly ConcurrentDictionary<string, VerificationCode> _codes = new();
+    private static readonly ConcurrentDictionary<string, DateTime> _lastSent = new();
     private const int CodeExpirationMinutes = 5;
     private const int ResendCooldownSeconds = 60;
 
@@ -74,7 +76,13 @@ public class MockVerificationService : IVerificationService
 
     private static string GenerateRandomCode()
     {
-        var random = new Random();
-        return random.Next(100000, 999999).ToString();
+        // Use cryptographically secure random for better security
+        var bytes = new byte[4];
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(bytes);
+        }
+        var randomNumber = BitConverter.ToUInt32(bytes, 0);
+        return (randomNumber % 900000 + 100000).ToString();
     }
 }

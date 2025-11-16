@@ -74,7 +74,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
   Future<void> _verifyCode() async {
     final code = _code;
     if (code.length != 6) {
-      _showError('Please enter all 6 digits');
+      _showError(AppLocalizations.of(context)!.pleaseEnterAllSixDigits);
       return;
     }
 

@@ -4,12 +4,17 @@ import '../domain/verification_request.dart';
 import '../domain/verification_response.dart';
 
 class VerificationApiService {
-  // TODO: Replace with actual API URL from environment config
-  static const String baseUrl = 'http://localhost:5000/api';
-  
+  final String baseUrl;
   final http.Client client;
 
-  VerificationApiService({http.Client? client}) : client = client ?? http.Client();
+  VerificationApiService({
+    http.Client? client,
+    String? baseUrl,
+  })  : client = client ?? http.Client(),
+        baseUrl = baseUrl ?? const String.fromEnvironment(
+          'API_BASE_URL',
+          defaultValue: 'http://localhost:5000/api',
+        );
 
   Future<VerificationResponse> sendCode(VerificationRequest request) async {
     try {
@@ -58,10 +63,22 @@ class VerificationApiService {
           jsonDecode(response.body) as Map<String, dynamic>,
         );
       } else {
-        final error = jsonDecode(response.body);
+        String message = 'Verification failed';
+        try {
+          final error = jsonDecode(response.body);
+          if (error is Map<String, dynamic> && error['message'] is String) {
+            message = error['message'];
+          } else if (response.body.isNotEmpty) {
+            message = response.body;
+          }
+        } catch (_) {
+          if (response.body.isNotEmpty) {
+            message = response.body;
+          }
+        }
         return VerificationResponse(
           success: false,
-          message: error['message'] ?? 'Verification failed',
+          message: message,
         );
       }
     } catch (e) {

@@ -6,11 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-<<<<<<< HEAD
   <ItemGroup>
     <ProjectReference Include="..\Shongkot.Domain\Shongkot.Domain.csproj" />
   </ItemGroup>
 
-=======
->>>>>>> origin/main
 </Project>

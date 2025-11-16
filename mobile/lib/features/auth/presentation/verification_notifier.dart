@@ -19,14 +19,14 @@ class VerificationState {
 
   VerificationState copyWith({
     bool? isLoading,
-    String? error,
+    String? Function()? error,
     bool? isVerified,
     DateTime? expiresAt,
     DateTime? lastResendTime,
   }) {
     return VerificationState(
       isLoading: isLoading ?? this.isLoading,
-      error: error,
+      error: error != null ? error() : this.error,
       isVerified: isVerified ?? this.isVerified,
       expiresAt: expiresAt ?? this.expiresAt,
       lastResendTime: lastResendTime ?? this.lastResendTime,
@@ -54,7 +54,7 @@ class VerificationNotifier extends StateNotifier<VerificationState> {
   VerificationNotifier(this.ref) : super(VerificationState());
 
   Future<void> sendCode(VerificationRequest request) async {
-    state = state.copyWith(isLoading: true, error: null);
+    state = state.copyWith(isLoading: true, error: () => null);
     _currentIdentifier = request.identifier;
 
     try {
@@ -70,24 +70,24 @@ class VerificationNotifier extends StateNotifier<VerificationState> {
       } else {
         state = state.copyWith(
           isLoading: false,
-          error: response.message,
+          error: () => response.message,
         );
       }
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        error: e.toString(),
+        error: () => e.toString(),
       );
     }
   }
 
   Future<bool> verifyCode(String code) async {
     if (_currentIdentifier == null) {
-      state = state.copyWith(error: 'No identifier set');
+      state = state.copyWith(error: () => 'No identifier set');
       return false;
     }
 
-    state = state.copyWith(isLoading: true, error: null);
+    state = state.copyWith(isLoading: true, error: () => null);
 
     try {
       final apiService = ref.read(verificationApiServiceProvider);
@@ -102,14 +102,14 @@ class VerificationNotifier extends StateNotifier<VerificationState> {
       } else {
         state = state.copyWith(
           isLoading: false,
-          error: response.message,
+          error: () => response.message,
         );
         return false;
       }
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        error: e.toString(),
+        error: () => e.toString(),
       );
       return false;
     }
@@ -118,12 +118,12 @@ class VerificationNotifier extends StateNotifier<VerificationState> {
   Future<void> resendCode(VerificationRequest request) async {
     if (!state.canResend) {
       state = state.copyWith(
-        error: 'Please wait ${state.secondsUntilCanResend} seconds before resending',
+        error: () => 'Please wait ${state.secondsUntilCanResend} seconds before resending',
       );
       return;
     }
 
-    state = state.copyWith(isLoading: true, error: null);
+    state = state.copyWith(isLoading: true, error: () => null);
     _currentIdentifier = request.identifier;
 
     try {
@@ -139,19 +139,19 @@ class VerificationNotifier extends StateNotifier<VerificationState> {
       } else {
         state = state.copyWith(
           isLoading: false,
-          error: response.message,
+          error: () => response.message,
         );
       }
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        error: e.toString(),
+        error: () => e.toString(),
       );
     }
   }
 
   void clearError() {
-    state = state.copyWith(error: null);
+    state = state.copyWith(error: () => null);
   }
 }
 
