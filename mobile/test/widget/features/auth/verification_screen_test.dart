@@ -80,18 +80,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Find the verify button
-      final verifyButton = find.text('Verify');
+      final verifyButton = find.widgetWithText(ElevatedButton, 'Verify');
       expect(verifyButton, findsOneWidget);
 
       // Verify button should be present and tappable
       // AppButton uses ElevatedButton by default (primary variant)
-      final button = tester.widget<ElevatedButton>(
-        find.ancestor(
-          of: verifyButton,
-          matching: find.byType(ElevatedButton),
-        ).first,
-      );
-      
+      final button = tester.widget<ElevatedButton>(verifyButton);
       expect(button.onPressed, isNotNull);
     });
 
