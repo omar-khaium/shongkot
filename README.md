@@ -6,9 +6,9 @@
 
 ## 🚀 Latest Deployment
 
-**Version:** v2025.11.13-3a20bcf  
-**Deployed:** 2025-11-13 12:09:05 UTC  
-**Commit:** 3a20bcf
+**Version:** v2025.11.14-7d9fec2  
+**Deployed:** 2025-11-14 10:19:19 UTC  
+**Commit:** 7d9fec2
 
 ### Service Status
 
@@ -16,36 +16,59 @@
 - **API Documentation:** ✅ available - [https://shongkot-mumbai-gyeuv4je3q-el.a.run.app/swagger](https://shongkot-mumbai-gyeuv4je3q-el.a.run.app/swagger)
 - **Base URL:** [https://shongkot-mumbai-gyeuv4je3q-el.a.run.app](https://shongkot-mumbai-gyeuv4je3q-el.a.run.app)
 
-### What's New in v2025.11.13-3a20bcf
+### What's New in v2025.11.14-7d9fec2
 
-Merge a4006f6f4c323407c8a01d1dd1eda6cb2126528a into 426782731a263928457ae4f59d2a758d391c50e7
+Merge pull request #20 from omar-khaium/mobile
+
+Mobile
 
 ### Recent Changes
 
-- Merge a4006f6f4c323407c8a01d1dd1eda6cb2126528a into 426782731a263928457ae4f59d2a758d391c50e7 (3a20bcf)
-- Add comprehensive branch management setup documentation (a4006f6)
-- Add branch synchronization workflow and update gitignore (656de91)
-- Add comprehensive documentation and update branch strategy (0719f31)
-- Initial plan (b30369b)
-- docs: update README with deployment info [v2025.11.13-63fdcd1] (4267827)
-- Merge pull request #5 from omar-khaium/copilot/fix-deployment-url-issues (63fdcd1)
-- docs: update README with deployment info [v2025.11.13-740958f] (fce789b)
-- Add git pull --rebase before push to prevent non-fast-forward errors (cde715f)
-- docs: update README with deployment info [v2025.11.12-e5098bb] (6e92967)
+- Merge pull request #20 from omar-khaium/mobile (7d9fec2)
+- Merge pull request #19 from omar-khaium/copilot/fix-dart-format-issues (da02b22)
+- Fix Dart formatting after flutter pub get (CI compatibility) (ae15108)
+- Add pre-commit hooks to enforce code quality checks locally (431af99)
+- Fix Dart formatting issues in mobile app files (e447b1d)
+- Initial plan (539dfb4)
+- Merge pull request #17 from omar-khaium/copilot/fix-theme-change-bug (5417f4c)
+- Fix theme change not taking effect immediately (062cd17)
+- Initial plan (369dd39)
+- Merge pull request #12 from omar-khaium/copilot/fix-release-date-output (6268290)
 
 ---
 
 
+<<<<<<< HEAD
 ## 📱 Latest Mobile App Version
 
 **Version:** 1.0.0+latest  
+=======
+
+
+## 📱 Latest Mobile App Version
+
+**Version:** v1.0.0-build.79  
+**Release Date:** 2025-11-14  
+>>>>>>> origin/main
 **Platform:** Android (iOS coming soon)  
 **Distribution:** Firebase App Distribution
 
 ### Download Links
 
+<<<<<<< HEAD
 - **For Testers:** [Firebase App Distribution](https://appdistribution.firebase.google.com/) (requires authorization)
 - **Latest Release:** [GitHub Releases](https://github.com/omar-khaium/shongkot/releases/latest)
+=======
+- **Firebase App Distribution:** [Download Latest APK](https://appdistribution.firebase.google.com/testerapps/1:657665364433:android:33fc8763de2c42867390f0) (Public - anyone with the link)
+- **GitHub Releases:** [v1.0.0-build.79](https://github.com/omar-khaium/shongkot/releases/tag/v1.0.0-build.79)
+
+### In-App Updates
+
+✅ **Automatic Updates Enabled**
+- Users with previous versions will receive update prompts
+- Updates are delivered through Firebase App Distribution
+- No manual download required for existing users
+>>>>>>> origin/main
 
 ### Features
 
@@ -55,6 +78,7 @@ Merge a4006f6f4c323407c8a01d1dd1eda6cb2126528a into 426782731a263928457ae4f59d2a
 - Nearby responders finder
 
 ---
+
 
 ## 📚 Documentation
 

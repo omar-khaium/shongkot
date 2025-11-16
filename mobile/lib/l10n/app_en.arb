@@ -340,5 +340,9 @@
   "networkError": "Network error. Please check your connection.",
   "@networkError": {
     "description": "Network error message"
+  },
+  "pleaseEnterAllSixDigits": "Please enter all 6 digits",
+  "@pleaseEnterAllSixDigits": {
+    "description": "Error message when OTP is incomplete"
   }
 }
