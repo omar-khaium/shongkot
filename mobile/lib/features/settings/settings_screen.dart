@@ -6,6 +6,7 @@ import '../../core/providers/theme_provider.dart';
 import '../../core/providers/locale_provider.dart';
 import '../../shared/widgets/app_card.dart';
 import '../../l10n/app_localizations.dart';
+import '../auth/presentation/auth_notifier.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -209,6 +210,40 @@ class SettingsScreen extends ConsumerWidget {
                   },
                 ),
               ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+
+          // Account section
+          AppCard(
+            child: _SettingsTile(
+              icon: Icons.logout,
+              title: 'Logout',
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () async {
+                // Show confirmation dialog
+                final confirmed = await showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Logout'),
+                    content: const Text('Are you sure you want to logout?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: Text(l10n.cancel),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: const Text('Logout'),
+                      ),
+                    ],
+                  ),
+                );
+
+                if (confirmed == true && context.mounted) {
+                  await ref.read(authNotifierProvider.notifier).logout();
+                }
+              },
             ),
           ),
         ],
