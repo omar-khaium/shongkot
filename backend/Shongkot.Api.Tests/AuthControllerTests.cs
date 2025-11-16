@@ -11,13 +11,15 @@ public class AuthControllerTests
 {
     private readonly Mock<ILogger<AuthController>> _mockLogger;
     private readonly Mock<IVerificationService> _mockVerificationService;
+    private readonly Mock<IAuthService> _mockAuthService;
     private readonly AuthController _controller;
 
     public AuthControllerTests()
     {
         _mockLogger = new Mock<ILogger<AuthController>>();
         _mockVerificationService = new Mock<IVerificationService>();
-        _controller = new AuthController(_mockLogger.Object, _mockVerificationService.Object);
+        _mockAuthService = new Mock<IAuthService>();
+        _controller = new AuthController(_mockLogger.Object, _mockVerificationService.Object, _mockAuthService.Object);
     }
 
     [Fact]

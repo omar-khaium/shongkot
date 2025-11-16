@@ -1,4 +1,59 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Shongkot.Application.Models;
+using Shongkot.Application.Services;
+using Shongkot.Infrastructure.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure JWT settings
+var jwtSettings = new JwtSettings
+{
+    SecretKey = builder.Configuration["Jwt:SecretKey"] ?? "YourSuperSecretKeyThatIsAtLeast32CharactersLongForHS256",
+    Issuer = builder.Configuration["Jwt:Issuer"] ?? "Shongkot",
+    Audience = builder.Configuration["Jwt:Audience"] ?? "ShongkotApp",
+    AccessTokenExpirationMinutes = int.Parse(builder.Configuration["Jwt:AccessTokenExpirationMinutes"] ?? "15"),
+    RefreshTokenExpirationDays = int.Parse(builder.Configuration["Jwt:RefreshTokenExpirationDays"] ?? "7")
+};
+
+// Security check: Warn if using default JWT secret key in production
+if (builder.Environment.IsProduction() && 
+    jwtSettings.SecretKey == "YourSuperSecretKeyThatIsAtLeast32CharactersLongForHS256")
+{
+    throw new InvalidOperationException(
+        "SECURITY ERROR: Default JWT secret key detected in production environment. " +
+        "You must set a secure JWT:SecretKey in environment variables or configuration. " +
+        "Generate a secure key with: openssl rand -base64 32");
+}
+
+builder.Services.Configure<JwtSettings>(options =>
+{
+    options.SecretKey = jwtSettings.SecretKey;
+    options.Issuer = jwtSettings.Issuer;
+    options.Audience = jwtSettings.Audience;
+    options.AccessTokenExpirationMinutes = jwtSettings.AccessTokenExpirationMinutes;
+    options.RefreshTokenExpirationDays = jwtSettings.RefreshTokenExpirationDays;
+});
+
+// Add JWT Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings.Issuer,
+            ValidAudience = jwtSettings.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 // Add services to the container
 builder.Services.AddControllers();
@@ -8,7 +63,32 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { 
         Title = "Shongkot Emergency Responder API", 
         Version = "v1",
-        Description = "API for the Shongkot emergency responder mobile application"
+        Description = "API for the Shongkot emergency responder mobile application with OAuth2 authentication"
+    });
+    
+    // Add JWT bearer security definition
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token",
+        Name = "Authorization",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
     });
 });
 
@@ -25,7 +105,10 @@ builder.Services.AddCors(options =>
 // Add application services
 builder.Services.AddMemoryCache();
 builder.Services.AddHttpClient();
-builder.Services.AddScoped<Shongkot.Application.Services.IVerificationService, Shongkot.Infrastructure.Services.MockVerificationService>();
+builder.Services.AddScoped<IVerificationService, MockVerificationService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
@@ -47,6 +130,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAll");
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
@@ -54,7 +138,7 @@ app.MapControllers();
 app.MapGet("/health", () => Results.Ok(new { 
     status = "healthy", 
     timestamp = DateTime.UtcNow,
-    version = "1.0.0"
+    version = "2.0.0"
 })).WithName("HealthCheck");
 
 app.Run();

@@ -14,4 +14,13 @@ public class User
     public bool IsPhoneVerified { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
+    
+    // OAuth2 and social login support
+    public string? RefreshToken { get; set; }
+    public DateTime? RefreshTokenExpiresAt { get; set; }
+    public string? GoogleId { get; set; }
+    public string? FacebookId { get; set; }
+    public string? AppleId { get; set; }
+    public string? PhotoUrl { get; set; }
+    public DateTime? PasswordChangedAt { get; set; }
 }

@@ -1,0 +1,58 @@
+name: Auto Format and Push
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/auto-format.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  auto-format:
+    name: Auto-format Dart/Flutter code
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout PR head ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+          # checkout the PR's head ref so we are on a branch, not a detached merge commit
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '3.35.3'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: ./mobile
+
+      - name: Run dart format and commit if changed
+        env:
+          PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -euo pipefail
+          cd mobile
+          dart format .
+          cd ..
+          
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore: auto-format dart code [skip ci]"
+            # push back to the PR branch
+            git push origin HEAD:"${PR_BRANCH}"
+            echo "✅ Formatting changes committed and pushed"
+          else
+            echo "✅ No formatting changes needed"
+          fi
